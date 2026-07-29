@@ -8,7 +8,13 @@ export const useUserProfileDrawer = (onClose) => {
     navigate('/perfil'); 
   };
 
+  const handleNotificacao = () => {
+    onClose(); 
+    navigate('/notificacoes'); 
+  };
+
   return {
     handleEditProfileClick,
+    handleNotificacao,
   };
 };

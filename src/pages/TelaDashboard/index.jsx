@@ -1,8 +1,10 @@
+import React from 'react';
 import Navbar from '../../components/Navbar/index';
 import './index.css';
 import { HeaderActions } from '../../components/infoEstrelas/index';
 import { UserProfileDrawer } from '../../components/UserProfileDrawer/index';
 import Conquistas from '../../components/Conquistas/index';
+import { useTelaDashboard } from './index.hook'; 
 
 const HeadphoneIcon = () => (
   <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -55,6 +57,8 @@ const PerformanceBar = ({ label, value, color }) => (
 );
 
 const TelaDashboard = () => {
+  const { drawerAberto, abrirPerfil, fecharPerfil } = useTelaDashboard();
+
   return (
     <div className="dashboard-wrapper">
       <Navbar />
@@ -63,8 +67,11 @@ const TelaDashboard = () => {
         <div className="dashboard-header">
           <h1 className="dashboard-title">Dashboard</h1>
           <div className="header-right">
-            <HeaderActions />
-            <UserProfileDrawer />
+            
+            <HeaderActions onOpenProfile={abrirPerfil} />
+            
+            <UserProfileDrawer isOpen={drawerAberto} onClose={fecharPerfil} />
+            
           </div>
         </div>
 

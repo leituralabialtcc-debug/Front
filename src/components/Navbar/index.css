@@ -52,9 +52,9 @@
 
 .navbar-hamburguer {
   display: none;
-  position: fixed;
-  top: 43px;
-  left: 18px;
+  position: absolute; 
+  top: 40px; 
+  left: 16px;
   z-index: 40;
   width: 44px;
   height: 44px;
@@ -86,14 +86,14 @@
 @media (max-width: 600px) {
   .navbar-hamburguer {
     display: flex;
-    top: 30px;
+    top: 40px; 
   }
 }
 
 @media (max-width: 480px) {
   .navbar-hamburguer {
     display: flex;
-    top: 37px;
+    top: 45px; 
   }
 }
 

@@ -5,7 +5,7 @@ import { formatPhone } from './utils';
 import './index.css';
 
 export const UserProfileDrawer = ({ isOpen, onClose, userData }) => {
-  const { handleEditProfileClick } = useUserProfileDrawer(onClose);
+  const { handleEditProfileClick, handleNotificacao } = useUserProfileDrawer(onClose);
 
   const data = userData || {
     username: 'Username',
@@ -25,8 +25,9 @@ export const UserProfileDrawer = ({ isOpen, onClose, userData }) => {
           <button className="close-btn" onClick={onClose}>
             <X size={24} color="#8A6B8E" />
           </button>
-          <button className="drawer-notification-btn">
-            <Bell size={20} color="white" fill="white" />
+          
+          <button className="drawer-notification-btn" onClick={handleNotificacao}>
+            <Bell size={20} color="white" fill="white"  />
           </button>
         </div>
 

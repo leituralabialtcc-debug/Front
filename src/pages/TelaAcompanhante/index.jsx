@@ -4,9 +4,12 @@ import RedesSociais from "../../components/RedesSociais";
 import { HeaderActions } from "../../components/infoEstrelas";
 import InfoAtividades from "../../components/InfoAtividades/InfoAtividades";
 import Navbar from "../../components/Navbar";
+import { UserProfileDrawer } from "../../components/UserProfileDrawer"; 
 import Bia from "../../assets/img/Bia.png";
 import biaAcompanhante from "../../assets/img/biaAcompanhante.png";
 import "./index.css";
+
+import { useTelaAcompanhante } from "./index.hook"; 
 
 const CARDS = [
   {
@@ -30,6 +33,8 @@ const TelaAcompanhante = () => {
   const [activeIndex, setActiveIndex] = useState(1);
   const navigate = useNavigate();
 
+  const { drawerAberto, abrirPerfil, fecharPerfil } = useTelaAcompanhante();
+
   const total = CARDS.length;
 
   const getPosition = (cardId) => {
@@ -45,7 +50,7 @@ const TelaAcompanhante = () => {
       <Navbar />
 
       <header className="ta-header">
-        <HeaderActions />
+        <HeaderActions onOpenProfile={abrirPerfil} />
       </header>
 
       <section className="ta-dicionario">
@@ -127,7 +132,7 @@ const TelaAcompanhante = () => {
         </div>
       </section>
 
-
+      <UserProfileDrawer isOpen={drawerAberto} onClose={fecharPerfil} />
     </div>
   );
 };

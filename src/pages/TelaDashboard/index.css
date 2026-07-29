@@ -6,7 +6,7 @@
 }
 
 .dashboard-main {
-  margin-left: 90px;
+  margin-left: 80px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -288,9 +288,13 @@
 
 @media (max-width: 768px) {
   .dashboard-main {
-    margin-left: 80px;
+    margin-left: 0px;
     padding: 20px 16px 32px 16px;
     gap: 14px;
+  }
+
+  .dashboard-header {
+    padding-left: 56px; 
   }
 
   .dashboard-title {
@@ -315,11 +319,18 @@
   }
 }
 
-
 @media (max-width: 480px) {
   .dashboard-main {
-    margin-left: 90px;
+    margin-left: 0px;
     padding: 20px 12px 32px 12px; 
+  }
+
+  .dashboard-header {
+    flex-direction: row; 
+    flex-wrap: wrap; 
+    align-items: center; 
+    padding-left: 56px; 
+    gap: 12px;
   }
 
   .dashboard-title {
@@ -373,10 +384,19 @@
   .strike-month {
     font-size: 0.55rem;
   }
+}
 
+@media (max-width: 350px) {
   .dashboard-header {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row; 
+    align-items: center;   
+    padding-left: 0;      
+    padding-top: 60px;     
+    gap: 16px;
+  }
+
+  .conquistas-grid {
+    grid-template-columns: 1fr; 
   }
 }
 

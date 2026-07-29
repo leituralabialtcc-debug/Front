@@ -6,14 +6,18 @@ import Filtro from "../../components/Filtro";
 import InfoAtividade from "../../components/InfoAtividades/InfoAtividades";
 import Botao from "../../components/Botao";
 import { HeaderActions } from "../../components/infoEstrelas";
+import { UserProfileDrawer } from "../../components/UserProfileDrawer"; 
 
 import personagem from "../../assets/img/bia_inicioatividade.png";
-
 import realizadas from "../../assets/img/realizadas.png";
 import salvas from "../../assets/img/salvas.png";
 import revisadas from "../../assets/img/revisadas.png";
 
+import { useTelaInicioAtividades } from "./index.hook"; 
+
 const TelaInicioAtividades = () => {
+  const { drawerAberto, abrirPerfil, fecharPerfil } = useTelaInicioAtividades();
+
   return (
     <div className="pagina-atividades">
       <Navbar />
@@ -23,7 +27,7 @@ const TelaInicioAtividades = () => {
           
           <div className="topo-acoes">
             <div className="menu-espaco-placeholder"></div> 
-            <HeaderActions />
+            <HeaderActions onOpenProfile={abrirPerfil} />
           </div>
 
           <div className="banner">
@@ -98,6 +102,8 @@ const TelaInicioAtividades = () => {
 
         <Filtro />
       </div>
+
+      <UserProfileDrawer isOpen={drawerAberto} onClose={fecharPerfil} />
     </div>
   );
 };

@@ -3,14 +3,15 @@ import { DicionarioCard } from "../../components/Dicionario";
 import Navbar from "../../components/Navbar";
 import { HeaderActions } from "../../components/infoEstrelas";
 import Botao from "../../components/Botao";
+import { UserProfileDrawer } from "../../components/UserProfileDrawer";
 import "./index.css";
+
+import { useTelaDicionario } from "./index.hook"; 
 
 const TelaDicionario = () => {
   const [categoriaAtiva, setCategoriaAtiva] = useState("Comida");
 
-  const handleOpenProfile = () => {
-    console.log("Abrindo o perfil do usuário...");
-  };
+  const { drawerAberto, abrirPerfil, fecharPerfil } = useTelaDicionario();
 
   const categorias = ["Comida", "Escola", "Trabalho", "Natureza", "Saudações"];
 
@@ -25,7 +26,7 @@ const TelaDicionario = () => {
 
       <main className="tela-dicionario__conteudo">
         <div className="tela-dicionario__topo">
-          <HeaderActions onOpenProfile={handleOpenProfile} />
+          <HeaderActions onOpenProfile={abrirPerfil} />
         </div>
 
         <section className="tela-dicionario__painel">
@@ -63,6 +64,8 @@ const TelaDicionario = () => {
           </div>
         </section>
       </main>
+
+      <UserProfileDrawer isOpen={drawerAberto} onClose={fecharPerfil} />
     </div>
   );
 };
