@@ -256,7 +256,7 @@ html, body {
 }
 
 .ta-atividades {
-  margin: 0 24px 40px;
+  margin: 0 24px 24px;
 }
 
 .ta-atividades__title {
@@ -273,7 +273,7 @@ html, body {
 }
 
 .ta-footer {
-  margin-top: auto;
+  margin-top: 0;
 }
 
 @media (max-width: 1024px) {
@@ -307,7 +307,7 @@ html, body {
   .tela-acompanhante {
     margin-left: 0;
     padding-left: 0;
-    padding-bottom: 80px;
+    padding-bottom: 0;
   }
 
   .ta-dicionario {
@@ -370,7 +370,7 @@ html, body {
   }
 
   .ta-atividades {
-    margin: 0 14px 28px;
+    margin: 0 14px 20px;
   }
 
   .ta-atividades__grid {
