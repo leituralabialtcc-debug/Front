@@ -155,6 +155,21 @@
 
   .dashboard-admin__main {
     padding: 20px 16px;
+     align-items: center;
+  }
+
+  .dashboard-admin__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    margin-top: 20px;
+  }
+
+  .dashboard-admin__titulo {
+    margin: 0;
+    text-align: center;
+    font-size: 1.4rem;
   }
 
   .dashboard-admin__rodape {

@@ -149,4 +149,18 @@
   .dashboard-medico__main {
     padding: 20px 16px;
   }
+
+  .dashboard-medico__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    margin-top: 20px;
+  }
+
+  .dashboard-medico__titulo {
+    margin: 0 60px;
+    text-align: center;
+    font-size: 1.4rem;
+  }
 }

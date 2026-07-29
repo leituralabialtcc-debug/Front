@@ -113,6 +113,8 @@
   }
 
   .atividades-admin__titulo {
+    margin: 20px 60px 24px;
+    text-align: center;
     font-size: 24px;
   }
 
@@ -132,6 +134,7 @@
   }
 
   .atividades-admin__titulo {
+    margin: 20px 60px 24px;
     font-size: 22px;
   }
-}q
+}
