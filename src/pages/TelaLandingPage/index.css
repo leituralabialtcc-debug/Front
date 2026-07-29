@@ -1,13 +1,24 @@
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
 .landing {
   font-family: "Segoe UI", sans-serif;
   background-color: #ffffff;
   color: #1f2937;
+  overflow-x: hidden;
 }
 
 .landing__hero-wrapper {
   position: relative;
   background-color: #ede3f6;
-  overflow: visible;
+  overflow: visible !important;
   padding-bottom: 0;
 }
 
@@ -50,6 +61,7 @@
 .landing__hero-logo {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0;
   margin-bottom: 14px;
 }
@@ -89,6 +101,7 @@
 .landing__hero-btn {
   display: block;
   width: 200px;
+  max-width: 100%;
   text-align: center;
   padding: 14px 0;
   background: #cc91e3;
@@ -100,7 +113,7 @@
   cursor: pointer;
   transition: background 0.2s;
   position: relative;
-  z-index: 50;
+  z-index: 100 !important;
 }
 
 .landing__hero-btn:hover {
@@ -113,6 +126,7 @@
   flex: 1;
   display: flex;
   justify-content: center;
+  min-width: 0;
 }
 
 .landing__hero-image img {
@@ -131,6 +145,7 @@
   position: relative;
   z-index: 2;
   margin-top: -60px;
+  flex-wrap: wrap;
 }
 
 .landing__feature-card {
@@ -151,7 +166,7 @@
   margin-top: 100px;
 }
 
-.landing__feature-card .feature-icon img{
+.landing__feature-card .feature-icon img {
   width: 30px;
   height: 30px;
 }
@@ -169,6 +184,21 @@
   color: rgba(255, 255, 255, 0.85);
 }
 
+.landing__features-wave {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  line-height: 0;
+}
+
+.landing__features-wave svg {
+  display: block;
+  width: 100%;
+  transform: rotate(180deg);
+}
+
+/* ===== SOBRE ===== */
 .landing__sobre {
   padding: 100px 60px;
   position: relative;
@@ -178,16 +208,16 @@
 
 .landing__sobre-bg {
   position: absolute;
-  top: 40px;    
-  left: 40px;   
-  right: 40px;  
-  bottom: 40px; 
-  background-color: #efe5f8; 
-  border-radius: 40px;       
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+  background-color: #efe5f8;
+  border-radius: 40px;
   z-index: 1;
 }
 
-.landing__sobre h2, 
+.landing__sobre h2,
 .landing__sobre-content {
   position: relative;
   z-index: 2;
@@ -211,11 +241,18 @@
 
 .landing__sobre-image {
   width: 50%;
+  display: flex;
+  justify-content: center;
 }
 
 .landing__sobre-image img {
-  width: 400px;
+  max-width: 400px;
+  width: 100%;
   border-radius: 24px;
+}
+
+.landing__sobre-benefits {
+  min-width: 0;
 }
 
 .landing__sobre-benefits h3 {
@@ -247,11 +284,12 @@
   font-size: 1.1rem;
   flex-shrink: 0;
   margin-top: 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
-.benefit-item .benefit-icon img{
-  width:40px;
-  height:40px
+
+.benefit-item .benefit-icon img {
+  width: 40px;
+  height: 40px;
 }
 
 .benefit-item h4 {
@@ -267,6 +305,7 @@
   line-height: 1.5;
 }
 
+/* ===== CTA ===== */
 .landing__cta {
   padding: 100px 80px;
   background: #F8EDFB;
@@ -286,7 +325,6 @@
   justify-content: center;
   gap: 60px;
   min-height: 350px;
-  
 }
 
 .landing__cta-circle {
@@ -308,10 +346,12 @@
   align-items: center;
   position: relative;
   z-index: 3;
+  min-width: 0;
 }
 
 .landing__cta-image img {
   width: 500px;
+  max-width: 100%;
   height: auto;
   filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.3));
   transition: transform 0.3s ease;
@@ -323,6 +363,7 @@
   position: relative;
   z-index: 2;
   text-align: left;
+  min-width: 0;
 }
 
 .landing__cta-text h2 {
@@ -330,6 +371,7 @@
   font-weight: 800;
   line-height: 1.3;
   margin-bottom: 20px;
+  color: #ffffff !important;
 }
 
 .landing__cta-text h2 span {
@@ -345,6 +387,7 @@
   opacity: 0.95;
   margin-bottom: 35px;
   max-width: 500px;
+  color: #ffffff !important;
 }
 
 .landing__cta-btn {
@@ -360,10 +403,9 @@
   display: inline-block;
 }
 
-.landing__cta-btn:hover{
+.landing__cta-btn:hover {
   background: #8e62a0;
 }
-
 
 .landing__cta-btn-acessar {
   padding: 14px 35px;
@@ -380,17 +422,18 @@
   margin-left: 15px;
 }
 
-.landing__cta-btn-acessar:hover{
-  background-color:#dddddd ;
+.landing__cta-btn-acessar:hover {
+  background-color: #dddddd;
 }
-
 
 .landing__cta-buttons {
   display: flex;
   gap: 15px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
+/* ===== EQUIPE ===== */
 .equipe {
   padding: 100px 20px;
   background: linear-gradient(180deg, #6a3979, #3e1452);
@@ -437,12 +480,13 @@
 .equipe__card {
   flex: 0 1 320px;
   padding: 15px;
-  border-radius: 45px; 
+  border-radius: 45px;
   border: 1.5px solid rgba(255, 255, 255, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
   transition: transform 0.3s ease;
+  max-width: 100%;
 }
 
 .equipe__card:hover {
@@ -474,6 +518,7 @@
   margin: 10px 0 5px;
   font-size: 1.15rem;
   font-weight: 700;
+  text-align: center;
 }
 
 .equipe__card-inner p {
@@ -481,8 +526,10 @@
   opacity: 0.9;
   font-size: 0.9rem;
   margin: 0;
+  text-align: center;
 }
 
+/* ===== CONTATO ===== */
 .landing__contato {
   padding: 80px 60px;
   background-color: #F8EDFB;
@@ -504,7 +551,7 @@
   padding: 50px;
   max-width: 900px;
   margin: 0 auto;
-  box-shadow: 15px 15px 0px #AD74C3; 
+  box-shadow: 15px 15px 0px #AD74C3;
   position: relative;
   border: 1px solid #e5e7eb;
 }
@@ -513,12 +560,14 @@
   display: flex;
   gap: 30px;
   margin-bottom: 25px;
+  flex-wrap: wrap;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-width: 200px;
 }
 
 .form-group label {
@@ -528,7 +577,7 @@
   font-size: 1rem;
 }
 
-.form-group input, 
+.form-group input,
 .form-group textarea {
   padding: 15px;
   border: 1.5px solid #d1d5db;
@@ -537,9 +586,10 @@
   font-size: 1rem;
   outline: none;
   transition: border-color 0.2s;
+  width: 100%;
 }
 
-.form-group input:focus, 
+.form-group input:focus,
 .form-group textarea:focus {
   border-color: #7A3A8E;
 }
@@ -571,19 +621,9 @@
   background: #5f2c82;
 }
 
-.landing__features-wave {
-  position: absolute;
-  top: -1px;
-  left: 0;
-  width: 100%;
-  line-height: 0;
-}
-
-.landing__features-wave svg {
-  display: block;
-  width: 100%;
-  transform: rotate(180deg);
-}
+/* =========================================================
+   MEDIA QUERIES (consolidadas — sem duplicatas)
+   ========================================================= */
 
 @media (max-width: 1200px) {
   .landing__hero {
@@ -591,7 +631,7 @@
     padding: 60px 60px 100px;
     gap: 30px;
   }
-  
+
   .landing__hero-wave {
     height: 100px;
   }
@@ -626,6 +666,7 @@
 
   .landing__hero-image img {
     max-width: 80%;
+    margin: 0 auto;
   }
 
   .landing__hero-wave {
@@ -633,7 +674,6 @@
   }
 
   .landing__features {
-    flex-wrap: wrap;
     padding: 50px 40px 40px;
     justify-content: center;
     margin-top: -40px;
@@ -647,7 +687,7 @@
 
   .landing__feature-card .feature-icon {
     margin: 0 auto 10px;
-    margin-top: 60px; 
+    margin-top: 60px;
   }
 
   .landing__sobre-content {
@@ -656,7 +696,6 @@
 
   .landing__sobre-image {
     width: 100%;
-    display: flex;
     justify-content: center;
   }
 
@@ -670,20 +709,20 @@
     text-align: center;
     padding: 50px 30px;
   }
-  
+
   .landing__cta-text {
     text-align: center;
   }
-  
+
   .landing__cta-text p {
     margin-left: auto;
     margin-right: auto;
   }
-  
+
   .landing__cta-buttons {
     justify-content: center;
   }
-  
+
   .landing__cta-image img {
     width: 220px;
   }
@@ -704,6 +743,14 @@
     height: 280px;
   }
 
+  .equipe__header {
+    text-align: center;
+  }
+
+  .equipe__header h2 {
+    font-size: 2rem;
+  }
+
   .benefit-item {
     flex-direction: row;
     align-items: flex-start;
@@ -712,6 +759,16 @@
 
   .benefit-item .benefit-icon {
     margin-top: 0;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .landing__contato-form {
+    padding: 30px;
+    box-shadow: 8px 8px 0px #AD74C3;
   }
 }
 
@@ -753,8 +810,6 @@
     padding: 12px 20px;
     margin: 0 auto;
     font-size: 0.9rem;
-    position: relative;
-    z-index: 50;
   }
 
   .landing__hero-image {
@@ -768,7 +823,6 @@
 
   .landing__hero-wave {
     height: 60px;
-    bottom: -1px;
   }
 
   .landing__features {
@@ -787,7 +841,7 @@
 
   .landing__feature-card .feature-icon {
     margin: 0 auto 10px;
-    margin-top: 30px; 
+    margin-top: 30px;
   }
 
   .landing__sobre {
@@ -846,12 +900,6 @@
     padding: 24px 16px;
     gap: 20px;
     min-height: auto;
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .landing__cta-text {
-    text-align: center;
   }
 
   .landing__cta-text h2 {
@@ -860,8 +908,6 @@
 
   .landing__cta-text p {
     font-size: 0.85rem;
-    margin-left: auto;
-    margin-right: auto;
     max-width: 100%;
   }
 
@@ -895,7 +941,6 @@
   }
 
   .equipe__header {
-    text-align: center;
     margin-bottom: 24px;
   }
 
@@ -942,15 +987,18 @@
   }
 
   .form-row {
-    flex-direction: column;
     gap: 14px;
+  }
+
+  .form-group {
+    min-width: 0;
   }
 
   .form-group label {
     font-size: 0.85rem;
   }
 
-  .form-group input, 
+  .form-group input,
   .form-group textarea {
     padding: 10px;
     font-size: 0.85rem;
@@ -1003,7 +1051,7 @@
   }
 
   .landing__feature-card .feature-icon {
-    margin-top: 20px; 
+    margin-top: 20px;
   }
 
   .landing__feature-card h3 {
@@ -1056,65 +1104,32 @@
   }
 }
 
-.landing__hero-btn {
-  position: relative;
-  z-index: 100 !important;
-}
+/* Telas muito pequenas (celulares antigos, ~320-360px) */
+@media (max-width: 360px) {
+  .landing__hero-logo .logo-lip,
+  .landing__hero-logo .logo-ai {
+    font-size: 1.5rem;
+  }
 
-.landing__hero-wave {
-  pointer-events: none;
-}
+  .landing__hero-logo .logo-ai {
+    padding: 0 6px;
+  }
 
-.landing__hero-wave svg {
-  pointer-events: none;
-}
+  .landing__feature-card {
+    padding: 0 4px;
+  }
 
-.landing__hero-wrapper {
-  overflow: visible !important;
-}
+  .equipe__card-inner img {
+    height: 140px;
+  }
 
-@media (max-width: 1024px) {
-  .landing__cta-card {
-    flex-direction: column;
-    text-align: center;
-    padding: 50px 30px;
-  }
-  
-  .landing__cta-text {
-    text-align: center;
-  }
-  
-  .landing__cta-text p {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .landing__cta-buttons {
-    justify-content: center;
-  }
-  
-  .landing__cta-image img {
-    width: 220px;
-  }
-}
-
-@media (max-width: 768px) {
-  .equipe__header {
-    text-align: center;
-  }
-  
-  .equipe__header h2 {
-    font-size: 2rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .form-row {
-    flex-direction: column;
-    gap: 20px;
-  }
   .landing__contato-form {
-    padding: 30px;
-    box-shadow: 8px 8px 0px #AD74C3;
+    padding: 12px 8px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 8px;
+    font-size: 0.8rem;
   }
 }
