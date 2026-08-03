@@ -24,7 +24,8 @@ import CadastrarPaciente from '../pages/Admin/TelaPacienteCadastro';
 import TelaPaciente from '../pages/Profissional/TelaPaciente';
 import TelaPacienteAtividade from '../pages/Profissional/TelaPacienteAtividade';
 
-
+import TelaConfiguracoesMedico from "../pages/Profissional/TelaConfiguracoesMedico"
+import TelaContatoMedico from "../pages/Profissional/TelaContatoMedico"
 import DashboardAdmin from '../pages/Admin/TelaDashboardAdmin';
 import ProfissionaisAdmin from '../pages/Admin/TelaProfissionaisAdmin';
 import TelaAtividadesAdmin from '../pages/Admin/TelaAtividadesAdmin';
@@ -56,6 +57,8 @@ function AppRoutes() {
         <Route path="/atividade/video/:id" element={<TelaAtividadeVideo />} />
 
         <Route path="/dashboard-medico" element={<DashboardMedico />} />
+        <Route path="/contato-medico" element={<TelaContatoMedico />} />
+        <Route path="/configuracoes-medico" element={<TelaConfiguracoesMedico />} />
         
         <Route path="/dashboard-admin" element={<DashboardAdmin />} />
         <Route path="/profissional-admin" element={<ProfissionaisAdmin />} /> 
