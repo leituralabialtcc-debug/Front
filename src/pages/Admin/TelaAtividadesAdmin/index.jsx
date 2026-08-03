@@ -1,7 +1,7 @@
 import React from "react";
 import { Search, ChevronDown } from "lucide-react";
-import Navbar from "../../../components/Navbar";
 import InfoAtividade from "../../../components/InfoAtividades/InfoAtividades";
+import NavbarAdmin from "../../../components/NavbarAdmin";
 import { useTelaAtividadesAdmin } from "./index.hook";
 import "./index.css";
 
@@ -18,7 +18,7 @@ const TelaAtividadesAdmin = () => {
 
   return (
     <div className="tela-atividades-admin">
-      <Navbar />
+      <NavbarAdmin />
 
       <main className="atividades-admin__conteudo">
         <h1 className="atividades-admin__titulo">Atividade</h1>
