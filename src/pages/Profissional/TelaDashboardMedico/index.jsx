@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Navbar from "../../../components/Navbar"
 import { HeaderActions } from "../../../components/infoEstrelas";
+import NavbarProfissional from "../../../components/NavbarProfissional";
 import CardUsuario from "../../../components/CardUsuario";
 import "./index.css";
 
@@ -69,7 +69,7 @@ const DashboardMedico = () => {
   return (
     <div className="dashboard-medico">
       <aside className="dashboard-medico__sidebar">
-        <Navbar />
+        <NavbarProfissional />
       </aside>
 
       <main className="dashboard-medico__main">

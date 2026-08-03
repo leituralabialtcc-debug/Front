@@ -7,5 +7,5 @@ export const NAV_ITEMS = [
   { icon: Users, path: '/acompanhante', label: 'Acompanhante' },
   { icon: BookA, path: '/dicionario', label: 'Dicionário' },
   { icon: Phone, path: '/contato', label: 'Contato' },
-  { icon: Settings, path: '/configuracoes', label: 'Configurações' },
+  // { icon: Settings, path: '/configuracoes', label: 'Configurações' },
 ];
