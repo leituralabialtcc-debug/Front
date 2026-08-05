@@ -1,7 +1,5 @@
 import { useState, useMemo } from "react";
-
-// Mock de atividades para testar o filtro
-const mockAtividades = [
+const TODAS_ATIVIDADES_MOCK = [
   {
     id: 1,
     titulo: "Primeira Atividade",
@@ -55,7 +53,7 @@ export function useTelaInicioAtividades() {
 
   // Filtra as atividades com base nos estados atuais
   const atividadesFiltradas = useMemo(() => {
-    return mockAtividades.filter((atividade) => {
+    return TODAS_ATIVIDADES_MOCK.filter((atividade) => {
       const batePesquisa = atividade.titulo.toLowerCase().includes(search.toLowerCase());
       
       const bateDificuldade = difficulty.length === 0 || difficulty.includes(atividade.dificuldade);

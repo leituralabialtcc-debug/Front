@@ -1,5 +1,6 @@
 import React from "react";
-import { Bookmark } from "lucide-react"; 
+import { useNavigate } from "react-router-dom"; // <-- 1. Importando o useNavigate
+import { Bookmark, X } from "lucide-react"; // <-- 2. Importando o ícone de X
 import Navbar from "../../components/Navbar_reta"; 
 import InfoAtividade from "../../components/InfoAtividades/InfoAtividades"; 
 import { useTelaAtividadeSalva } from "./index.hook";
@@ -7,15 +8,33 @@ import "./index.css";
 
 function TelaAtividadeSalva() {
   const { atividades, handleToggleSalvar, handleAvancar } = useTelaAtividadeSalva();
+  const navigate = useNavigate(); // <-- 3. Inicializando a navegação
+
+  // 4. Criando a função para voltar/sair
+  const handleSair = () => {
+    navigate(-1); // Volta para a tela anterior. Se quiser ir para o início, mude para navigate("/")
+  };
 
   return (
     <div className="tela-atividade-salva">
       <Navbar />
 
       <main className="tela-atividade-salva__painel">
-        <header className="tela-atividade-salva__cabecalho">
-          <Bookmark size={24} />
-          <h1 className="tela-atividade-salva__titulo">Atividades salvas</h1>
+        
+        {/* 5. Adicionando o botão de sair no cabeçalho */}
+        <header className="tela-atividade-salva__cabecalho" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Bookmark size={24} />
+            <h1 className="tela-atividade-salva__titulo">Atividades salvas</h1>
+          </div>
+          
+          <button 
+            className="btn-fechar" 
+            onClick={handleSair} 
+            style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+          >
+            <X size={32} color="#5B2D74" />
+          </button>
         </header>
         
         <p className="tela-atividade-salva__descricao">
@@ -33,8 +52,9 @@ function TelaAtividadeSalva() {
                 tipo={atividade.tipo}
                 progresso={atividade.progresso}
                 salva={atividade.salva}
-                onAvancar={handleAvancar(atividade.id)}
-                onToggleSalvar={handleToggleSalvar(atividade.id)}
+                // Ajuste importante: envelopando as funções para não executarem sozinhas ao renderizar
+                onAvancar={() => handleAvancar(atividade.id)}
+                onToggleSalvar={() => handleToggleSalvar(atividade.id)}
               />
             ))
           ) : (
@@ -48,4 +68,4 @@ function TelaAtividadeSalva() {
   );
 }
 
-export default TelaAtividadeSalva
+export default TelaAtividadeSalva;

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { ATIVIDADES_SALVAS_MOCK } from "./utils";
+import { TODAS_ATIVIDADES_MOCK } from "./utils";
  
 export function useTelaAtividadeSalva() {
-  const [atividades, setAtividades] = useState(ATIVIDADES_SALVAS_MOCK);
+  const [atividades, setAtividades] = useState(TODAS_ATIVIDADES_MOCK);
  
   const handleToggleSalvar = (id) => (novoValor) => {
     if (!novoValor) {
