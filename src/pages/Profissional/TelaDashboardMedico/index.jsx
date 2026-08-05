@@ -16,55 +16,28 @@ const IconeChevron = () => (
   </svg>
 );
 
-const IconeX = () => (
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
-  </svg>
-);
-
 const pacientesMock = [
-  {
-    id: 1,
-    nome: "Paciente 1",
-    descricao: "lorem ldwadw vlalla blal  dwaddw  awddwadwadwadw dwadwa",
-    nivel: "Iniciante",
-    status: "ativo",
-    tipo: "paciente-profissional",
-    botao: "Começar",
-  },
-  {
-    id: 2,
-    nome: "Paciente 1",
-    descricao: "lorem ldwadw vlalla blal  dwaddw  awddwadwadwadw dwadwa",
-    nivel: "Iniciante",
-    status: "inativo",
-    tipo: "paciente-profissional",
-    botao: "Começar",
-  },
-  {
-    id: 3,
-    nome: "Paciente 1",
-    descricao: "lorem ldwadw vlalla blal  dwaddw  awddwadwadwadw dwadwa",
-    nivel: "Iniciante",
-    status: "inativo",
-    tipo: "paciente-profissional",
-    botao: "Começar",
-  },
-  {
-    id: 4,
-    nome: "Paciente 1",
-    descricao: "lorem ldwadw vlalla blal  dwaddw  awddwadwadwadw dwadwa",
-    nivel: "Iniciante",
-    status: "inativo",
-    tipo: "paciente-profissional",
-    botao: "Ver",
-  },
+  { id: 1, nome: "Paciente 1", descricao: "lorem...", nivel: "Iniciante", status: "ativo", tipo: "paciente-profissional", botao: "Começar" },
+  { id: 2, nome: "Paciente 2", descricao: "lorem...", nivel: "Intermediário", status: "inativo", tipo: "paciente-profissional", botao: "Começar" },
+  { id: 3, nome: "Paciente 3", descricao: "lorem...", nivel: "Iniciante", status: "inativo", tipo: "paciente-profissional", botao: "Começar" },
+  { id: 4, nome: "Paciente 4", descricao: "lorem...", nivel: "Avançado", status: "inativo", tipo: "paciente-profissional", botao: "Ver" },
 ];
 
 const DashboardMedico = () => {
   const [pesquisa, setPesquisa] = useState("");
-  const [filtroNivel, setFiltroNivel] = useState(true);
-  const [filtroConsistencia, setFiltroConsistencia] = useState(true);
+  
+  // Estados para menus e filtros
+  const [menuNivelAberto, setMenuNivelAberto] = useState(false);
+  const [menuConsistenciaAberto, setMenuConsistenciaAberto] = useState(false);
+  const [nivelFiltro, setNivelFiltro] = useState("");
+  const [consistenciaFiltro, setConsistenciaFiltro] = useState("");
+
+  const pacientesFiltrados = pacientesMock.filter(paciente => {
+    const batePesquisa = paciente.nome.toLowerCase().includes(pesquisa.toLowerCase());
+    const bateNivel = nivelFiltro === "" || paciente.nivel === nivelFiltro;
+    const bateConsistencia = consistenciaFiltro === "" || paciente.status === consistenciaFiltro;
+    return batePesquisa && bateNivel && bateConsistencia;
+  });
 
   return (
     <div className="dashboard-medico">
@@ -94,17 +67,45 @@ const DashboardMedico = () => {
             </div>
 
             <div className="dashboard-medico__filtros">
-              <button className="dashboard-medico__filtro-dropdown">
-                Nível <IconeChevron />
-              </button>
-              <button className="dashboard-medico__filtro-dropdown">
-                Consistência <IconeChevron />
-              </button>
+              {/* Dropdown Nível */}
+              <div className="dropdown-container" style={{ position: "relative" }}>
+                <button 
+                  className="dashboard-medico__filtro-dropdown"
+                  onClick={() => setMenuNivelAberto(!menuNivelAberto)}
+                >
+                  {nivelFiltro || "Nível"} <IconeChevron />
+                </button>
+                {menuNivelAberto && (
+                  <ul className="dropdown-menu" style={{ position: "absolute", top: "100%", background: "#fff", border: "1px solid #ccc", listStyle: "none", padding: "8px", margin: 0, zIndex: 10, width: "100%" }}>
+                    <li className="dropdown-item" onClick={() => { setNivelFiltro(""); setMenuNivelAberto(false); }}>Todos</li>
+                    <li className="dropdown-item" onClick={() => { setNivelFiltro("Iniciante"); setMenuNivelAberto(false); }}>Iniciante</li>
+                    <li className="dropdown-item" onClick={() => { setNivelFiltro("Intermediário"); setMenuNivelAberto(false); }}>Intermediário</li>
+                    <li className="dropdown-item" onClick={() => { setNivelFiltro("Avançado"); setMenuNivelAberto(false); }}>Avançado</li>
+                  </ul>
+                )}
+              </div>
+
+              {/* Dropdown Consistência */}
+              <div className="dropdown-container" style={{ position: "relative" }}>
+                <button 
+                  className="dashboard-medico__filtro-dropdown"
+                  onClick={() => setMenuConsistenciaAberto(!menuConsistenciaAberto)}
+                >
+                  {consistenciaFiltro || "Consistência"} <IconeChevron />
+                </button>
+                {menuConsistenciaAberto && (
+                  <ul className="dropdown-menu" style={{ position: "absolute", top: "100%", background: "#fff", border: "1px solid #ccc", listStyle: "none", padding: "8px", margin: 0, zIndex: 10, width: "100%" }}>
+                    <li className="dropdown-item" onClick={() => { setConsistenciaFiltro(""); setMenuConsistenciaAberto(false); }}>Todos</li>
+                    <li className="dropdown-item" onClick={() => { setConsistenciaFiltro("ativo"); setMenuConsistenciaAberto(false); }}>Ativo</li>
+                    <li className="dropdown-item" onClick={() => { setConsistenciaFiltro("inativo"); setMenuConsistenciaAberto(false); }}>Inativo</li>
+                  </ul>
+                )}
+              </div>
             </div>
           </div>
 
           <ul className="dashboard-medico__lista">
-            {pacientesMock.map((paciente) => (
+            {pacientesFiltrados.map((paciente) => (
               <li key={paciente.id} className="dashboard-medico__item">
                 <CardUsuario
                   tipo={paciente.tipo}
@@ -116,6 +117,12 @@ const DashboardMedico = () => {
                 />
               </li>
             ))}
+            
+            {pacientesFiltrados.length === 0 && (
+              <p style={{ textAlign: "center", width: "100%", padding: "20px" }}>
+                Nenhum paciente encontrado.
+              </p>
+            )}
           </ul>
 
           <button className="dashboard-medico__ver-mais">

@@ -39,6 +39,7 @@ function AppRoutes() {
         <Route path="/criar-conta" element={<TelaCadastroUser />} />
         <Route path="/landingpage" element={<TelaLandingPage />} />
         <Route path="/" element={<TelaDashboard />} />
+        <Route path="/dashboard" element={<TelaDashboard />} />
         <Route path="/perfil" element={<TelaPerfil />} />
         <Route path="/configuracoes" element={<TelaConfiguracoes />} />
         <Route path="/notificacoes" element={<TelaNotificacoes />} />

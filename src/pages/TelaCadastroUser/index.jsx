@@ -5,6 +5,11 @@ import Botao from "../../components/Botao";
 const TelaCadastroUser = () => {
   const navigate = useNavigate();
 
+  const handleCadastro = (e) => {
+    e.preventDefault();
+    navigate("/dashboard");
+  };
+
   return (
     <div className="cadastro-page">
       <div className="bg-circle bg-circle-1"></div>
@@ -40,21 +45,21 @@ const TelaCadastroUser = () => {
             Preencha seus dados para se registrar
           </p>
 
-          <div className="form-scroll">
+          <form className="form-scroll" onSubmit={handleCadastro}>
             <div className="input-group">
-              <input type="text" placeholder="Nome" />
+              <input type="text" placeholder="Nome" required />
             </div>
 
             <div className="input-group">
-              <input type="email" placeholder="Email" />
+              <input type="email" placeholder="Email" required />
             </div>
 
             <div className="input-group">
-              <input type="password" placeholder="Senha" />
+              <input type="password" placeholder="Senha" required />
             </div>
 
             <div className="input-group">
-              <input type="password" placeholder="Confirme sua senha" />
+              <input type="password" placeholder="Confirme sua senha" required />
             </div>
 
             <div className="divider"></div>
@@ -77,7 +82,13 @@ const TelaCadastroUser = () => {
             </span>
 
             <div className="btn-container">
-              <Botao texto="Cadastrar-se" corDeFundo="#8426ac" corBorda=""/>
+              {/* Adicionado o onClick chamando a função handleCadastro */}
+              <Botao 
+                texto="Cadastrar-se" 
+                corDeFundo="#8426ac" 
+                corBorda=""
+                onClick={handleCadastro}
+              />
             </div>
 
             <div className="google-login">
@@ -88,7 +99,7 @@ const TelaCadastroUser = () => {
                 alt="Google"
               />
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>

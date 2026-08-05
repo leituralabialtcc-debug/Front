@@ -29,7 +29,7 @@ const TelaPacienteAtividades = () => {
           
           <section className="atividade-detalhe-topo-card">
             <InfoAtividade 
-              titulo="Primeira Atividade"
+              titulo={`Primeira Atividade (ID: ${id || 'N/A'})`} // Só um exemplo de como usar o ID
               descricao="Aqui vai a descrição de como vai ser a atividade e o que será cobrado"
               dificuldade="Iniciante"
               tipo="Escrita"

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { UserSidebar } from "../../components/UserSidebar";
 import './index.css';
-
 
 const TelaPerfil = () => {
   const [nome, setNome] = useState('');
@@ -9,12 +9,12 @@ const TelaPerfil = () => {
   const [senha, setSenha] = useState('');
   const [diagnostico, setDiagnostico] = useState('');
 
+  const navigate = useNavigate();
 
   const handleSalvar = (e) => {
     e.preventDefault();
     console.log('Dados salvos:', { nome, email, senha, diagnostico });
   };
-
 
   return (
     <div className="perfil-page-container">
@@ -26,16 +26,17 @@ const TelaPerfil = () => {
         </svg>
       </div>
 
-
-      <UserSidebar onBackClick={() => console.log('Voltou para a Home')} />
-
+      {/* AQUI ESTAVA O PROBLEMA: Substituímos o console.log pelo navigate */}
+      <UserSidebar onBackClick={() => navigate(-1)} />
 
       <main className="perfil-main-content">
-       
+        
         <div className="perfil-header">
           <h1 className="perfil-title">Seu Perfil</h1>
-         
+          
           <div className="progress-container">
+            {/* Esse botão de voltar já estava certo com o navigate(-1) */}
+            <button className="btn-voltar" onClick={() => navigate(-1)}></button>
             <svg className="progress-svg" viewBox="0 0 90 90">
               <circle className="progress-circle-bg" cx="45" cy="45" r="40" />
               <circle className="progress-circle-bar" cx="45" cy="45" r="40" />
@@ -48,9 +49,8 @@ const TelaPerfil = () => {
           </div>
         </div>
 
-
         <form className="perfil-form" onSubmit={handleSalvar}>
-         
+          
           <div className="form-group">
             <label>Nome:</label>
             <span>Altere seu nome completo cadastrado na conta</span>
@@ -60,7 +60,6 @@ const TelaPerfil = () => {
               onChange={(e) => setNome(e.target.value)}
             />
           </div>
-
 
           <div className="form-group">
             <label>Email:</label>
@@ -72,7 +71,6 @@ const TelaPerfil = () => {
             />
           </div>
 
-
           <div className="form-group">
             <label>Senha:</label>
             <span>Altere sua chave de segurança secreta</span>
@@ -82,7 +80,6 @@ const TelaPerfil = () => {
               onChange={(e) => setSenha(e.target.value)}
             />
           </div>
-
 
           <div className="form-group">
             <label>Diagnóstico:</label>
@@ -94,17 +91,14 @@ const TelaPerfil = () => {
             />
           </div>
 
-
           <button type="submit" className="btn-confirmar">
             Confirmar
           </button>
-
 
         </form>
       </main>
     </div>
   );
 };
-
 
 export default TelaPerfil;

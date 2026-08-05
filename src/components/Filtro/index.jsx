@@ -1,23 +1,19 @@
 import { useState } from "react";
 import "./index.css";
 import { difficulties, statusOptions } from "./types";
-import { useFilter } from "./hook";
 
-export default function Filter() {
+export default function Filtro({
+  search,
+  setSearch,
+  difficulty,
+  setDifficulty,
+  status,
+  setStatus,
+  toggleItem,
+}) {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const {
-    search,
-    setSearch,
-    difficulty,
-    setDifficulty,
-    status,
-    setStatus,
-    openDifficulty,
-    setOpenDifficulty,
-    openStatus,
-    setOpenStatus,
-    toggleItem,
-  } = useFilter();
+  const [openDifficulty, setOpenDifficulty] = useState(true);
+  const [openStatus, setOpenStatus] = useState(true);
 
   return (
     <>

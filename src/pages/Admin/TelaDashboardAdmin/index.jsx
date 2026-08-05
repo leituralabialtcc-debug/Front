@@ -18,43 +18,41 @@ const IconeChevron = () => (
 );
 
 const usuariosMock = [
-  {
-    id: 1,
-    nome: "Paciente 1",
-    descricao: "lorem ldwadw vlalla blal dwaddw awddwadwadwadw dwadwa",
-    nivel: "Iniciante",
-    status: "ativo",
-    tipo: "paciente-admin",
-  },
-  {
-    id: 2,
-    nome: "Paciente 1",
-    descricao: "lorem ldwadw vlalla blal dwaddw awddwadwadwadw dwadwa",
-    nivel: "Iniciante",
-    status: "inativo",
-    tipo: "paciente-admin",
-  },
-  {
-    id: 3,
-    nome: "Paciente 1",
-    descricao: "lorem ldwadw vlalla blal dwaddw awddwadwadwadw dwadwa",
-    nivel: "Iniciante",
-    status: "ativo",
-    tipo: "paciente-admin",
-  },
-  {
-    id: 4,
-    nome: "Paciente 1",
-    descricao: "lorem ldwadw vlalla blal dwaddw awddwadwadwadw dwadwa",
-    nivel: "Iniciante",
-    status: "inativo",
-    tipo: "paciente-admin",
-  },
+  { id: 1, nome: "Paciente 1", descricao: "lorem...", nivel: "Iniciante", status: "ativo", tipo: "paciente-admin" },
+  { id: 2, nome: "Paciente 2", descricao: "lorem...", nivel: "Intermediário", status: "inativo", tipo: "paciente-admin" },
+  { id: 3, nome: "Paciente 3", descricao: "lorem...", nivel: "Iniciante", status: "ativo", tipo: "paciente-admin" },
+  { id: 4, nome: "Paciente 4", descricao: "lorem...", nivel: "Avançado", status: "inativo", tipo: "paciente-admin" },
 ];
 
 const DashboardAdmin = () => {
   const [pesquisa, setPesquisa] = useState("");
   const navigate = useNavigate();
+
+  // Estados dos Dropdowns
+  const [menuNivelAberto, setMenuNivelAberto] = useState(false);
+  const [menuConsistenciaAberto, setMenuConsistenciaAberto] = useState(false);
+  
+  // Valores selecionados nos filtros
+  const [nivelFiltro, setNivelFiltro] = useState("");
+  const [consistenciaFiltro, setConsistenciaFiltro] = useState(""); // Usando "status" como consistência no mock
+
+  // Lógica de filtragem combinada (Pesquisa + Nível + Consistência)
+  const usuariosFiltrados = usuariosMock.filter(usuario => {
+    const batePesquisa = usuario.nome.toLowerCase().includes(pesquisa.toLowerCase());
+    const bateNivel = nivelFiltro === "" || usuario.nivel === nivelFiltro;
+    const bateConsistencia = consistenciaFiltro === "" || usuario.status === consistenciaFiltro;
+    return batePesquisa && bateNivel && bateConsistencia;
+  });
+
+  const handleSelecionarNivel = (nivel) => {
+    setNivelFiltro(nivel);
+    setMenuNivelAberto(false);
+  };
+
+  const handleSelecionarConsistencia = (status) => {
+    setConsistenciaFiltro(status);
+    setMenuConsistenciaAberto(false);
+  };
 
   return (
     <div className="dashboard-admin">
@@ -83,17 +81,45 @@ const DashboardAdmin = () => {
             </div>
 
             <div className="dashboard-admin__filtros">
-              <button className="dashboard-admin__filtro-dropdown">
-                Nível <IconeChevron />
-              </button>
-              <button className="dashboard-admin__filtro-dropdown">
-                Consistência <IconeChevron />
-              </button>
+              {/* Dropdown Nível */}
+              <div className="dropdown-container" style={{ position: "relative" }}>
+                <button 
+                  className="dashboard-admin__filtro-dropdown" 
+                  onClick={() => setMenuNivelAberto(!menuNivelAberto)}
+                >
+                  {nivelFiltro || "Nível"} <IconeChevron />
+                </button>
+                {menuNivelAberto && (
+                  <ul className="dropdown-menu" style={{ position: "absolute", top: "100%", background: "#fff", border: "1px solid #ccc", listStyle: "none", padding: "8px", margin: 0, zIndex: 10, width: "100%" }}>
+                    <li className="dropdown-item" onClick={() => handleSelecionarNivel("")}>Todos</li>
+                    <li className="dropdown-item" onClick={() => handleSelecionarNivel("Iniciante")}>Iniciante</li>
+                    <li className="dropdown-item" onClick={() => handleSelecionarNivel("Intermediário")}>Intermediário</li>
+                    <li className="dropdown-item" onClick={() => handleSelecionarNivel("Avançado")}>Avançado</li>
+                  </ul>
+                )}
+              </div>
+
+              {/* Dropdown Consistência */}
+              <div className="dropdown-container" style={{ position: "relative" }}>
+                <button 
+                  className="dashboard-admin__filtro-dropdown"
+                  onClick={() => setMenuConsistenciaAberto(!menuConsistenciaAberto)}
+                >
+                  {consistenciaFiltro || "Consistência"} <IconeChevron />
+                </button>
+                {menuConsistenciaAberto && (
+                  <ul className="dropdown-menu" style={{ position: "absolute", top: "100%", background: "#fff", border: "1px solid #ccc", listStyle: "none", padding: "8px", margin: 0, zIndex: 10, width: "100%" }}>
+                    <li className="dropdown-item" onClick={() => handleSelecionarConsistencia("")}>Todos</li>
+                    <li className="dropdown-item" onClick={() => handleSelecionarConsistencia("ativo")}>Ativo</li>
+                    <li className="dropdown-item" onClick={() => handleSelecionarConsistencia("inativo")}>Inativo</li>
+                  </ul>
+                )}
+              </div>
             </div>
           </div>
 
           <ul className="dashboard-admin__lista">
-            {usuariosMock.map((usuario) => (
+            {usuariosFiltrados.map((usuario) => (
               <li key={usuario.id} className="dashboard-admin__item">
                 <CardUsuario
                   tipo={usuario.tipo}
@@ -106,6 +132,12 @@ const DashboardAdmin = () => {
                 />
               </li>
             ))}
+
+            {usuariosFiltrados.length === 0 && (
+              <p style={{ textAlign: "center", width: "100%", padding: "20px" }}>
+                Nenhum paciente encontrado.
+              </p>
+            )}
           </ul>
 
           <div className="dashboard-admin__rodape">

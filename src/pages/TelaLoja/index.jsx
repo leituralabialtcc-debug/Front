@@ -18,6 +18,7 @@ const TelaLoja = () => {
     drawerAberto,
     abrirPerfil,
     fecharPerfil,
+    handleComprar,
   } = useTelaLoja();
 
   return (
@@ -30,11 +31,10 @@ const TelaLoja = () => {
         </div>
 
         <section className="tela-loja__painel">
-          
           <div className="tela-loja__painel-esquerda">
             <h1 className="tela-loja__titulo">Loja</h1>
             <p className="tela-loja__descricao">
-              Faça suas compras aqui e desbloqueie vantagens para acelerar o seu aprendizado.
+              Faça as suas compras aqui e desbloqueie vantagens para acelerar o seu aprendizado.
             </p>
 
             <div className="tela-loja__busca">
@@ -57,6 +57,7 @@ const TelaLoja = () => {
                     price={item.price}
                     tipo={item.tipo} 
                     isBlocked={item.isBlocked}
+                    onComprar={() => handleComprar(item)}
                   />
                 </div>
               ))}
@@ -76,7 +77,6 @@ const TelaLoja = () => {
               className="tela-loja__ilustracao" 
             />
           </div>
-
         </section>
       </main>
 

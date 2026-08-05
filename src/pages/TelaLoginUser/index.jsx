@@ -4,6 +4,12 @@ import Botao from "../../components/Botao";
 
 const TelaLoginUser = () => {
   const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    navigate("/dashboard");
+  };
+
   return (
     <div className="login-page">
       <div className="bg-circle bg-circle-1"></div>
@@ -20,17 +26,27 @@ const TelaLoginUser = () => {
 
           <p className="subtitle">Preencha seus dados para entrar</p>
 
-          <div className="input-group">
-            <input type="email" placeholder="Email" />
-          </div>
+          {/* Correção: Envolvemos os inputs e o botão em um <form> */}
+          <form onSubmit={handleLogin}>
+            <div className="input-group">
+              {/* Dica: coloquei 'required' para obrigar o preenchimento */}
+              <input type="email" placeholder="Email" required />
+            </div>
 
-          <div className="input-group">
-            <input type="password" placeholder="Senha" />
-          </div>
+            <div className="input-group">
+              <input type="password" placeholder="Senha" required />
+            </div>
 
-          <div className="btn-container">
-            <Botao texto="Entrar" corDeFundo="#8426ac" corBorda=""/>
-          </div>
+            <div className="btn-container">
+              {/* Adicionado o onClick chamando a função */}
+              <Botao 
+                texto="Entrar" 
+                corDeFundo="#8426ac" 
+                corBorda="" 
+                onClick={handleLogin} 
+              />
+            </div>
+          </form>
 
           <div className="google-login">
             <span>Entre com google:</span>
@@ -53,7 +69,13 @@ const TelaLoginUser = () => {
               Por favor, preencha suas informações aqui
             </p>
 
-            <Botao texto="Cadastro" corDeFundo="transparent" corBorda="white" onClick={() => navigate("/criar-conta")}/>
+            {/* O botão de cadastro já estava com o onClick certinho! */}
+            <Botao 
+              texto="Cadastro" 
+              corDeFundo="transparent" 
+              corBorda="white" 
+              onClick={() => navigate("/criar-conta")} 
+            />
 
             <div className="triangle-top"></div>
             <div className="triangle-middle"></div>

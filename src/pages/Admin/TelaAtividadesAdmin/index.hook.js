@@ -3,45 +3,40 @@ import { useMemo, useState } from "react";
 const MOCK_ATIVIDADES = [
   {
     id: 1,
-    titulo: "Primeira Atividade",
-    descricao:
-      "Teste seus conhecimentos de leitura labial através de uma ferramenta de IA.",
+    titulo: "Introdução à Leitura Labial",
+    descricao: "Teste os seus conhecimentos de leitura labial através de uma ferramenta de IA.",
     dificuldade: "Iniciante",
     tipo: "Escrita",
     progresso: 65,
   },
   {
     id: 2,
-    titulo: "Primeira Atividade",
-    descricao:
-      "Teste seus conhecimentos de leitura labial através de uma ferramenta de IA.",
+    titulo: "Frases do Dia a Dia",
+    descricao: "Pratique a leitura labial com frases do quotidiano usando IA.",
     dificuldade: "Iniciante",
     tipo: "Escrita",
-    progresso: 65,
+    progresso: 80,
   },
   {
     id: 3,
-    titulo: "Primeira Atividade",
-    descricao:
-      "Teste seus conhecimentos de leitura labial através de uma ferramenta de IA.",
+    titulo: "Vocabulário do Contexto Escolar",
+    descricao: "Aprenda termos comuns utilizados no ambiente académico.",
     dificuldade: "Iniciante",
     tipo: "Escrita",
-    progresso: 65,
+    progresso: 45,
   },
   {
     id: 4,
-    titulo: "Segunda Atividade",
-    descricao:
-      "Pratique a leitura labial com frases do dia a dia usando IA.",
+    titulo: "Prática de Áudio Intermediária",
+    descricao: "Identifique expressões complexas através do som e labiografia.",
     dificuldade: "Intermediário",
     tipo: "Áudio",
     progresso: 30,
   },
   {
     id: 5,
-    titulo: "Terceira Atividade",
-    descricao:
-      "Desafie-se com palavras mais complexas de leitura labial.",
+    titulo: "Desafio Avançado de Leitura",
+    descricao: "Desafie-se com palavras mais complexas de leitura labial.",
     dificuldade: "Avançado",
     tipo: "Leitura",
     progresso: 10,
@@ -54,6 +49,10 @@ export function useTelaAtividadesAdmin() {
   const [atividades, setAtividades] = useState(MOCK_ATIVIDADES);
   const [termoBusca, setTermoBusca] = useState("");
   const [mostrarTodas, setMostrarTodas] = useState(false);
+  const [drawerAberto, setDrawerAberto] = useState(false);
+
+  const abrirPerfil = () => setDrawerAberto(true);
+  const fecharPerfil = () => setDrawerAberto(false);
 
   const atividadesFiltradas = useMemo(() => {
     const termo = termoBusca.trim().toLowerCase();
@@ -80,7 +79,7 @@ export function useTelaAtividadesAdmin() {
   };
 
   const handleEditar = (id) => {
-    console.log("Editar atividade", id);
+    console.log("Editar atividade:", id);
   };
 
   const handleExcluir = (id) => {
@@ -91,6 +90,9 @@ export function useTelaAtividadesAdmin() {
     termoBusca,
     atividadesVisiveis,
     podeVerMais,
+    drawerAberto,
+    abrirPerfil,
+    fecharPerfil,
     handleBuscar,
     handleVerMais,
     handleEditar,

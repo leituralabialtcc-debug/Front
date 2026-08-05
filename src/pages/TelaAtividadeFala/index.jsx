@@ -1,27 +1,23 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./index.css";
 
 import { X } from "lucide-react";
 
 import Fala from "../../components/Fala";
 import Botao from "../../components/Botao";
-import FeedbackCard from "../../components/FeedbackCard";
 import Modal from "../../components/ModalSair";
 
 const TelaAtividadeFala = () => {
-  const [mostrarFeedback, setMostrarFeedback] = useState(false);
   const [mostrarModalSair, setMostrarModalSair] = useState(false);
-
-  if (mostrarFeedback) {
-    return <FeedbackCard />;
-  }
+  const navigate = useNavigate();
 
   const handleEnviar = () => {
-    setMostrarFeedback(true);
+    navigate("/atividades-unidades");
   };
 
   const handleConfirmarSaida = () => {
-    console.log("Usuário saiu da atividade");
+    navigate("/atividades-unidades");
   };
 
   return (

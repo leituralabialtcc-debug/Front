@@ -5,6 +5,7 @@ export function useTelaLoja() {
   const [busca, setBusca] = useState("");
   const [drawerAberto, setDrawerAberto] = useState(false);
 
+  // Filtro memoizado por termo de pesquisa
   const itensFiltrados = useMemo(
     () => filtrarItensPorBusca(ITENS_LOJA_MOCK, busca),
     [busca]
@@ -14,7 +15,11 @@ export function useTelaLoja() {
   const fecharPerfil = () => setDrawerAberto(false);
 
   const handleComprar = (item) => {
-    console.log("Comprar item:", item);
+    if (item.isBlocked) {
+      alert(`O item "${item.title}" está bloqueado.`);
+      return;
+    }
+    console.log("Item comprado com sucesso:", item);
   };
 
   return {

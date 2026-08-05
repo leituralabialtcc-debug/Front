@@ -125,10 +125,11 @@ const TelaAcompanhante = () => {
       <section className="ta-atividades">
         <h2 className="ta-atividades__title">Próximas atividades</h2>
         <div className="ta-atividades__grid">
-          <InfoAtividades />
-          <InfoAtividades />
-          <InfoAtividades />
-          <InfoAtividades />
+          {/* Adicionando o onAvancar com a rota correta do Acompanhante IA */}
+          <InfoAtividades onAvancar={() => navigate("/atividade/acompanhante/1")} />
+          <InfoAtividades onAvancar={() => navigate("/atividade/acompanhante/2")} />
+          <InfoAtividades onAvancar={() => navigate("/atividade/acompanhante/3")} />
+          <InfoAtividades onAvancar={() => navigate("/atividade/acompanhante/4")} />
         </div>
       </section>
 

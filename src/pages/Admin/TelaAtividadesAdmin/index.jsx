@@ -2,6 +2,7 @@ import React from "react";
 import { Search, ChevronDown } from "lucide-react";
 import InfoAtividade from "../../../components/InfoAtividades/InfoAtividades";
 import NavbarAdmin from "../../../components/NavbarAdmin";
+import { UserProfileDrawer } from "../../../components/UserProfileDrawer";
 import { useTelaAtividadesAdmin } from "./index.hook";
 import "./index.css";
 
@@ -10,6 +11,8 @@ const TelaAtividadesAdmin = () => {
     termoBusca,
     atividadesVisiveis,
     podeVerMais,
+    drawerAberto,
+    fecharPerfil,
     handleBuscar,
     handleVerMais,
     handleEditar,
@@ -30,6 +33,7 @@ const TelaAtividadesAdmin = () => {
               placeholder="Pesquise"
               value={termoBusca}
               onChange={handleBuscar}
+              aria-label="Pesquisar atividades"
             />
             <Search size={18} className="atividades-admin__busca-icone" />
           </div>
@@ -68,6 +72,8 @@ const TelaAtividadesAdmin = () => {
           )}
         </section>
       </main>
+
+      <UserProfileDrawer isOpen={drawerAberto} onClose={fecharPerfil} />
     </div>
   );
 };
