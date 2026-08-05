@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./index.css";
 
 import Navbar from "../../components/Navbar";
@@ -16,7 +17,26 @@ import revisadas from "../../assets/img/revisadas.png";
 import { useTelaInicioAtividades } from "./index.hook"; 
 
 const TelaInicioAtividades = () => {
-  const { drawerAberto, abrirPerfil, fecharPerfil } = useTelaInicioAtividades();
+  const { 
+    drawerAberto, 
+    abrirPerfil, 
+    fecharPerfil,
+    search,
+    setSearch,
+    difficulty,
+    setDifficulty,
+    status,
+    setStatus,
+    toggleItem,
+    atividadesFiltradas 
+  } = useTelaInicioAtividades();
+  
+  const navigate = useNavigate();
+
+  // Separando visualmente o que é "continuar" do que é "recomendada" 
+  // (Opcional: você pode ajustar conforme a lógica real do seu app)
+  const atividadesParaContinuar = atividadesFiltradas.filter(a => a.categoria === "continuar");
+  const atividadesRecomendadas = atividadesFiltradas.filter(a => a.categoria === "recomendada");
 
   return (
     <div className="pagina-atividades">
@@ -39,9 +59,10 @@ const TelaInicioAtividades = () => {
                 dwdad wd a dw ad wad wad wd
               </p>
               <Botao
-                texto="Testar"
-                corDeFundo="#FFFFFF"
-                corTexto="#6D458C"
+               texto="Testar"
+               corDeFundo="#FFFFFF"
+               corTexto="#6D458C"
+               onClick={() => navigate("/dicionario")}
               />
             </div>
             <img src={personagem} alt="" />
@@ -73,34 +94,50 @@ const TelaInicioAtividades = () => {
             </div>
           </div>
 
+          {/* Lista Dinâmica: Continuar Atividade */}
           <h2>Continuar Atividade</h2>
+          {atividadesParaContinuar.length > 0 ? (
+            atividadesParaContinuar.map((atividade) => (
+              <InfoAtividade
+                key={atividade.id}
+                titulo={atividade.titulo}
+                descricao={atividade.descricao}
+                dificuldade={atividade.dificuldade}
+                tipo={atividade.tipo}
+                progresso={atividade.progresso}
+              />
+            ))
+          ) : (
+            <p>Nenhuma atividade encontrada neste filtro.</p>
+          )}
 
-          <InfoAtividade
-            titulo="Primeira Atividade"
-            descricao="Teste seus conhecimentos de leitura labial através de uma ferramenta de IA. Responda as perguntas e melhore suas habilidades de leitura labial!"
-            dificuldade="Iniciante"
-            tipo="Escrita"
-            progresso={65}
-          />
-
+          {/* Lista Dinâmica: Recomendadas */}
           <h2>Recomendadas</h2>
-
-          <InfoAtividade
-            titulo="Primeira Atividade"
-            descricao="Teste seus conhecimentos de leitura labial através de uma ferramenta de IA. Responda as perguntas e melhore suas habilidades de leitura labial!"
-            dificuldade="Iniciante"
-            tipo="Escrita"
-          />
-
-          <InfoAtividade
-            titulo="Primeira Atividade"
-            descricao="Teste seus conhecimentos de leitura labial através de uma ferramenta de IA. Responda as perguntas e melhore suas habilidades de leitura labial!"
-            dificuldade="Iniciante"
-            tipo="Escrita"
-          />
+          {atividadesRecomendadas.length > 0 ? (
+            atividadesRecomendadas.map((atividade) => (
+              <InfoAtividade
+                key={atividade.id}
+                titulo={atividade.titulo}
+                descricao={atividade.descricao}
+                dificuldade={atividade.dificuldade}
+                tipo={atividade.tipo}
+              />
+            ))
+          ) : (
+            <p>Nenhuma atividade encontrada neste filtro.</p>
+          )}
         </section>
 
-        <Filtro />
+        {/* Repassando todos os controles de estado para o Filtro */}
+        <Filtro 
+          search={search}
+          setSearch={setSearch}
+          difficulty={difficulty}
+          setDifficulty={setDifficulty}
+          status={status}
+          setStatus={setStatus}
+          toggleItem={toggleItem}
+        />
       </div>
 
       <UserProfileDrawer isOpen={drawerAberto} onClose={fecharPerfil} />

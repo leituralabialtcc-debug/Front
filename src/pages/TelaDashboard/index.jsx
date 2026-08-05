@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // 1. Importando o hook de navegação
 import Navbar from '../../components/Navbar/index';
 import './index.css';
 import { HeaderActions } from '../../components/infoEstrelas/index';
@@ -30,7 +31,8 @@ const strikeDays = [
   { label: 'MAR', day: '04' },
 ];
 
-const ActivityCard = ({ title, description }) => (
+// 2. Adicionado a prop 'onComecar' para receber a função de navegação do pai
+const ActivityCard = ({ title, description, onComecar }) => (
   <div className="activity-card">
     <div className="activity-icon">
       <HeadphoneIcon />
@@ -38,7 +40,8 @@ const ActivityCard = ({ title, description }) => (
     <div className="activity-info">
       <h3 className="activity-title">{title}</h3>
       <p className="activity-desc">{description}</p>
-      <button className="btn-comecar">Começar</button>
+      {/* 3. Atrelando o onClick à prop onComecar */}
+      <button className="btn-comecar" onClick={onComecar}>Começar</button>
     </div>
   </div>
 );
@@ -58,6 +61,12 @@ const PerformanceBar = ({ label, value, color }) => (
 
 const TelaDashboard = () => {
   const { drawerAberto, abrirPerfil, fecharPerfil } = useTelaDashboard();
+  const navigate = useNavigate(); // 4. Instanciando o navigate
+
+  // 5. Função para abrir o painel/alerta de explicação das ofensivas
+  const handleAjudaOfensiva = () => {
+    alert("Painel de Ofensivas:\n\nAs ofensivas representam a quantidade de dias consecutivos que você completou pelo menos uma atividade no LipAI. Mantenha o foco diário para não perder sua sequência!");
+  };
 
   return (
     <div className="dashboard-wrapper">
@@ -81,7 +90,8 @@ const TelaDashboard = () => {
               <h2 className="section-title">Ofensiva</h2>
               <p className="section-subtitle">Complete ao menos uma lição por dia, para manter a ofensiva.</p>
             </div>
-            <button className="help-btn" aria-label="Ajuda sobre ofensiva">?</button>
+            {/* 6. onClick chamando a função de ajuda */}
+            <button className="help-btn" aria-label="Ajuda sobre ofensiva" onClick={handleAjudaOfensiva}>?</button>
           </div>
           <div className="strike-days">
             {strikeDays.map((d, i) => (
@@ -96,13 +106,16 @@ const TelaDashboard = () => {
         <section className="card-section">
           <h2 className="section-title">Atividades Recentes</h2>
           <div className="activities-grid">
+            {/* 7. Passando a rota para o botão Começar */}
             <ActivityCard
               title="Escutando"
               description="lorem ldwadw vlalla blal dwaddw awddwadwadwadw dwadwa"
+              onComecar={() => navigate('/inicio-atividades')}
             />
             <ActivityCard
               title="Escutando"
               description="lorem ldwadw vlalla blal dwaddw awddwadwadwadw dwadwa"
+              onComecar={() => navigate('/inicio-atividades')}
             />
           </div>
         </section>
@@ -113,7 +126,8 @@ const TelaDashboard = () => {
               <h2 className="section-title">Conquistas</h2>
               <p className="section-subtitle">Veja suas conquistas</p>
             </div>
-            <button className="ver-mais-btn">Ver mais</button>
+            {/* 8. onClick chamando a tela de conquistas */}
+            <button className="ver-mais-btn" onClick={() => navigate('/conquistas')}>Ver mais</button>
           </div>
           <div className="conquistas-grid">
             <Conquistas title="Semana Ouro" subtitle="Semana Ouro" />

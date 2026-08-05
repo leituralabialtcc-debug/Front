@@ -1,4 +1,6 @@
 import React from "react";
+// 1. Importamos o useNavigate para as rotas
+import { useNavigate } from "react-router-dom"; 
 import NavbarLandingPage from "../../components/Navbar-landingpage";
 import Footer from "../../components/Footer";
 import "./index.css";
@@ -18,8 +20,6 @@ import cerebroIcon from "../../assets/img/cerebro.png"
 import lipsIcon from "../../assets/img/lips.png"
 import lipsIconPurple from "../../assets/img/lips-purple.png"
 import aprendizado_icon from "../../assets/img/aprendizado_icon.png"
-
-
 
 const membros = [
   {
@@ -50,9 +50,18 @@ const membros = [
 ];
 
 const TelaLandingPage = () => {
+  const navigate = useNavigate(); // Instanciando o hook de navegação
+
+  // Função para simular o envio do formulário de contato
+  const handleContatoSubmit = (e) => {
+    e.preventDefault(); // Impede o recarregamento da página
+    alert("Mensagem enviada com sucesso! Em breve entraremos em contato.");
+    e.target.reset(); // Limpa os campos do formulário após enviar
+  };
+
   return (
     <div className="landing">
-     
+      
       <NavbarLandingPage />
 
       <div className="landing__hero-wrapper">
@@ -71,7 +80,10 @@ const TelaLandingPage = () => {
               surdo-mudas no desenvolvimento da comunicação por meio da
               tecnologia.
             </p>
-            <button className="landing__hero-btn">Acessar aqui</button>
+            {/* Adicionado onClick chamando a tela de Login */}
+            <button className="landing__hero-btn" onClick={() => navigate("/login")}>
+              Acessar aqui
+            </button>
           </div>
           <div className="landing__hero-image">
             <img src={notebookImg} alt="Dashboard LipAI no notebook" />
@@ -185,10 +197,19 @@ const TelaLandingPage = () => {
             </p>
 
             <div className="landing__cta-buttons">
-              <button className="landing__cta-btn">
+              {/* Faz a página rolar suavemente até a seção de "Sobre" */}
+              <button 
+                className="landing__cta-btn"
+                onClick={() => document.getElementById("sobre").scrollIntoView({ behavior: "smooth" })}
+              >
                 Saiba mais
               </button>
-              <button className="landing__cta-btn-acessar">
+
+              {/* Redireciona para o Login */}
+              <button 
+                className="landing__cta-btn-acessar" 
+                onClick={() => navigate("/login")}
+              >
                 Acessar aqui
               </button>
             </div>
@@ -196,7 +217,7 @@ const TelaLandingPage = () => {
         </div>
       </section>
 
-      <section className="equipe" id="participantes">
+      <section className="equipe" id="equipe">
         <div className="equipe__grid">
           {membros.map((m, i) => (
             <div className="equipe__card" key={i}>
@@ -213,25 +234,28 @@ const TelaLandingPage = () => {
       <section className="landing__contato" id="contato">
         <div className="landing__contato-container">
           <h2>Contato:</h2>
-          <form className="landing__contato-form">
+          
+          {/* Adicionando o onSubmit no formulário e "required" nos campos obrigatórios */}
+          <form className="landing__contato-form" onSubmit={handleContatoSubmit}>
             <div className="form-row">
               <div className="form-group">
                 <label htmlFor="nome">Nome:</label>
-                <input type="text" id="nome" name="nome" placeholder="Seu nome" />
+                <input type="text" id="nome" name="nome" placeholder="Seu nome" required />
               </div>
               <div className="form-group">
                 <label htmlFor="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="Seu e-mail" />
+                <input type="email" id="email" name="email" placeholder="Seu e-mail" required />
               </div>
             </div>
             <div className="form-group">
               <label htmlFor="assunto">Assunto:</label>
-              <textarea id="assunto" name="assunto" placeholder="Como podemos ajudar?" />
+              <textarea id="assunto" name="assunto" placeholder="Como podemos ajudar?" required />
             </div>
             <div className="form-submit">
               <button type="submit">Enviar</button>
             </div>
           </form>
+
         </div>
       </section>
 

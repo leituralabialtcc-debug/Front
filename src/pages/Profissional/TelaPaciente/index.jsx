@@ -16,6 +16,17 @@ const TelaPaciente = () => {
 
   const [busca, setBusca] = useState("");
 
+  // Transformamos as atividades estáticas em um array de dados
+  const [atividades] = useState([
+    { id: 1, titulo: "Primeira Atividade", progresso: 75 },
+    { id: 2, titulo: "Segunda Atividade", progresso: 40 }
+  ]);
+
+  // Aplica o filtro antes de renderizar
+  const atividadesFiltradas = atividades.filter(atividade =>
+    atividade.titulo.toLowerCase().includes(busca.toLowerCase())
+  );
+
   return (
     <div className="paciente-page-container">
       <Navbar />
@@ -68,16 +79,20 @@ const TelaPaciente = () => {
           </section>
 
           <section className="paciente-atividades-lista">
-            <InfoAtividades 
-              titulo="Primeira Atividade"
-              progresso={75}
-              onAvancar={() => navigate("/paciente/atividade/1")} 
-            />
-            <InfoAtividades 
-              titulo="Segunda Atividade"
-              progresso={40}
-              onAvancar={() => navigate("/paciente/atividade/2")} 
-            />
+            {atividadesFiltradas.length > 0 ? (
+              atividadesFiltradas.map((atividade) => (
+                <InfoAtividades 
+                  key={atividade.id}
+                  titulo={atividade.titulo}
+                  progresso={atividade.progresso}
+                  onAvancar={() => navigate(`/atividade-paciente/${atividade.id}`)} 
+                />
+              ))
+            ) : (
+              <p style={{ textAlign: "center", marginTop: "20px", color: "#666" }}>
+                Nenhuma atividade encontrada para "{busca}".
+              </p>
+            )}
           </section>
 
         </div>

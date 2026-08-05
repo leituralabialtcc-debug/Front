@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // 1. Importado o hook de navegação
 import './index.css';
 import Botao from '../../components/Botao';
 import Modal from '../../components/ModalSair';
@@ -7,9 +8,14 @@ import { X } from 'lucide-react';
 
 const TelaAtividadeVideo = () => {
   const [mostrarModalSair, setMostrarModalSair] = useState(false);
+  const navigate = useNavigate(); // 2. Instanciando o navigate
 
   const handleConfirmarSaida = () => {
-    console.log('Usuário saiu da atividade');
+    navigate('/atividades-unidades'); // 3. Navega para fora ao confirmar saída no modal
+  };
+
+  const handleFinalizar = () => {
+    navigate('/atividades-unidades'); // 4. Navega ao clicar no botão finalizar
   };
 
   return (
@@ -43,7 +49,6 @@ const TelaAtividadeVideo = () => {
             </button>
           </div>
 
-
           <div className="video-container">
             <div className="video-placeholder">
               <span>VIDEO AULA</span>
@@ -73,7 +78,7 @@ const TelaAtividadeVideo = () => {
               texto="Finalizar"
               corDeFundo="#9065A6"
               corTexto="#FFFFFF"
-              onClick={() => console.log('Finalizar')}
+              onClick={handleFinalizar} // Atualizado para chamar a função de navegação
             />
           </div>
 

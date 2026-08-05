@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // 1. Importado o hook
 import "./index.css";
 
 import { X } from "lucide-react";
@@ -9,9 +10,10 @@ import Vibracao from "../../components/Vibracao";
 
 const TelaAcompanhante = () => {
   const [mostrarModalSair, setMostrarModalSair] = useState(false);
+  const navigate = useNavigate(); // 2. Instanciando o navigate
 
   const handleConfirmarSaida = () => {
-    console.log("Usuário saiu da atividade");
+    navigate("/atividades-unidades"); // 3. Navegando para fora ao confirmar saída
   };
 
   return (
@@ -59,7 +61,7 @@ const TelaAcompanhante = () => {
               texto="Próximo"
               corDeFundo="#9065A6"
               corTexto="#FFFFFF"
-              onClick={() => console.log("Próximo")}
+              onClick={() => navigate("/atividades-unidades")} // 4. Botão Próximo levando para a próxima etapa ou conclusão
             />
           </div>
         </div>

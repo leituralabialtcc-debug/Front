@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { DicionarioCard } from "../../components/Dicionario";
 import Navbar from "../../components/Navbar";
 import { HeaderActions } from "../../components/infoEstrelas";
@@ -9,16 +9,16 @@ import "./index.css";
 import { useTelaDicionario } from "./index.hook"; 
 
 const TelaDicionario = () => {
-  const [categoriaAtiva, setCategoriaAtiva] = useState("Comida");
-
-  const { drawerAberto, abrirPerfil, fecharPerfil } = useTelaDicionario();
+  const { 
+    categoriaAtiva, 
+    setCategoriaAtiva, 
+    cardsFiltrados, 
+    drawerAberto, 
+    abrirPerfil, 
+    fecharPerfil 
+  } = useTelaDicionario();
 
   const categorias = ["Comida", "Escola", "Trabalho", "Natureza", "Saudações"];
-
-  const cardsData = Array(8).fill({
-    titulo: "Laranja",
-    descricao: "blabla fawdwadw",
-  });
 
   return (
     <div className="tela-dicionario">
@@ -32,7 +32,7 @@ const TelaDicionario = () => {
         <section className="tela-dicionario__painel">
           <h1 className="tela-dicionario__titulo">Dicionário</h1>
           <p className="tela-dicionario__descricao">
-            Explicação do que é o dicionário e como isso pode ajudar no ensino nlnald dwa f wafw afw
+            Explicação do que é o dicionário e como isso pode ajudar no ensino.
           </p>
 
           <div className="tela-dicionario__filtros">
@@ -53,14 +53,21 @@ const TelaDicionario = () => {
           </div>
 
           <div className="tela-dicionario__grid">
-            {cardsData.map((card, index) => (
-              <div className="tela-dicionario__grid-item" key={index}>
+            {cardsFiltrados.map((card) => (
+              <div className="tela-dicionario__grid-item" key={card.id}>
                 <DicionarioCard
                   titulo={card.titulo}
                   descricao={card.descricao}
                 />
               </div>
             ))}
+            
+            {/* Opcional: Feedback caso uma categoria não tenha itens cadastrados */}
+            {cardsFiltrados.length === 0 && (
+              <p className="tela-dicionario__vazio">
+                Nenhum card encontrado para a categoria "{categoriaAtiva}".
+              </p>
+            )}
           </div>
         </section>
       </main>
