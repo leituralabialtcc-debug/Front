@@ -32,7 +32,7 @@ const TelaDicionario = () => {
         <section className="tela-dicionario__painel">
           <h1 className="tela-dicionario__titulo">Dicionário</h1>
           <p className="tela-dicionario__descricao">
-            Explicação do que é o dicionário e como isso pode ajudar no ensino.
+            Aprenda a leitura labial de diferentes palavras com vídeos demonstrativos.
           </p>
 
           <div className="tela-dicionario__filtros">
@@ -62,7 +62,6 @@ const TelaDicionario = () => {
               </div>
             ))}
             
-            {/* Opcional: Feedback caso uma categoria não tenha itens cadastrados */}
             {cardsFiltrados.length === 0 && (
               <p className="tela-dicionario__vazio">
                 Nenhum card encontrado para a categoria "{categoriaAtiva}".

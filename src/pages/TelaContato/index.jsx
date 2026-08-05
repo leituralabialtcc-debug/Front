@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../../components/Navbar';
 import Botao from '../../components/Botao';
+import RedesSociais from '../../components/RedesSociais';
 import './index.css';
 
 const TelaContato = () => {
@@ -100,14 +101,7 @@ const TelaContato = () => {
               </p>
             </div>
 
-            <div className="social-media-links">
-              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="social-icon">
-                i
-              </a>
-              <a href="https://facebook.com" target="_blank" rel="noreferrer" className="social-icon">
-                f
-              </a>
-            </div>
+            <RedesSociais />
           </div>
 
         </div>

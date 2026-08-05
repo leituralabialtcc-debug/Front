@@ -10,6 +10,10 @@ html, body {
 .tela-acompanhante {
   min-height: 100vh;
   background-color: #f3eef9;
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-size: 100% 100%;
+  background-attachment: fixed;
   font-family: "Inter", "Segoe UI", sans-serif;
   color: #333;
   display: flex;
@@ -165,7 +169,7 @@ html, body {
 }
 
 .ta-carousel__card--center {
-  width: 420px;
+  width: 520px;
   min-height: 210px;
   z-index: 3;
   opacity: 1;
@@ -175,7 +179,7 @@ html, body {
 
 .ta-carousel__card--left,
 .ta-carousel__card--right {
-  width: 320px;
+  width: 500px;
   min-height: 180px;
   z-index: 1;
   opacity: 0.5;
@@ -276,51 +280,26 @@ html, body {
   margin-top: 0;
 }
 
+/* ---------- Ver Atividades (CTA final) ---------- */
 .ta-ver-atividades {
-  position: relative;
-  margin: 12px 24px 36px;
-  background: 
-    radial-gradient(circle at 15% 20%, rgba(139, 95, 191, 0.10) 0%, transparent 45%),
-    radial-gradient(circle at 85% 15%, rgba(210, 184, 245, 0.25) 0%, transparent 50%),
-    radial-gradient(circle at 90% 85%, rgba(124, 58, 237, 0.08) 0%, transparent 45%),
-    linear-gradient(135deg, #fdfbff 0%, #f8f2ff 50%, #f3eafd 100%);
-  border: 1px solid #ede3fb;
-  border-radius: 20px;
-  padding: 40px 32px;
+  margin: 40px 24px 48px;
+  padding: 0;
   display: flex;
-  justify-content: center;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(124, 58, 237, 0.08);
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .ta-ver-atividades__decor {
-  position: absolute;
-  top: -60px;
-  right: -60px;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(139, 95, 191, 0.12) 0%, rgba(139, 95, 191, 0) 70%);
-  pointer-events: none;
+  display: none;
 }
 
 .ta-ver-atividades::before {
-  content: "";
-  position: absolute;
-  bottom: -70px;
-  left: -70px;
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(210, 184, 245, 0.18) 0%, rgba(210, 184, 245, 0) 70%);
-  pointer-events: none;
+  content: none;
 }
 
 .ta-ver-atividades__content {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  max-width: 440px;
+  max-width: 420px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -332,61 +311,63 @@ html, body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #8b5fbf;
-  background: #f6effc;
-  padding: 5px 14px;
-  border-radius: 20px;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
+  background-color: #eee3f8;
+  padding: 15px;
+  border-radius: 30px;
 }
 
 .ta-ver-atividades__title {
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 700;
-  color: #4a2a5c;
-  margin: 0 0 10px;
+  color: #522566;
+  margin: 0 0 8px;
   letter-spacing: -0.01em;
 }
 
 .ta-ver-atividades__text {
   font-size: 0.9rem;
-  color: #8a7a99;
+  color: #7a5c94;
   line-height: 1.6;
-  margin: 0 0 24px;
+  margin: 0 0 22px;
   font-weight: 400;
 }
 
 .ta-ver-atividades__btn {
-  padding: 10px 30px !important;
+  padding: 11px 32px !important;
   font-size: 0.86rem !important;
   font-weight: 600 !important;
   border-radius: 999px !important;
-  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.12);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  background-color: #8b5fbf !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: 0 4px 14px rgba(139, 95, 191, 0.25);
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .ta-ver-atividades__btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.18);
-  background-color: #f6effc !important;
+  background-color: #7c3aed !important;
+}
+
+@media (max-width: 1300) {
+  .ta-carousel__card--center {
+    width: 300px;
+  }
+
+  .ta-carousel__card--left,
+  .ta-carousel__card--right {
+    width: 210px;
+  }
 }
 
 @media (max-width: 768px) {
-  .ta-ver-atividades {
-    margin: 10px 14px 28px;
-    padding: 30px 20px;
-    border-radius: 16px;
-  }
-
   .ta-ver-atividades__title {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
   }
 }
 
 @media (max-width: 480px) {
-  .ta-ver-atividades {
-    margin: 10px 12px 24px;
-    padding: 26px 18px;
-  }
-
   .ta-ver-atividades__text {
     font-size: 0.82rem;
   }
@@ -394,7 +375,7 @@ html, body {
 
 @media (max-width: 1024px) {
   .ta-carousel__card--center {
-    width: 360px;
+    width: 260px;
   }
 
   .ta-carousel__card--left,

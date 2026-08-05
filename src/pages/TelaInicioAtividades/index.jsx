@@ -54,9 +54,7 @@ const TelaInicioAtividades = () => {
             <div className="banner-texto">
               <h1>Dicionário</h1>
               <p>
-                Teste seus conhecimentos de leitura labial através de um
-                dicionário. Veja quais são cha cha vdw chawd w w daw
-                dwdad wd a dw ad wad wad wd
+                O dicionário da plataforma é uma ferramenta de apoio à leitura labial. Nele, você poderá pesquisar ou encontrar o nome de diferentes objetos e acessar um vídeo demonstrativo mostrando como realizar a leitura labial daquela palavra. Dessa forma, o recurso facilita o aprendizado e a prática da leitura labial de maneira visual e interativa.
               </p>
               <Botao
                texto="Testar"
