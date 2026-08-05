@@ -10,6 +10,7 @@ import biaAcompanhante from "../../assets/img/biaAcompanhante.png";
 import "./index.css";
 
 import { useTelaAcompanhante } from "./index.hook"; 
+import Botao from "../../components/Botao";
 
 const CARDS = [
   {
@@ -122,14 +123,33 @@ const TelaAcompanhante = () => {
         </div>
       </section>
 
-      <section className="ta-atividades">
+      {/* <section className="ta-atividades">
         <h2 className="ta-atividades__title">Próximas atividades</h2>
         <div className="ta-atividades__grid">
-          {/* Adicionando o onAvancar com a rota correta do Acompanhante IA */}
           <InfoAtividades onAvancar={() => navigate("/atividade/acompanhante/1")} />
           <InfoAtividades onAvancar={() => navigate("/atividade/acompanhante/2")} />
           <InfoAtividades onAvancar={() => navigate("/atividade/acompanhante/3")} />
           <InfoAtividades onAvancar={() => navigate("/atividade/acompanhante/4")} />
+        </div>
+      </section> */}
+
+      <section className="ta-ver-atividades">
+        <div className="ta-ver-atividades__decor" aria-hidden="true"></div>
+        <div className="ta-ver-atividades__content">
+          <span className="ta-ver-atividades__tag">Continue evoluindo</span>
+          <h2 className="ta-ver-atividades__title">Pronto para praticar?</h2>
+          <p className="ta-ver-atividades__text">
+            Veja as próximas atividades disponíveis e continue avançando
+            no seu aprendizado de leitura labial.
+          </p>
+          <Botao
+            texto="Ver atividades"
+            corDeFundo="#ffffff"
+            corTexto="#763991"
+            corBorda="#e4d4f7"
+            className="ta-ver-atividades__btn"
+            onClick={() => navigate("/inicio-atividades")}
+          />
         </div>
       </section>
 

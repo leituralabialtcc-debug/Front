@@ -9,13 +9,13 @@ import { useTelaDashboard } from './index.hook';
 
 const HeadphoneIcon = () => (
   <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="32" cy="32" r="31" stroke="#9B59B6" strokeWidth="2" fill="none"/>
-    <path d="M16 32C16 23.163 23.163 16 32 16C40.837 16 48 23.163 48 32" stroke="#9B59B6" strokeWidth="2.5" strokeLinecap="round"/>
-    <rect x="13" y="30" width="7" height="12" rx="3.5" fill="#9B59B6"/>
-    <rect x="44" y="30" width="7" height="12" rx="3.5" fill="#9B59B6"/>
-    <path d="M26 34 Q32 30 38 34" stroke="#9B59B6" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
-    <path d="M28 37 Q32 34 36 37" stroke="#9B59B6" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
-    <path d="M30 40 Q32 38 34 40" stroke="#9B59B6" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
+    <circle cx="32" cy="32" r="31" stroke="#7A3A8E" strokeWidth="2" fill="none"/>
+    <path d="M16 32C16 23.163 23.163 16 32 16C40.837 16 48 23.163 48 32" stroke="#7A3A8E" strokeWidth="2.5" strokeLinecap="round"/>
+    <rect x="13" y="30" width="7" height="12" rx="3.5" fill="#7A3A8E"/>
+    <rect x="44" y="30" width="7" height="12" rx="3.5" fill="#7A3A8E"/>
+    <path d="M26 34 Q32 30 38 34" stroke="#7A3A8E" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
+    <path d="M28 37 Q32 34 36 37" stroke="#7A3A8E" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
+    <path d="M30 40 Q32 38 34 40" stroke="#7A3A8E" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
   </svg>
 );
 
@@ -31,7 +31,6 @@ const strikeDays = [
   { label: 'MAR', day: '04' },
 ];
 
-// 2. Adicionado a prop 'onComecar' para receber a função de navegação do pai
 const ActivityCard = ({ title, description, onComecar }) => (
   <div className="activity-card">
     <div className="activity-icon">
@@ -40,7 +39,6 @@ const ActivityCard = ({ title, description, onComecar }) => (
     <div className="activity-info">
       <h3 className="activity-title">{title}</h3>
       <p className="activity-desc">{description}</p>
-      {/* 3. Atrelando o onClick à prop onComecar */}
       <button className="btn-comecar" onClick={onComecar}>Começar</button>
     </div>
   </div>
@@ -61,9 +59,8 @@ const PerformanceBar = ({ label, value, color }) => (
 
 const TelaDashboard = () => {
   const { drawerAberto, abrirPerfil, fecharPerfil } = useTelaDashboard();
-  const navigate = useNavigate(); // 4. Instanciando o navigate
+  const navigate = useNavigate(); 
 
-  // 5. Função para abrir o painel/alerta de explicação das ofensivas
   const handleAjudaOfensiva = () => {
     alert("Painel de Ofensivas:\n\nAs ofensivas representam a quantidade de dias consecutivos que você completou pelo menos uma atividade no LipAI. Mantenha o foco diário para não perder sua sequência!");
   };
@@ -90,7 +87,6 @@ const TelaDashboard = () => {
               <h2 className="section-title">Ofensiva</h2>
               <p className="section-subtitle">Complete ao menos uma lição por dia, para manter a ofensiva.</p>
             </div>
-            {/* 6. onClick chamando a função de ajuda */}
             <button className="help-btn" aria-label="Ajuda sobre ofensiva" onClick={handleAjudaOfensiva}>?</button>
           </div>
           <div className="strike-days">
@@ -106,7 +102,6 @@ const TelaDashboard = () => {
         <section className="card-section">
           <h2 className="section-title">Atividades Recentes</h2>
           <div className="activities-grid">
-            {/* 7. Passando a rota para o botão Começar */}
             <ActivityCard
               title="Escutando"
               description="lorem ldwadw vlalla blal dwaddw awddwadwadwadw dwadwa"
@@ -126,7 +121,6 @@ const TelaDashboard = () => {
               <h2 className="section-title">Conquistas</h2>
               <p className="section-subtitle">Veja suas conquistas</p>
             </div>
-            {/* 8. onClick chamando a tela de conquistas */}
             <button className="ver-mais-btn" onClick={() => navigate('/conquistas')}>Ver mais</button>
           </div>
           <div className="conquistas-grid">
@@ -141,8 +135,8 @@ const TelaDashboard = () => {
           <h2 className="section-title">Desempenho</h2>
           <p className="section-subtitle">Veja seu desempenho nas atividades de escuta, fala, interpretação e</p>
           <div className="perf-list">
-            <PerformanceBar label="Interpretação" value={70} color="#e879f9" />
-            <PerformanceBar label="Fala" value={90} color="#7c3aed" />
+            <PerformanceBar label="Interpretação" value={70} color="#F0BFFF" />
+            <PerformanceBar label="Fala" value={90} color="#B78CC4" />
           </div>
         </section>
       </div>

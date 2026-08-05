@@ -170,7 +170,7 @@
 .activity-title {
   font-size: 0.95rem;
   font-weight: 700;
-  color: #7c3aed;
+  color: #7A3A8E;
   margin: 0;
 }
 
@@ -202,7 +202,7 @@
 .ver-mais-btn {
   background: none;
   border: none;
-  color: #7c3aed;
+  color: #7A3A8E;
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
@@ -255,7 +255,7 @@
 
 .perf-track {
   flex: 1;
-  height: 10px;
+  height: 5px;
   background: #f0e6ff;
   border-radius: 20px;
   overflow: hidden;
