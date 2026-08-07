@@ -4,28 +4,31 @@ import RedesSociais from "../../components/RedesSociais";
 import { HeaderActions } from "../../components/infoEstrelas";
 import InfoAtividades from "../../components/InfoAtividades/InfoAtividades";
 import Navbar from "../../components/Navbar";
-import { UserProfileDrawer } from "../../components/UserProfileDrawer"; 
+import { UserProfileDrawer } from "../../components/UserProfileDrawer";
 import Bia from "../../assets/img/Bia.png";
 import biaAcompanhante from "../../assets/img/biaAcompanhante.png";
 import "./index.css";
 
-import { useTelaAcompanhante } from "./index.hook"; 
+import backgroundOnda from "../../assets/img/background_onda.png"
+
+import { useTelaAcompanhante } from "./index.hook";
+import Botao from "../../components/Botao";
 
 const CARDS = [
   {
     id: 0,
-    title: "Como Funciona?",
-    text: "Bla ca c awd ad fesace xw bla ca c awd ad fesace xwadwaddwadadwa adwadddwadadwa",
+    title: "Como funciona?",
+    text: "O acompanhante permanece ao lado da criança durante os exercícios, oferecendo suporte e orientação para que ela consiga realizar as atividades com mais facilidade.",
   },
   {
     id: 1,
     title: "Por que ter um acompanhante é essencial?",
-    text: "Bla ca c awd ad fesace xw bla ca c awd ad fesace xwadwaddwadadwa adwadddwadadwa",
+    text: "O apoio do acompanhante ajuda a criança a compreender os exercícios, tornando o processo de aprendizagem mais seguro e interativo.",
   },
   {
     id: 2,
-    title: "Como Funciona?",
-    text: "Bla ca c awd ad fesace xw bla ca c awd ad fesace xwadwaddwadadwa adwadddwadadwa",
+    title: "Auxílio durante as atividades",
+    text: "Por meio de estímulos e vibrações, o acompanhante ajuda a criança a perceber os comandos e desenvolver suas habilidades nos exercícios básicos.",
   },
 ];
 
@@ -45,7 +48,10 @@ const TelaAcompanhante = () => {
   };
 
   return (
-    <div className="tela-acompanhante">
+    <div
+      className="tela-acompanhante"
+      style={{ backgroundImage: `url(${backgroundOnda})` }}
+    >
 
       <Navbar />
 
@@ -57,8 +63,7 @@ const TelaAcompanhante = () => {
         <div className="ta-dicionario__content">
           <h2 className="ta-dicionario__title">Dicionário</h2>
           <p className="ta-dicionario__text">
-            Teste seus conhecimentos de leitura labial através de um dicionário. Veja quais sa dwa dw dwad w d wa
-            dw wdadem ipsum doicing elperspiciatis dolorem veritatis ratione minus aspernatur pariatur officia distinctio praesentium minima unde, ipsam rerum ea. ugit sunt.
+            O dicionário da plataforma é uma ferramenta de apoio à leitura labial. Nele, você poderá pesquisar ou encontrar o nome de diferentes objetos e acessar um vídeo demonstrativo mostrando como realizar a leitura labial daquela palavra. Dessa forma, o recurso facilita o aprendizado e a prática da leitura labial de maneira visual e interativa.
           </p>
           <button className="ta-dicionario__btn" onClick={() => navigate("/dicionario")}>Testar</button>
         </div>
@@ -74,9 +79,8 @@ const TelaAcompanhante = () => {
         <div className="ta-como-funciona__content">
           <h2 className="ta-como-funciona__title">Como Funciona?</h2>
           <p className="ta-como-funciona__text">
-            Ladw adkwa dwadw fwa aqui vai explicar o que a parte do acompanhante
-            é e para que serve e como utiliza-la vlakdwad wdwadwad dwadw d wa
-            wwd wdwd adwaadf dwaddd dwadwa
+            O acompanhante é um recurso de apoio desenvolvido para auxiliar a criança durante os níveis iniciais da aprendizagem. Ele atua como um suporte durante os exercícios, acompanhando seus movimentos e oferecendo estímulos, como vibrações e orientações, para facilitar a compreensão dos comandos e a realização das tarefas. Dessa forma, a criança consegue desenvolver suas habilidades de forma mais segura, interativa e adaptada ao seu ritmo de aprendizado, contando com um auxílio extra durante as primeiras etapas da experiência.
+
           </p>
         </div>
       </section>
@@ -122,14 +126,31 @@ const TelaAcompanhante = () => {
         </div>
       </section>
 
-      <section className="ta-atividades">
+      {/* <section className="ta-atividades">
         <h2 className="ta-atividades__title">Próximas atividades</h2>
         <div className="ta-atividades__grid">
-          {/* Adicionando o onAvancar com a rota correta do Acompanhante IA */}
           <InfoAtividades onAvancar={() => navigate("/atividade/acompanhante/1")} />
           <InfoAtividades onAvancar={() => navigate("/atividade/acompanhante/2")} />
           <InfoAtividades onAvancar={() => navigate("/atividade/acompanhante/3")} />
           <InfoAtividades onAvancar={() => navigate("/atividade/acompanhante/4")} />
+        </div>
+      </section> */}
+
+      <section className="ta-ver-atividades">
+        <div className="ta-ver-atividades__content">
+          <span className="ta-ver-atividades__tag">Continue evoluindo</span>
+          <h2 className="ta-ver-atividades__title">Pronto para praticar?</h2>
+          <p className="ta-ver-atividades__text">
+            Veja as próximas atividades disponíveis e continue avançando
+            no seu aprendizado de leitura labial.
+          </p>
+          <Botao
+            texto="Ver atividades"
+            corDeFundo="#8b5fbf"
+            corTexto="#ffffff"
+            className="ta-ver-atividades__btn"
+            onClick={() => navigate("/inicio-atividades")}
+          />
         </div>
       </section>
 

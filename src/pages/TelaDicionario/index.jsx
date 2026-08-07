@@ -6,23 +6,29 @@ import Botao from "../../components/Botao";
 import { UserProfileDrawer } from "../../components/UserProfileDrawer";
 import "./index.css";
 
-import { useTelaDicionario } from "./index.hook"; 
+import { useTelaDicionario } from "./index.hook";
+
+import backgroundOnda from "../../assets/img/background_onda.png";
+
 
 const TelaDicionario = () => {
-  const { 
-    categoriaAtiva, 
-    setCategoriaAtiva, 
-    cardsFiltrados, 
-    drawerAberto, 
-    abrirPerfil, 
-    fecharPerfil 
+  const {
+    categoriaAtiva,
+    setCategoriaAtiva,
+    cardsFiltrados,
+    drawerAberto,
+    abrirPerfil,
+    fecharPerfil
   } = useTelaDicionario();
 
   const categorias = ["Comida", "Escola", "Trabalho", "Natureza", "Saudações"];
 
   return (
-    <div className="tela-dicionario">
-      <Navbar /> 
+    <div
+      className="tela-dicionario"
+      style={{ backgroundImage: `url(${backgroundOnda})` }}
+    >
+      <Navbar />
 
       <main className="tela-dicionario__conteudo">
         <div className="tela-dicionario__topo">
@@ -32,7 +38,7 @@ const TelaDicionario = () => {
         <section className="tela-dicionario__painel">
           <h1 className="tela-dicionario__titulo">Dicionário</h1>
           <p className="tela-dicionario__descricao">
-            Explicação do que é o dicionário e como isso pode ajudar no ensino.
+            Aprenda a leitura labial de diferentes palavras com vídeos demonstrativos.
           </p>
 
           <div className="tela-dicionario__filtros">
@@ -61,8 +67,7 @@ const TelaDicionario = () => {
                 />
               </div>
             ))}
-            
-            {/* Opcional: Feedback caso uma categoria não tenha itens cadastrados */}
+
             {cardsFiltrados.length === 0 && (
               <p className="tela-dicionario__vazio">
                 Nenhum card encontrado para a categoria "{categoriaAtiva}".

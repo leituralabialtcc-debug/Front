@@ -1,9 +1,14 @@
 .tela-loja {
   --tl-roxo-texto: #522566;
   --tl-cinza-texto: rgb(99, 71, 110);
-  --tl-fundo: #F3EFFA;
+  --tl-fundo: #f3e8ff;
+
   min-height: 100vh;
-  background: var(--tl-fundo);
+  background-color: var(--tl-fundo);
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-size: 100% 100%;
+  background-attachment: fixed;
   font-family: "Inter", "Segoe UI", system-ui, sans-serif;
 }
 

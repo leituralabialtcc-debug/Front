@@ -1,7 +1,11 @@
 .dashboard-wrapper {
   display: flex;
   min-height: 100vh;
-  background: #f3e8ff;
+  background-color: #f3e8ff;
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-size: 100% 100%;
+  background-attachment: fixed;
   font-family: 'Inter', 'Segoe UI', sans-serif;
 }
 
@@ -170,7 +174,7 @@
 .activity-title {
   font-size: 0.95rem;
   font-weight: 700;
-  color: #7c3aed;
+  color: #7A3A8E;
   margin: 0;
 }
 
@@ -202,7 +206,7 @@
 .ver-mais-btn {
   background: none;
   border: none;
-  color: #7c3aed;
+  color: #7A3A8E;
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
@@ -255,7 +259,7 @@
 
 .perf-track {
   flex: 1;
-  height: 10px;
+  height: 5px;
   background: #f0e6ff;
   border-radius: 20px;
   overflow: hidden;

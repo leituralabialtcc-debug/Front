@@ -2,19 +2,22 @@
   position: relative;
   display: inline-flex;
   background-color: #ffffff;
-  border: 2px solid #9c8cb9; 
+  border: 1px solid #e4dcf0;
   border-radius: 24px;
   padding: 16px;
   width: 280px;
+  height: 260px;
   box-sizing: border-box;
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   overflow: visible;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  box-shadow: 0 4px 14px rgba(156, 140, 185, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .dicionario-container:hover {
   transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(156, 140, 185, 0.22);
 }
 
 .dicionario-sidebar-detail {
@@ -22,8 +25,8 @@
   left: -6px;
   top: 15px;
   bottom: 45px;
-  width: 12px;
-  background-color: #692d83; 
+  width: 5px;
+  background-color: #7A3A8E;
   border-radius: 8px;
   z-index: 1;
 }
@@ -32,14 +35,16 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100%;
   z-index: 2;
 }
 
 .dicionario-video-placeholder {
-  background-color: #d9d9d9;
-  border-radius: 4px;
+  background-color: #f4f1f8;
+  border-radius: 12px;
   width: 100%;
   height: 140px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,35 +53,48 @@
 }
 
 .placeholder-text {
-  color: #939393;
-  font-size: 18px;
-  font-weight: 600;
+  color: #b3aac2;
+  font-size: 16px;
+  font-weight: 500;
   text-align: center;
   text-transform: uppercase;
-  transform: rotate(-20deg); 
-  letter-spacing: 1px;
-  line-height: 1.3;
+  transform: rotate(-14deg);
+  letter-spacing: 1.5px;
+  line-height: 1.4;
 }
 
 .dicionario-text-container {
   margin-top: 14px;
   padding-left: 4px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .dicionario-title {
-  color: #4a1565; 
-  font-size: 28px;
-  font-weight: 700;
+  color: #7a4f9c;
+  font-size: 26px;
+  font-weight: 600;
   margin: 0;
   padding: 0;
-  line-height: 1.1;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dicionario-description {
-  color: #4a1565;
+  color: #8b78a3;
   font-size: 14px;
   font-weight: 400;
   margin: 4px 0 0 0;
   padding: 0;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

@@ -8,6 +8,9 @@ import { useTelaLoja } from "./index.hook";
 
 import ImgPersonagem from "../../assets/img/menina-carrinho.png"; 
 
+import backgroundOnda from "../../assets/img/background_onda.png";
+
+
 import "./index.css";
 
 const TelaLoja = () => {
@@ -22,7 +25,10 @@ const TelaLoja = () => {
   } = useTelaLoja();
 
   return (
-    <div className="tela-loja">
+    <div
+      className="tela-loja"
+      style={{ backgroundImage: `url(${backgroundOnda})` }}
+    >
       <Navbar /> 
 
       <main className="tela-loja__conteudo">
