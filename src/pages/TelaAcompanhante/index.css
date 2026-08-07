@@ -103,7 +103,6 @@ html, body {
   display: block;
 }
 
-/* ---------- Como Funciona ---------- */
 .ta-como-funciona {
   margin: 32px 24px;
   display: flex;
@@ -144,12 +143,14 @@ html, body {
   margin: 0;
 }
 
-/* ---------- Carousel ---------- */
 .ta-carousel {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 8px 0 32px;
+  padding: 0 24px;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .ta-carousel__track {
@@ -158,6 +159,7 @@ html, body {
   justify-content: center;
   width: 100%;
   padding: 16px 0 20px;
+  box-sizing: border-box;
 }
 
 .ta-carousel__card {
@@ -280,7 +282,6 @@ html, body {
   margin-top: 0;
 }
 
-/* ---------- Ver Atividades (CTA final) ---------- */
 .ta-ver-atividades {
   margin: 40px 24px 48px;
   padding: 0;
@@ -350,53 +351,63 @@ html, body {
   background-color: #7c3aed !important;
 }
 
-@media (max-width: 1300) {
+@media (max-width: 1300px) {
+  .ta-carousel {
+    padding: 0 20px;
+  }
+
   .ta-carousel__card--center {
-    width: 300px;
+    width: 420px;
+    min-height: 190px;
   }
 
   .ta-carousel__card--left,
   .ta-carousel__card--right {
-    width: 210px;
+    width: 380px;
+    min-height: 170px;
   }
-}
 
-@media (max-width: 768px) {
-  .ta-ver-atividades__title {
-    font-size: 1.3rem;
+  .ta-carousel__card--left {
+    transform: scale(0.88) translateX(20px);
+    margin-right: -32px;
   }
-}
 
-@media (max-width: 480px) {
-  .ta-ver-atividades__text {
-    font-size: 0.82rem;
+  .ta-carousel__card--right {
+    transform: scale(0.88) translateX(-20px);
+    margin-left: -32px;
   }
 }
 
 @media (max-width: 1024px) {
-  .ta-carousel__card--center {
-    width: 260px;
-  }
-
-  .ta-carousel__card--left,
-  .ta-carousel__card--right {
-    width: 270px;
-  }
-}
-
-@media (max-width: 900px) {
   .tela-acompanhante {
-    margin-left: 0;
     padding-left: 90px;
   }
 
+  .ta-carousel {
+    padding: 0 16px;
+  }
+
   .ta-carousel__card--center {
-    width: 300px;
+    width: 320px;
+    min-height: 180px;
+    padding: 26px 22px;
   }
 
   .ta-carousel__card--left,
   .ta-carousel__card--right {
-    width: 210px;
+    width: 280px;
+    min-height: 150px;
+    padding: 22px 18px;
+  }
+
+  .ta-carousel__card--left {
+    transform: scale(0.88) translateX(14px);
+    margin-right: -24px;
+  }
+
+  .ta-carousel__card--right {
+    transform: scale(0.88) translateX(-14px);
+    margin-left: -24px;
   }
 }
 
@@ -445,25 +456,30 @@ html, body {
     text-align: center;
   }
 
-  .ta-carousel__card--center {
-    width: 240px;
-    min-height: 160px;
-    padding: 22px 18px;
+  .ta-carousel {
+    padding: 0 14px;
+  }
+
+  .ta-carousel__track {
+    padding: 12px 0 16px;
   }
 
   .ta-carousel__card--left,
   .ta-carousel__card--right {
-    width: 160px;
-    min-height: 130px;
-    padding: 18px 14px;
+    display: none;
   }
 
-  .ta-carousel__card--left {
-    margin-right: -24px;
+  .ta-carousel__card--center {
+    width: 100%;
+    max-width: 340px;
+    min-height: auto;
+    margin: 0 auto;
+    padding: 24px 20px;
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.15);
   }
 
-  .ta-carousel__card--right {
-    margin-left: -24px;
+  .ta-ver-atividades__title {
+    font-size: 1.3rem;
   }
 
   .ta-atividades {
@@ -502,17 +518,17 @@ html, body {
     height: 170px;
   }
 
-  .ta-carousel__card--center {
-    width: 200px;
-    min-height: 150px;
-    padding: 18px 16px;
+  .ta-carousel {
+    padding: 0 12px;
   }
 
-  .ta-carousel__card--left,
-  .ta-carousel__card--right {
-    width: 128px;
-    min-height: 115px;
-    padding: 14px 12px;
+  .ta-carousel__card--center {
+    max-width: 280px;
+    padding: 20px 16px;
+  }
+
+  .ta-ver-atividades__text {
+    font-size: 0.82rem;
   }
 
   .ta-atividades {

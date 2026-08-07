@@ -1,11 +1,13 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // 1. Importando o hook de navegação
+import { useNavigate } from 'react-router-dom'; 
 import Navbar from '../../components/Navbar/index';
 import './index.css';
 import { HeaderActions } from '../../components/infoEstrelas/index';
 import { UserProfileDrawer } from '../../components/UserProfileDrawer/index';
 import Conquistas from '../../components/Conquistas/index';
 import { useTelaDashboard } from './index.hook'; 
+import backgroundOnda from '../../assets/img/background_onda.png';
+
 
 const HeadphoneIcon = () => (
   <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -66,7 +68,10 @@ const TelaDashboard = () => {
   };
 
   return (
-    <div className="dashboard-wrapper">
+    <div
+      className="dashboard-wrapper"
+      style={{ backgroundImage: `url(${backgroundOnda})` }}
+    >
       <Navbar />
 
       <div className="dashboard-main">

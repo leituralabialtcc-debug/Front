@@ -1,7 +1,11 @@
 .dashboard-wrapper {
   display: flex;
   min-height: 100vh;
-  background: #f3e8ff;
+  background-color: #f3e8ff;
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-size: 100% 100%;
+  background-attachment: fixed;
   font-family: 'Inter', 'Segoe UI', sans-serif;
 }
 

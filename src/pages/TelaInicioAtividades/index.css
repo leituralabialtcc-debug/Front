@@ -1,6 +1,10 @@
 .pagina-atividades {
   min-height: 100vh;
-  background: #efe6f3;
+  background-color: #efe6f3;
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-size: 100% 100%;
+  background-attachment: fixed;
   padding: 16px 24px;
   box-sizing: border-box;
 }
