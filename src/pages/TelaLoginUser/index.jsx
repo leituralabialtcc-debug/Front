@@ -1,13 +1,33 @@
+import { useState } from "react";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
 import Botao from "../../components/Botao";
+import { login } from "../../services/authService";
 
 const TelaLoginUser = () => {
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const [form, setForm] = useState({ email: "", senha: "" });
+  const [erro, setErro] = useState("");
+  const [carregando, setCarregando] = useState(false);
+
+  function handleChange(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    navigate("/dashboard");
+    setErro("");
+    setCarregando(true);
+
+    const resultado = await login(form.email, form.senha);
+    setCarregando(false);
+
+    if (resultado.sucesso) {
+      navigate("/dashboard");
+    } else {
+      setErro(resultado.mensagem);
+    }
   };
 
   return (
@@ -20,37 +40,51 @@ const TelaLoginUser = () => {
       <div className="bg-triangle triangle-3"></div>
 
       <div className="login-container">
-        {/* LADO ESQUERDO */}
         <div className="login-left">
           <h1>Entrar sua conta!</h1>
-
           <p className="subtitle">Preencha seus dados para entrar</p>
 
-          {/* Correção: Envolvemos os inputs e o botão em um <form> */}
           <form onSubmit={handleLogin}>
             <div className="input-group">
-              {/* Dica: coloquei 'required' para obrigar o preenchimento */}
-              <input type="email" placeholder="Email" required />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={form.email}
+                onChange={handleChange}
+                required
+              />
             </div>
 
             <div className="input-group">
-              <input type="password" placeholder="Senha" required />
+              <input
+                type="password"
+                name="senha"
+                placeholder="Senha"
+                value={form.senha}
+                onChange={handleChange}
+                required
+              />
             </div>
 
+            {erro && (
+              <span className="helper-text" style={{ color: "#c0392b" }}>
+                {erro}
+              </span>
+            )}
+
             <div className="btn-container">
-              {/* Adicionado o onClick chamando a função */}
-              <Botao 
-                texto="Entrar" 
-                corDeFundo="#8426ac" 
-                corBorda="" 
-                onClick={handleLogin} 
+              <Botao
+                texto={carregando ? "Entrando..." : "Entrar"}
+                corDeFundo="#8426ac"
+                corBorda=""
+                onClick={handleLogin}
               />
             </div>
           </form>
 
           <div className="google-login">
             <span>Entre com google:</span>
-
             <img
               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
               alt="Google"
@@ -58,32 +92,26 @@ const TelaLoginUser = () => {
           </div>
         </div>
 
-        {/* LADO DIREITO */}
         <div className="login-right">
           <div className="welcome-content">
             <h2>Olá de novo!</h2>
-
             <p>
               Não possui uma conta?
               <br />
               Por favor, preencha suas informações aqui
             </p>
-
-            {/* O botão de cadastro já estava com o onClick certinho! */}
-            <Botao 
-              texto="Cadastro" 
-              corDeFundo="transparent" 
-              corBorda="white" 
-              onClick={() => navigate("/criar-conta")} 
+            <Botao
+              texto="Cadastro"
+              corDeFundo="transparent"
+              corBorda="white"
+              onClick={() => navigate("/criar-conta")}
             />
-
             <div className="triangle-top"></div>
             <div className="triangle-middle"></div>
             <div className="triangle-small-bottom"></div>
             <div className="triangle-large-left"></div>
             <div className="triangle-top-left"></div>
           </div>
-
           <div className="shape triangle-top"></div>
           <div className="shape triangle-middle"></div>
         </div>

@@ -1,13 +1,66 @@
+import { useState } from "react";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
 import Botao from "../../components/Botao";
+import { cadastrarUsuario } from "../../services/usuarioService";
+
+const NIVEIS = [
+  { valor: 1, label: "Iniciante" },
+  { valor: 2, label: "Intermediário" },
+  { valor: 3, label: "Avançado" },
+];
 
 const TelaCadastroUser = () => {
   const navigate = useNavigate();
 
-  const handleCadastro = (e) => {
+  const [form, setForm] = useState({
+    nome: "",
+    email: "",
+    senha: "",
+    confirmarSenha: "",
+    nivelDificuldade: "",
+    codigoProfissional: "",
+  });
+
+  const [erro, setErro] = useState("");
+  const [carregando, setCarregando] = useState(false);
+
+  function handleChange(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
+
+  const handleCadastro = async (e) => {
     e.preventDefault();
-    navigate("/dashboard");
+    setErro("");
+
+    if (form.senha !== form.confirmarSenha) {
+      setErro("As senhas não coincidem.");
+      return;
+    }
+
+    if (!form.nivelDificuldade) {
+      setErro("Selecione o nível de dificuldade.");
+      return;
+    }
+
+    const payload = {
+      Nome: form.nome,
+      Email: form.email,
+      Senha: form.senha,
+      NivelDificuldade: Number(form.nivelDificuldade),
+      Diagnostico: "", // ajuste se tiver um campo pra isso no form
+      CodigoProfissional: form.codigoProfissional || null,
+    };
+
+    setCarregando(true);
+    const resultado = await cadastrarUsuario(payload);
+    setCarregando(false);
+
+    if (resultado.sucesso) {
+      navigate("/dashboard");
+    } else {
+      setErro(resultado.mensagem);
+    }
   };
 
   return (
@@ -47,45 +100,91 @@ const TelaCadastroUser = () => {
 
           <form className="form-scroll" onSubmit={handleCadastro}>
             <div className="input-group">
-              <input type="text" placeholder="Nome" required />
+              <input
+                type="text"
+                name="nome"
+                placeholder="Nome"
+                value={form.nome}
+                onChange={handleChange}
+                required
+              />
             </div>
 
             <div className="input-group">
-              <input type="email" placeholder="Email" required />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={form.email}
+                onChange={handleChange}
+                required
+              />
             </div>
 
             <div className="input-group">
-              <input type="password" placeholder="Senha" required />
+              <input
+                type="password"
+                name="senha"
+                placeholder="Senha"
+                value={form.senha}
+                onChange={handleChange}
+                required
+              />
             </div>
 
             <div className="input-group">
-              <input type="password" placeholder="Confirme sua senha" required />
+              <input
+                type="password"
+                name="confirmarSenha"
+                placeholder="Confirme sua senha"
+                value={form.confirmarSenha}
+                onChange={handleChange}
+                required
+              />
             </div>
 
             <div className="divider"></div>
 
             <div className="input-group">
-              <select>
-                <option>Nível de dificuldade</option>
-                <option>Iniciante</option>
-                <option>Intermediário</option>
-                <option>Avançado</option>
+              <select
+                name="nivelDificuldade"
+                value={form.nivelDificuldade}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Nível de dificuldade</option>
+                {NIVEIS.map((n) => (
+                  <option key={n.valor} value={n.valor}>
+                    {n.label}
+                  </option>
+                ))}
               </select>
             </div>
 
             <div className="input-group">
-              <input type="text" placeholder="Código do profissional" />
+              <input
+                type="text"
+                name="codigoProfissional"
+                placeholder="Código do profissional"
+                value={form.codigoProfissional}
+                onChange={handleChange}
+              />
             </div>
 
             <span className="helper-text">
               Este campo só deve ser preenchido se sua conta for vinculada a um profissional da saúde.
             </span>
 
+            {erro && (
+              <span className="helper-text" style={{ color: "#c0392b" }}>
+                {erro}
+              </span>
+            )}
+
             <div className="btn-container">
-              {/* Adicionado o onClick chamando a função handleCadastro */}
-              <Botao 
-                texto="Cadastrar-se" 
-                corDeFundo="#8426ac" 
+              <Botao
+                texto={carregando ? "Cadastrando..." : "Cadastrar-se"}
+                corDeFundo="#8426ac"
                 corBorda=""
                 onClick={handleCadastro}
               />
