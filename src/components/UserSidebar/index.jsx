@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useUserSidebar } from './hook';
 import './index.css';
 
 
 export const UserSidebar = ({ onBackClick }) => {
-  const { currentTab, avatar, handleTabChange, handleAvatarUpload } = useUserSidebar('perfil');
+  const { avatar, handleTabChange, handleAvatarUpload } = useUserSidebar('perfil');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
 
   const user = {
@@ -19,6 +22,20 @@ export const UserSidebar = ({ onBackClick }) => {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+
+  const irParaPerfil = () => {
+    handleTabChange('perfil');
+    setIsMenuOpen(false);
+    navigate('/perfil');
+  };
+
+
+  const irParaConfiguracoes = () => {
+    handleTabChange('configuracoes');
+    setIsMenuOpen(false);
+    navigate('/configuracoes');
   };
 
 
@@ -71,20 +88,14 @@ export const UserSidebar = ({ onBackClick }) => {
 
         <nav className="sidebar-menu-list">
           <button
-            className={`sidebar-menu-item ${currentTab === 'perfil' ? 'sidebar-menu-item-active' : ''}`}
-            onClick={() => {
-              handleTabChange('perfil');
-              setIsMenuOpen(false); 
-            }}
+            className={`sidebar-menu-item ${location.pathname === '/perfil' ? 'sidebar-menu-item-active' : ''}`}
+            onClick={irParaPerfil}
           >
             Perfil
           </button>
           <button
-            className={`sidebar-menu-item ${currentTab === 'configuracoes' ? 'sidebar-menu-item-active' : ''}`}
-            onClick={() => {
-              handleTabChange('configuracoes');
-              setIsMenuOpen(false); 
-            }}
+            className={`sidebar-menu-item ${location.pathname === '/configuracoes' ? 'sidebar-menu-item-active' : ''}`}
+            onClick={irParaConfiguracoes}
           >
             Configurações
           </button>
@@ -93,5 +104,3 @@ export const UserSidebar = ({ onBackClick }) => {
     </>
   );
 };
-
-

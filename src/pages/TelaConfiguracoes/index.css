@@ -250,3 +250,56 @@ input:checked + .slider:before {
     justify-content: center;
   }
 }
+
+
+.config-card-logout {
+  margin-top: 70px;
+  padding-top: 35px;
+  border: 1px solid #f3d6d6;
+  border-top: 1px solid #e0cce8;
+  position: relative;
+}
+
+.config-card-logout::before {
+  content: "";
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 2px;
+  background-color: #d6b8e8;
+  border-radius: 2px;
+}
+
+.logout-button {
+  background-color: #ffffff;
+  color: #c0392b;
+  border: 1.5px solid #c0392b;
+  border-radius: 12px;
+  padding: 12px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+
+.logout-section-wrapper {
+  margin-top: 70px;
+}
+
+.logout-button:hover {
+  background-color: #c0392b;
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .config-card-logout .wide-actions {
+    width: 100%;
+  }
+
+  .logout-button {
+    width: 100%;
+  }
+}
