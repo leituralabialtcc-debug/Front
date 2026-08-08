@@ -304,8 +304,6 @@ input:checked + .slider:before {
   }
 }
 
-/* ---------- Modal de confirmação de logout ---------- */
-
 .logout-modal-overlay {
   position: fixed;
   top: 0;
