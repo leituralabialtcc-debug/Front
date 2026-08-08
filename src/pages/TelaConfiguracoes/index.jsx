@@ -12,7 +12,14 @@ const TelaConfiguracoes = () => {
 
   const [temaSelecionado, setTemaSelecionado] = useState("claro");
 
+  const [confirmarSaidaAberto, setConfirmarSaidaAberto] = useState(false);
+
   const { handleLogout } = useLogout();
+
+  const confirmarLogout = () => {
+    setConfirmarSaidaAberto(false);
+    handleLogout();
+  };
 
   return (
     <div className="configuracoes-page-container">
@@ -154,13 +161,58 @@ const TelaConfiguracoes = () => {
             </div>
 
             <div className="wide-actions">
-              <button className="logout-button" onClick={handleLogout}>
+              <button
+                className="logout-button"
+                onClick={() => setConfirmarSaidaAberto(true)}
+              >
                 Sair
               </button>
             </div>
           </div>
         </div>
       </main>
+
+      {confirmarSaidaAberto && (
+        <div
+          className="logout-modal-overlay"
+          role="presentation"
+          onClick={() => setConfirmarSaidaAberto(false)}
+        >
+          <div
+            className="logout-modal"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="logout-modal-title"
+            aria-describedby="logout-modal-desc"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="logout-modal-icon">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M16 17l5-5-5-5M21 12H9" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            <h2 id="logout-modal-title" className="logout-modal-title">
+              Deseja realmente sair?
+            </h2>
+            <p id="logout-modal-desc" className="logout-modal-desc">
+              Você será desconectado da sua conta neste dispositivo e precisará
+              fazer login novamente para continuar.
+            </p>
+            <div className="logout-modal-actions">
+              <button
+                className="logout-modal-cancel"
+                onClick={() => setConfirmarSaidaAberto(false)}
+              >
+                Cancelar
+              </button>
+              <button className="logout-modal-confirm" onClick={confirmarLogout}>
+                Sim, sair
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
