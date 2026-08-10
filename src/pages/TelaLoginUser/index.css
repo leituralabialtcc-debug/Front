@@ -1,7 +1,7 @@
 .login-page {
   min-height: 100vh;
   width: 100%;
-  background: var(--lilas-50, #f3eaf5);
+  background: radial-gradient(circle at 25% 15%, #faf3fc 0%, #f3eaf5 55%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,7 +20,7 @@
 .bg-circle-1 {
   width: 350px;
   height: 350px;
-  background: var(--roxo-500, #8c5ca3);
+  background: #8c5ca3;
   opacity: 0.5;
   bottom: -180px;
   right: -100px;
@@ -29,7 +29,7 @@
 .bg-circle-2 {
   width: 180px;
   height: 180px;
-  background: var(--roxo-700, #7b3b93);
+  background: #7b3b93;
   bottom: 20px;
   right: 120px;
   opacity: 0.4;
@@ -38,16 +38,16 @@
 .bg-triangle {
   position: absolute;
   pointer-events: none;
+  width: 0;
+  height: 0;
 }
 
 .triangle-1 {
   top: 80px;
   left: 180px;
-  width: 0;
-  height: 0;
   border-left: 18px solid transparent;
   border-right: 18px solid transparent;
-  border-bottom: 30px solid var(--roxo-900, #4a154b);
+  border-bottom: 30px solid #4a154b;
   opacity: 0.2;
   transform: rotate(-15deg);
 }
@@ -55,11 +55,9 @@
 .triangle-2 {
   top: 300px;
   left: 100px;
-  width: 0;
-  height: 0;
   border-left: 12px solid transparent;
   border-right: 12px solid transparent;
-  border-bottom: 22px solid var(--roxo-900, #4a154b);
+  border-bottom: 22px solid #4a154b;
   opacity: 0.15;
   transform: rotate(45deg);
 }
@@ -67,40 +65,13 @@
 .triangle-3 {
   top: 140px;
   right: 150px;
-  width: 0;
-  height: 0;
   border-left: 16px solid transparent;
   border-right: 16px solid transparent;
-  border-bottom: 28px solid var(--roxo-900, #4a154b);
+  border-bottom: 28px solid #4a154b;
   opacity: 0.2;
   transform: rotate(25deg);
 }
 
-.triangle-4 {
-  top: 420px;
-  right: 100px;
-  width: 0;
-  height: 0;
-  border-left: 22px solid transparent;
-  border-right: 22px solid transparent;
-  border-bottom: 36px solid var(--roxo-900, #4a154b);
-  opacity: 0.1;
-  transform: rotate(-35deg);
-}
-
-.triangle-5 {
-  bottom: 140px;
-  left: 220px;
-  width: 0;
-  height: 0;
-  border-left: 14px solid transparent;
-  border-right: 14px solid transparent;
-  border-bottom: 25px solid var(--roxo-900, #4a154b);
-  opacity: 0.15;
-  transform: rotate(100deg);
-}
-
-/* Esconde as formas de fundo em telas menores para não poluir/estourar layout */
 @media (max-width: 900px) {
   .bg-circle,
   .bg-triangle {
@@ -112,14 +83,14 @@
   width: 100%;
   max-width: 1100px;
   min-height: 650px;
-  background: var(--lilas-100, #ece0f0);
+  background: #ece0f0;
   border-radius: 24px;
   display: flex;
   flex-wrap: wrap;
   overflow: hidden;
   position: relative;
   z-index: 2;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 40px rgba(74, 21, 75, 0.1);
 }
 
 .login-left {
@@ -127,13 +98,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; 
-  padding: 40px 20px;       
+  justify-content: center;
+  padding: 50px 20px 30px;
   box-sizing: border-box;
 }
 
 .login-left h1 {
-  color: var(--roxo-900, #4a154b);
+  color: #4a154b;
   font-size: 30px;
   font-weight: 700;
   text-align: center;
@@ -141,102 +112,142 @@
 
 .subtitle {
   margin-top: 12px;
-  color: var(--texto-suave, #6b6b6b);
+  color: #6b6b6b;
   text-align: center;
+}
+
+.form-scroll {
+  width: 100%;
+  max-height: 480px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 20px;
+  scrollbar-width: thin;
+  scrollbar-color: #8c5ca3 transparent;
+}
+
+.form-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.form-scroll::-webkit-scrollbar-thumb {
+  background: #8c5ca3;
+  border-radius: 10px;
+}
+
+.form-scroll::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .input-group {
   width: 100%;
   max-width: 420px;
-  margin-top: 30px;
+  margin-top: 22px;
 }
 
-.input-group input {
+.input-group input,
+.input-group select {
   width: 100%;
-  height: 60px;
-  border: 1px solid var(--borda, #e2d6e9);
-  border-radius: 20px;
-  background: var(--campo-bg, #f9f6fa);
-  padding: 0 25px;
-  font-size: 16px;
+  height: 56px;
+  border: 1px solid #e2d6e9;
+  border-radius: 16px;
+  background: #f9f6fa;
+  padding: 0 22px;
+  font-size: 15px;
+  font-family: inherit;
+  color: #333333;
   outline: none;
   box-sizing: border-box;
-  color: var(--texto, #333333);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .input-group input::placeholder {
-  color: var(--placeholder, #b8a9c0);
+  color: #b8a9c0;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  border-color: #8c5ca3;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(140, 92, 163, 0.16);
+}
+
+.helper-text {
+  width: 100%;
+  max-width: 420px;
+  font-size: 12px;
+  color: #6b6b6b;
+  margin-top: 10px;
+  line-height: 1.5;
 }
 
 .btn-container {
-  margin-top: 40px;
+  margin-top: 32px;
   width: 100%;
   max-width: 250px;
 }
 
 .btn-container .btn-generico {
   width: 100%;
-  border: 1px solid var(--roxo-700, #7b3b93);
-  color: var(--roxo-700, #7b3b93);
+  border: 1px solid #7b3b93;
+  color: #7b3b93;
   font-weight: 600;
 }
 
 .google-login {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-top: 60px;
-  color: var(--texto-suave, #6b6b6b);
+  gap: 10px;
+  margin-top: 32px;
+  padding: 10px 18px;
+  border: 1px solid #e2d6e9;
+  border-radius: 14px;
+  color: #6b6b6b;
   font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.google-login:hover {
+  border-color: #8c5ca3;
+  background: #f9f6fa;
 }
 
 .google-login img {
-  width: 35px;
-  height: 35px;
+  width: 26px;
+  height: 26px;
 }
 
 .login-right {
   width: 40%;
   min-width: 280px;
-  padding: 60px 20px;
-  background: #522566;
-  position: relative;  
-  color: white;
-  box-sizing: border-box;
-
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.login-right .shape,
-.welcome-content .triangle-top,
-.welcome-content .triangle-middle,
-.welcome-content .triangle-small-bottom,
-.welcome-content .triangle-large-left,
-.welcome-content .triangle-top-left {
-  position: absolute;
-  pointer-events: none;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  background: linear-gradient(160deg, #603071 0%, #431042 100%);
+  color: white;
 }
 
 .welcome-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  gap: 24px;
   text-align: center;
 }
 
 .welcome-content h2 {
-  font-size: 33px;
+  font-size: 32px;
   font-weight: 700;
   color: #ffffff;
-  text-align: center;
-  width: 100%;
 }
 
 .welcome-content p {
-  text-align: center;
   line-height: 1.6;
 }
 
@@ -246,30 +257,33 @@
   color: white;
 }
 
-
 @media (max-width: 900px) {
   .login-container {
     flex-direction: column;
+    border-radius: 20px;
     min-height: auto;
   }
 
   .login-left,
   .login-right {
     width: 100%;
+    padding: 30px 20px;
   }
 
+  /* Mantém o painel roxo em cima, igual ao cadastro (que já nasce nessa ordem no DOM) */
   .login-left {
-    padding: 40px 20px;
     order: 2;
   }
 
   .login-right {
-    padding: 40px 20px;
     order: 1;
+  }
+
+  .helper-text {
+    max-width: 100%;
   }
 }
 
-/* Celulares */
 @media (max-width: 480px) {
   .login-page {
     padding: 10px;
@@ -279,20 +293,12 @@
     font-size: 24px;
   }
 
-  .input-group input {
-    height: 52px;
-    font-size: 14px;
-  }
-
-  .btn-container {
-    max-width: 100%;
-  }
-
   .welcome-content h2 {
     font-size: 26px;
   }
 
-  .google-login {
-    margin-top: 30px;
+  .input-group input {
+    height: 52px;
+    font-size: 14px;
   }
 }
