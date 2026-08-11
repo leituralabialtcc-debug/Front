@@ -27,7 +27,7 @@ const TelaPerfil = () => {
       </div>
 
       {/* AQUI ESTAVA O PROBLEMA: Substituímos o console.log pelo navigate */}
-      <UserSidebar onBackClick={() => navigate(-1)} />
+      <UserSidebar onBackClick={() => navigate("/dashboard")} />
 
       <main className="perfil-main-content">
         

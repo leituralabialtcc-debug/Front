@@ -4,16 +4,16 @@ import { useUserProfileDrawer } from './index.hook';
 import { formatPhone } from './utils';
 import './index.css';
 
-export const UserProfileDrawer = ({ isOpen, onClose, userData }) => {
-  const { handleEditProfileClick, handleNotificacao } = useUserProfileDrawer(onClose);
+export const UserProfileDrawer = ({ isOpen, onClose }) => {
+  const { usuario, carregando, handleEditProfileClick, handleNotificacao } = useUserProfileDrawer(onClose, isOpen);
 
-  const data = userData || {
-    username: 'Username',
-    email: 'username@gmail.com',
-    diagnostic: 'Deficiência auditiva',
-    fullName: 'User Silva Santos',
-    birthDate: '08/02/2000',
-    phone: '+55 11 1245 432'
+  const data = {
+    username: usuario?.nome || usuario?.Nome || 'Usuário',
+    email: usuario?.email || usuario?.Email || '',
+    diagnostic: usuario?.diagnostico || usuario?.Diagnostico || 'Não informado',
+    fullName: usuario?.nome || usuario?.Nome || 'Usuário',
+    birthDate: '—', // não existe no backend ainda
+    phone: '' // não existe no backend ainda
   };
 
   return (
@@ -35,15 +35,14 @@ export const UserProfileDrawer = ({ isOpen, onClose, userData }) => {
           <div className="avatar-circle">
             <User size={48} color="white" />
           </div>
-          <h2 className="username">{data.username}</h2>
+          <h2 className="username">{carregando ? 'Carregando...' : data.username}</h2>
           <span className="user-email">{data.email}</span>
         </div>
 
         <div className="drawer-details">
           <p><strong>Diagnóstico:</strong> {data.diagnostic}</p>
-          <p><strong>Nome completo:</strong> {data.fullName}</p>
-          <p><strong>Data de nascimento:</strong> {data.birthDate}</p>
-          <p><strong>Telefone:</strong> {formatPhone(data.phone)}</p>
+          <p><strong>Nome:</strong> {data.fullName}</p>
+          {data.phone && <p><strong>Telefone:</strong> {formatPhone(data.phone)}</p>}
         </div>
 
         <button className="edit-profile-btn" onClick={handleEditProfileClick}>

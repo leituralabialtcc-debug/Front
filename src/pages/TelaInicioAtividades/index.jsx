@@ -36,8 +36,6 @@ const TelaInicioAtividades = () => {
 
   const navigate = useNavigate();
 
-  // Separando visualmente o que é "continuar" do que é "recomendada" 
-  // (Opcional: você pode ajustar conforme a lógica real do seu app)
   const atividadesParaContinuar = atividadesFiltradas.filter(a => a.categoria === "continuar");
   const atividadesRecomendadas = atividadesFiltradas.filter(a => a.categoria === "recomendada");
 
@@ -98,7 +96,6 @@ const TelaInicioAtividades = () => {
             </div>
           </div>
 
-          {/* Lista Dinâmica: Continuar Atividade */}
           <h2>Continuar Atividade</h2>
           {atividadesParaContinuar.length > 0 ? (
             atividadesParaContinuar.map((atividade) => (
@@ -115,7 +112,6 @@ const TelaInicioAtividades = () => {
             <p>Nenhuma atividade encontrada neste filtro.</p>
           )}
 
-          {/* Lista Dinâmica: Recomendadas */}
           <h2>Recomendadas</h2>
           {atividadesRecomendadas.length > 0 ? (
             atividadesRecomendadas.map((atividade) => (
@@ -132,7 +128,6 @@ const TelaInicioAtividades = () => {
           )}
         </section>
 
-        {/* Repassando todos os controles de estado para o Filtro */}
         <Filtro
           search={search}
           setSearch={setSearch}

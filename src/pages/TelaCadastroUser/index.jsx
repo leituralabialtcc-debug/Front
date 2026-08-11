@@ -6,8 +6,9 @@ import { cadastrarUsuario } from "../../services/usuarioService";
 
 const NIVEIS = [
   { valor: 1, label: "Iniciante" },
-  { valor: 2, label: "Intermediário" },
-  { valor: 3, label: "Avançado" },
+  { valor: 2, label: "Básico" },
+  { valor: 3, label: "Intermediário" },
+  { valor: 4, label: "Avançado" },
 ];
 
 const TelaCadastroUser = () => {

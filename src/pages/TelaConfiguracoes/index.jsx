@@ -3,6 +3,7 @@ import { UserSidebar } from "../../components/UserSidebar";
 import "./index.css";
 
 import { useLogout } from "./index.hooks";
+import { useNavigate } from "react-router-dom";
 
 const TelaConfiguracoes = () => {
   const [modoEscuro, setModoEscuro] = useState(false);
@@ -15,6 +16,8 @@ const TelaConfiguracoes = () => {
   const [confirmarSaidaAberto, setConfirmarSaidaAberto] = useState(false);
 
   const { handleLogout } = useLogout();
+
+  const navigate = useNavigate();
 
   const confirmarLogout = () => {
     setConfirmarSaidaAberto(false);
@@ -48,7 +51,7 @@ const TelaConfiguracoes = () => {
         </svg>
       </div>
 
-      <UserSidebar onBackClick={() => console.log("Voltou para a Home")} />
+      <UserSidebar onBackClick={() => navigate("/dashboard")} />
 
       <main className="configuracoes-main-content">
         <h1 className="configuracoes-title">Configurações</h1>
