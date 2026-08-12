@@ -32,7 +32,8 @@
 .barra-label {
     font-size: 15px;
     font-weight: 500;
-    font-family: sans-serif;
+      font-family: 'Poppins', sans-serif;
+
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

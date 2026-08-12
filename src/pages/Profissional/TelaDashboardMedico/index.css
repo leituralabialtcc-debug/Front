@@ -2,7 +2,7 @@
   display: flex;
   min-height: 100vh;
   background-color: #f0e8f5;
-  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .dashboard-medico__sidebar {
