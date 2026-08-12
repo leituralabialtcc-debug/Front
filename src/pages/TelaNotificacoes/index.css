@@ -1,11 +1,5 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', 'Segoe UI', sans-serif;
-  }
-  
-  .container-notificacoes {
+
+    .container-notificacoes {
     min-height: 100vh;
     background-color: #F8EDFB; 
     display: flex;

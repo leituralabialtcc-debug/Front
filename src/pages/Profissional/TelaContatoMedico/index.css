@@ -23,7 +23,7 @@
     radial-gradient(circle at 85% 15%, rgba(123, 59, 147, 0.10) 0%, transparent 45%),
     radial-gradient(circle at 10% 90%, rgba(140, 92, 163, 0.10) 0%, transparent 45%),
     linear-gradient(135deg, var(--lilas-50) 0%, var(--lilas-100) 100%);
-  font-family: var(--fonte-corpo);
+  font-family: 'Poppins', sans-serif;
 }
 
 .content-container {
@@ -73,7 +73,7 @@
 
 .form-title {
   color: var(--roxo-900);
-  font-family: var(--fonte-titulo);
+  font-family: 'Poppins', sans-serif;
   font-size: 30px;
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -139,7 +139,7 @@
   background-color: var(--campo-bg);
   border-radius: 12px;
   font-size: 14.5px;
-  font-family: inherit;
+  font-family: 'Poppins', sans-serif;
   color: var(--texto);
   transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
   outline: none;
@@ -267,7 +267,7 @@
 
 .panel-title {
   color: #ffffff;
-  font-family: var(--fonte-titulo);
+  font-family: 'Poppins', sans-serif;
   font-size: 21px;
   font-weight: 700;
   letter-spacing: -0.01em;
