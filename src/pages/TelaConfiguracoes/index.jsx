@@ -51,7 +51,6 @@ const TelaConfiguracoes = () => {
       <UserSidebar onBackClick={() => console.log("Voltou para a Home")} />
 
       <main className="configuracoes-main-content">
-        <h1 className="configuracoes-title">Configurações</h1>
 
         <div className="configuracoes-grid">
           <div className="config-card">
@@ -89,67 +88,8 @@ const TelaConfiguracoes = () => {
               </label>
             </div>
           </div>
-
-          <div className="config-card">
-            <h3 className="config-card-title">Segurança</h3>
-            <p className="config-card-description">
-              Exigir confirmação de duas etapas em todas as alterações de dados
-              sensíveis na conta.
-            </p>
-            <div className="config-card-action">
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  checked={autenticacao}
-                  onChange={(e) => setAutenticacao(e.target.checked)}
-                />
-                <span className="slider round"></span>
-              </label>
-            </div>
-          </div>
-
-          <div className="config-card">
-            <h3 className="config-card-title">Histórico médico</h3>
-            <p className="config-card-description">
-              Permitir que o sistema salve um registro histórico das alterações
-              feitas no seu diagnóstico.
-            </p>
-            <div className="config-card-action">
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  checked={historico}
-                  onChange={(e) => setHistorico(e.target.checked)}
-                />
-                <span className="slider round"></span>
-              </label>
-            </div>
-          </div>
         </div>
 
-        <div className="config-card-wide">
-          <div className="wide-info">
-            <h3 className="config-card-title">Tema do Sistema</h3>
-            <p className="config-card-description">
-              Escolha manualmente a paleta de cores predominante da interface do
-              seu aplicativo.
-            </p>
-          </div>
-
-          <div className="wide-actions">
-            <div className="wide-toggle-row">
-              <span className="toggle-label">Claro</span>
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  checked={temaSelecionado === "claro"}
-                  onChange={() => setTemaSelecionado("claro")}
-                />
-                <span className="slider round"></span>
-              </label>
-            </div>
-          </div>
-        </div>
         <div className="logout-section-wrapper">
           <div className="config-card-wide config-card-logout">
             <div className="wide-info">
