@@ -33,10 +33,27 @@
   padding: 50px 70px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   z-index: 1;
   box-sizing: border-box;
-  
-  margin-left: 280px; 
+
+  margin-left: 280px;
+}
+
+/* --- Seções (Perfil / Configurações) --- */
+.perfil-section,
+.configuracoes-section {
+  width: 100%;
+  max-width: 950px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.configuracoes-section {
+  margin-top: 80px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(74, 40, 104, 0.15);
 }
 
 .perfil-header {
@@ -163,11 +180,72 @@
   background-color: #985dbb;
 }
 
+/* --- Grid de Configurações --- */
+.configuracoes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  width: 100%;
+}
+
+.config-card {
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+  padding: 28px;
+  box-sizing: border-box;
+}
+
+.config-card-title {
+  color: #4a2868;
+  font-size: 18px;
+  margin: 0 0 10px 0;
+}
+
+.config-card-description {
+  color: #a58cb6;
+  font-size: 13px;
+  margin: 0 0 20px 0;
+  line-height: 1.5;
+}
+
+.logout-section-wrapper {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.config-card-wide {
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+  padding: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+.logout-button {
+  background: transparent;
+  border: 1.5px solid #e05252;
+  color: #e05252;
+  border-radius: 20px;
+  padding: 12px 32px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.logout-button:hover {
+  background-color: #e05252;
+  color: #ffffff;
+}
+
 /* --- REGRAS DE RESPONSIVIDADE INTERNA DA PÁGINA --- */
 @media (max-width: 1024px) {
   .perfil-main-content {
     padding: 40px 30px;
-    margin-left: 280px; 
+    margin-left: 280px;
   }
 }
 
@@ -175,31 +253,31 @@
   .perfil-page-container {
     flex-direction: column;
   }
-  
+
   .perfil-main-content {
     padding: 70px 20px 30px 20px;
-    margin-left: 0; 
+    margin-left: 0;
   }
-  
+
   .perfil-header {
     margin-bottom: 25px;
     align-items: center;
   }
-  
+
   .perfil-title {
     font-size: 26px;
-    margin-left: 10px; 
+    margin-left: 10px;
   }
-  
+
   .progress-container {
     width: 70px;
     height: 70px;
   }
-  
+
   .progress-text {
     font-size: 11px;
   }
-  
+
   .progress-text span {
     font-size: 9px;
   }
@@ -207,5 +285,18 @@
   .btn-confirmar {
     width: 100%;
     padding: 14px 0;
+  }
+
+  .configuracoes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .config-card-wide {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .logout-button {
+    width: 100%;
   }
 }
