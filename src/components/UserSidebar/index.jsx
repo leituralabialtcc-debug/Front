@@ -3,27 +3,23 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useUserSidebar } from './hook';
 import './index.css';
 
-
-export const UserSidebar = ({ onBackClick }) => {
+// Você pode até remover a prop onBackClick se não for usar em outro lugar
+export const UserSidebar = () => {
   const { avatar, handleTabChange, handleAvatarUpload } = useUserSidebar('perfil');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-
 
   const user = {
     name: 'User Silva Santos',
     avatarUrl: ''
   };
 
-
   const fotoExibida = avatar || user?.avatarUrl;
-
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
 
   const irParaPerfil = () => {
     handleTabChange('perfil');
@@ -31,13 +27,11 @@ export const UserSidebar = ({ onBackClick }) => {
     navigate('/perfil');
   };
 
-
   const irParaConfiguracoes = () => {
     handleTabChange('configuracoes');
     setIsMenuOpen(false);
     navigate('/configuracoes');
   };
-
 
   return (
     <>
@@ -45,19 +39,19 @@ export const UserSidebar = ({ onBackClick }) => {
         {isMenuOpen ? '✕' : '☰'}
       </button>
 
-
       {isMenuOpen && <div className="sidebar-overlay" onClick={toggleMenu}></div>}
-
 
       <aside className={`sidebar-container ${isMenuOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
-          {onBackClick && (
-            <button className="sidebar-back-button" onClick={onBackClick} aria-label="Voltar">
-              ←
-            </button>
-          )}
+          {/* AQUI ESTÁ A MUDANÇA: O onClick agora aponta direto para o /dashboard */}
+          <button 
+            className="sidebar-back-button" 
+            onClick={() => navigate('/dashboard')} 
+            aria-label="Voltar"
+          >
+            ←
+          </button>
         </div>
-
 
         <div className="sidebar-avatar-container">
           <div className="sidebar-avatar">
@@ -70,7 +64,6 @@ export const UserSidebar = ({ onBackClick }) => {
             )}
           </div>
 
-
           <label htmlFor="avatar-input" className="sidebar-status-indicator" title="Mudar foto">
             <input
               type="file"
@@ -82,9 +75,7 @@ export const UserSidebar = ({ onBackClick }) => {
           </label>
         </div>
 
-
         <h2 className="sidebar-user-name">{user?.name || 'Usuário'}</h2>
-
 
         <nav className="sidebar-menu-list">
           <button
