@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useUserSidebar } from './hook';
 import './index.css';
 
-// Você pode até remover a prop onBackClick se não for usar em outro lugar
-export const UserSidebar = () => {
-  const { avatar, handleTabChange, handleAvatarUpload } = useUserSidebar('perfil');
+export const UserSidebar = ({ activeSection, onSectionChange, onBackClick }) => {
+  const { avatar, handleAvatarUpload } = useUserSidebar();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
 
   const user = {
     name: 'User Silva Santos',
@@ -22,15 +20,13 @@ export const UserSidebar = () => {
   };
 
   const irParaPerfil = () => {
-    handleTabChange('perfil');
+    onSectionChange('perfil');
     setIsMenuOpen(false);
-    navigate('/perfil');
   };
 
   const irParaConfiguracoes = () => {
-    handleTabChange('configuracoes');
+    onSectionChange('configuracoes');
     setIsMenuOpen(false);
-    navigate('/configuracoes');
   };
 
   return (
@@ -43,10 +39,9 @@ export const UserSidebar = () => {
 
       <aside className={`sidebar-container ${isMenuOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
-          {/* AQUI ESTÁ A MUDANÇA: O onClick agora aponta direto para o /dashboard */}
-          <button 
-            className="sidebar-back-button" 
-            onClick={() => navigate('/dashboard')} 
+          <button
+            className="sidebar-back-button"
+            onClick={onBackClick || (() => navigate('/dashboard'))}
             aria-label="Voltar"
           >
             ←
@@ -79,13 +74,13 @@ export const UserSidebar = () => {
 
         <nav className="sidebar-menu-list">
           <button
-            className={`sidebar-menu-item ${location.pathname === '/perfil' ? 'sidebar-menu-item-active' : ''}`}
+            className={`sidebar-menu-item ${activeSection === 'perfil' ? 'sidebar-menu-item-active' : ''}`}
             onClick={irParaPerfil}
           >
             Perfil
           </button>
           <button
-            className={`sidebar-menu-item ${location.pathname === '/configuracoes' ? 'sidebar-menu-item-active' : ''}`}
+            className={`sidebar-menu-item ${activeSection === 'configuracoes' ? 'sidebar-menu-item-active' : ''}`}
             onClick={irParaConfiguracoes}
           >
             Configurações

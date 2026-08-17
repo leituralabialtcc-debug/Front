@@ -9,7 +9,6 @@ import Botao from "../../components/Botao";
 import { HeaderActions } from "../../components/infoEstrelas";
 import { UserProfileDrawer } from "../../components/UserProfileDrawer";
 
-import personagem from "../../assets/img/bia_inicioatividade.png";
 import realizadas from "../../assets/img/realizadas.png";
 import salvas from "../../assets/img/salvas.png";
 import revisadas from "../../assets/img/revisadas.png";
@@ -17,7 +16,6 @@ import revisadas from "../../assets/img/revisadas.png";
 import { useTelaInicioAtividades } from "./index.hook";
 
 import backgroundOnda from "../../assets/img/background_onda.png";
-
 
 const TelaInicioAtividades = () => {
   const {
@@ -36,8 +34,6 @@ const TelaInicioAtividades = () => {
 
   const navigate = useNavigate();
 
-  // Separando visualmente o que é "continuar" do que é "recomendada" 
-  // (Opcional: você pode ajustar conforme a lógica real do seu app)
   const atividadesParaContinuar = atividadesFiltradas.filter(a => a.categoria === "continuar");
   const atividadesRecomendadas = atividadesFiltradas.filter(a => a.categoria === "recomendada");
 
@@ -69,11 +65,11 @@ const TelaInicioAtividades = () => {
                 onClick={() => navigate("/dicionario")}
               />
             </div>
-            <img src={personagem} alt="" />
           </div>
 
+          <span className="painel-progresso-titulo">Seu progresso</span>
           <div className="infos">
-            <div className="card-info">
+            <div className="card-progresso">
               <img src={realizadas} alt="" />
               <div>
                 <span>10 Atividades</span>
@@ -81,7 +77,7 @@ const TelaInicioAtividades = () => {
               </div>
             </div>
 
-            <div className="card-info">
+            <div className="card-progresso">
               <img src={salvas} alt="" />
               <div>
                 <span>08 Atividades</span>
@@ -89,7 +85,7 @@ const TelaInicioAtividades = () => {
               </div>
             </div>
 
-            <div className="card-info">
+            <div className="card-progresso">
               <img src={revisadas} alt="" />
               <div>
                 <span>02 Atividades</span>
@@ -98,7 +94,6 @@ const TelaInicioAtividades = () => {
             </div>
           </div>
 
-          {/* Lista Dinâmica: Continuar Atividade */}
           <h2>Continuar Atividade</h2>
           {atividadesParaContinuar.length > 0 ? (
             atividadesParaContinuar.map((atividade) => (
@@ -115,7 +110,6 @@ const TelaInicioAtividades = () => {
             <p>Nenhuma atividade encontrada neste filtro.</p>
           )}
 
-          {/* Lista Dinâmica: Recomendadas */}
           <h2>Recomendadas</h2>
           {atividadesRecomendadas.length > 0 ? (
             atividadesRecomendadas.map((atividade) => (
@@ -132,7 +126,6 @@ const TelaInicioAtividades = () => {
           )}
         </section>
 
-        {/* Repassando todos os controles de estado para o Filtro */}
         <Filtro
           search={search}
           setSearch={setSearch}
