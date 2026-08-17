@@ -46,7 +46,7 @@
 }
 
 .banner-texto {
-  max-width: 100%; /* Ocupa todo o espaço agora */
+  max-width: 100%; 
   color: white;
 }
 
@@ -79,13 +79,15 @@
   padding: 0 4px;
 }
 
-/* === Cards de atividades === */
+/* === Cards de atividades (Progresso) === */
 .infos {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   width: 100%;
-  overflow-x: auto; /* Permite scroll no mobile sem esmagar */
-  padding-bottom: 8px; /* Espaço para não cortar a sombra */
+  overflow-x: auto; 
+  padding-bottom: 12px; 
+  -webkit-overflow-scrolling: touch; 
+  scroll-behavior: smooth;
 }
 
 /* Scroll customizado para .infos */
@@ -100,29 +102,30 @@
   border-radius: 10px;
 }
 
-.card-info {
-  flex: 1;
-  min-width: 180px; /* Impede os cards de sumirem ou afinarem muito */
-  background-color: #ffffff !important; /* Força os cards a serem brancos */
+/* Novo nome da classe para evitar conflitos com outros CSS */
+/* Novo nome da classe para evitar conflitos com outros CSS */
+.card-progresso {
+  flex: 1 0 240px !important; /* REGRA DE OURO AQUI: Cresce para preencher a linha, mas não encolhe menos que 240px */
+  background-color: #ffffff !important; 
   border-radius: 16px;
   padding: 12px 16px;
-  display: flex;
-  flex-direction: row;
+  display: flex !important;
+  flex-direction: row !important; 
   align-items: center;
   justify-content: flex-start;
   text-align: left;
   gap: 12px;
   border: 1px solid rgba(93, 47, 120, 0.08);
-  box-shadow: 0 4px 14px rgba(93, 47, 120, 0.1); /* Sombra melhorada para destacar o branco */
+  box-shadow: 0 4px 14px rgba(93, 47, 120, 0.1); 
   transition: box-shadow 0.15s ease, transform 0.15s ease;
 }
 
-.card-info:hover {
+.card-progresso:hover {
   box-shadow: 0 6px 18px rgba(93, 47, 120, 0.15);
   transform: translateY(-1px);
 }
 
-.card-info img {
+.card-progresso img {
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -132,7 +135,7 @@
   margin: 0;
 }
 
-.card-info > div {
+.card-progresso > div {
   display: flex;
   flex-direction: column;
   text-align: left;
@@ -141,25 +144,25 @@
   flex: none;
 }
 
-.card-info:nth-child(1) img { background: #E1EFE0; }
-.card-info:nth-child(2) img { background: #F3ECCF; }
-.card-info:nth-child(3) img { background: #DCE9F0; }
+.card-progresso:nth-child(1) img { background: #E1EFE0; }
+.card-progresso:nth-child(2) img { background: #F3ECCF; }
+.card-progresso:nth-child(3) img { background: #DCE9F0; }
 
-.card-info span {
+.card-progresso span {
   display: block;
   font-size: 12px;
   font-weight: 600;
 }
 
-.card-info h3 {
+.card-progresso h3 {
   font-size: 16px;
   font-weight: 700;
   margin: 0;
 }
 
-.card-info:nth-child(1) span, .card-info:nth-child(1) h3 { color: #3A7131; }
-.card-info:nth-child(2) span, .card-info:nth-child(2) h3 { color: #A8901F; }
-.card-info:nth-child(3) span, .card-info:nth-child(3) h3 { color: #2E6B86; }
+.card-progresso:nth-child(1) span, .card-progresso:nth-child(1) h3 { color: #3A7131; }
+.card-progresso:nth-child(2) span, .card-progresso:nth-child(2) h3 { color: #A8901F; }
+.card-progresso:nth-child(3) span, .card-progresso:nth-child(3) h3 { color: #2E6B86; }
 
 h2 {
   color: #5b2f78;
@@ -294,11 +297,10 @@ h2 {
 
   .conteudo {
     gap: 16px;
-    width: auto; /* Alterado de 100% para auto para não somar com o margin-left */
+    width: auto; 
     box-sizing: border-box;
   }
 
-  /* Força os cards e o topo a nunca passarem do tamanho da tela */
   .principal > * {
     max-width: 100%;
     box-sizing: border-box;
@@ -315,12 +317,9 @@ h2 {
 
   .infos {
     scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
   }
 
-  .card-info {
-    flex: 0 0 auto;
-    width: 240px; 
+  .card-progresso {
     scroll-snap-align: start;
   }
 }
@@ -329,7 +328,7 @@ h2 {
   .conteudo {
     padding-left: 0; 
     margin-left: 0;
-    width: 100%; /* Aqui volta para 100% porque o margin-left zerou */
+    width: 100%; 
   }
 
   .topo-acoes {
@@ -377,15 +376,16 @@ h2 {
     font-size: 13px;
   }
 
-  .card-info {
-    width: 220px;
+  .card-progresso {
+    flex: 0 0 220px !important; /* No mobile, volta a ter tamanho fixo para o scroll funcionar perfeito */
+    padding: 10px 12px;
   }
 
-  .card-info h3 {
+  .card-progresso h3 {
     font-size: 15px;
   }
 
-  .card-info span {
+  .card-progresso span {
     font-size: 11px;
   }
 

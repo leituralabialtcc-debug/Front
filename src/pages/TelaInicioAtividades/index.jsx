@@ -9,7 +9,6 @@ import Botao from "../../components/Botao";
 import { HeaderActions } from "../../components/infoEstrelas";
 import { UserProfileDrawer } from "../../components/UserProfileDrawer";
 
-// Removido o import do personagem
 import realizadas from "../../assets/img/realizadas.png";
 import salvas from "../../assets/img/salvas.png";
 import revisadas from "../../assets/img/revisadas.png";
@@ -17,7 +16,6 @@ import revisadas from "../../assets/img/revisadas.png";
 import { useTelaInicioAtividades } from "./index.hook";
 
 import backgroundOnda from "../../assets/img/background_onda.png";
-
 
 const TelaInicioAtividades = () => {
   const {
@@ -67,12 +65,11 @@ const TelaInicioAtividades = () => {
                 onClick={() => navigate("/dicionario")}
               />
             </div>
-            {/* Imagem da personagem removida daqui */}
           </div>
 
           <span className="painel-progresso-titulo">Seu progresso</span>
           <div className="infos">
-            <div className="card-info">
+            <div className="card-progresso">
               <img src={realizadas} alt="" />
               <div>
                 <span>10 Atividades</span>
@@ -80,7 +77,7 @@ const TelaInicioAtividades = () => {
               </div>
             </div>
 
-            <div className="card-info">
+            <div className="card-progresso">
               <img src={salvas} alt="" />
               <div>
                 <span>08 Atividades</span>
@@ -88,7 +85,7 @@ const TelaInicioAtividades = () => {
               </div>
             </div>
 
-            <div className="card-info">
+            <div className="card-progresso">
               <img src={revisadas} alt="" />
               <div>
                 <span>02 Atividades</span>
