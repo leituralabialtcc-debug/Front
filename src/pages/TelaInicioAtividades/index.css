@@ -34,20 +34,19 @@
   width: 100%;
 }
 
+/* === Banner Atualizado (Sem personagem) === */
 .banner {
   background: #8458a7;
   border-radius: 18px;
-  padding: 20px 24px;
+  padding: 24px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  min-height: 150px;
   position: relative;
   overflow: hidden;
 }
 
 .banner-texto {
-  max-width: 55%;
+  max-width: 100%; /* Ocupa todo o espaço agora */
   color: white;
 }
 
@@ -58,49 +57,74 @@
 }
 
 .banner p {
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   line-height: 1.4;
-  font-size: 13px;
+  font-size: 14px;
   opacity: 0.9;
 }
 
-.banner img {
-  width: 140px;
-  object-fit: contain;
-  position: absolute;
-  right: 16px;
-  bottom: 0;
-}
-
 .banner-texto .btn-generico {
-  padding: 6px 18px;
-  font-size: 13px;
+  padding: 8px 20px;
+  font-size: 14px;
   font-weight: 600;
 }
 
+/* === Rótulo acima dos cards de progresso === */
+.painel-progresso-titulo {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9b7bb8;
+  padding: 0 4px;
+}
+
+/* === Cards de atividades === */
 .infos {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   width: 100%;
+  overflow-x: auto; /* Permite scroll no mobile sem esmagar */
+  padding-bottom: 8px; /* Espaço para não cortar a sombra */
+}
+
+/* Scroll customizado para .infos */
+.infos::-webkit-scrollbar {
+  height: 6px;
+}
+.infos::-webkit-scrollbar-track {
+  background: transparent;
+}
+.infos::-webkit-scrollbar-thumb {
+  background: rgba(93, 47, 120, 0.15);
+  border-radius: 10px;
 }
 
 .card-info {
   flex: 1;
-  min-width: 150px;
-  background: white;
+  min-width: 180px; /* Impede os cards de sumirem ou afinarem muito */
+  background-color: #ffffff !important; /* Força os cards a serem brancos */
   border-radius: 16px;
-  padding: 10px 16px;
+  padding: 12px 16px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   text-align: left;
   gap: 12px;
+  border: 1px solid rgba(93, 47, 120, 0.08);
+  box-shadow: 0 4px 14px rgba(93, 47, 120, 0.1); /* Sombra melhorada para destacar o branco */
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.card-info:hover {
+  box-shadow: 0 6px 18px rgba(93, 47, 120, 0.15);
+  transform: translateY(-1px);
 }
 
 .card-info img {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   padding: 12px;
   box-sizing: content-box;
@@ -117,17 +141,9 @@
   flex: none;
 }
 
-.card-info:nth-child(1) img {
-  background: #E1EFE0;
-}
-
-.card-info:nth-child(2) img {
-  background: #F3ECCF;
-}
-
-.card-info:nth-child(3) img {
-  background: #DCE9F0;
-}
+.card-info:nth-child(1) img { background: #E1EFE0; }
+.card-info:nth-child(2) img { background: #F3ECCF; }
+.card-info:nth-child(3) img { background: #DCE9F0; }
 
 .card-info span {
   display: block;
@@ -141,28 +157,18 @@
   margin: 0;
 }
 
-.card-info:nth-child(1) span,
-.card-info:nth-child(1) h3 {
-  color: #3A7131;
-}
-
-.card-info:nth-child(2) span,
-.card-info:nth-child(2) h3 {
-  color: #A8901F;
-}
-
-.card-info:nth-child(3) span,
-.card-info:nth-child(3) h3 {
-  color: #2E6B86;
-}
+.card-info:nth-child(1) span, .card-info:nth-child(1) h3 { color: #3A7131; }
+.card-info:nth-child(2) span, .card-info:nth-child(2) h3 { color: #A8901F; }
+.card-info:nth-child(3) span, .card-info:nth-child(3) h3 { color: #2E6B86; }
 
 h2 {
   color: #5b2f78;
   font-size: 18px;
   font-weight: 700;
-  margin: 4px 0 0;
+  margin: 8px 0 4px;
 }
 
+/* === Filtro === */
 .conteudo > .filter {
   width: 280px;
   flex-shrink: 0;
@@ -170,16 +176,93 @@ h2 {
   right: 0;
   top: 16px;
   height: calc(100vh - 32px);
-  padding: 16px;
+  padding: 20px 16px;
+  box-sizing: border-box;
+  background: linear-gradient(180deg, #ffffff 0%, #faf6fc 100%);
+  border-radius: 24px;
+  border: 1px solid rgba(93, 47, 120, 0.07);
+  box-shadow: 0 12px 32px -16px rgba(93, 47, 120, 0.25);
+  overflow: hidden;
 }
 
 .filter h1,
 .filter .titulo-filtro {
   color: #5b2f78;
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 1;
 }
 
+.filter input[type="text"],
+.filter input[type="search"] {
+  width: 100%;
+  border: 1px solid rgba(93, 47, 120, 0.14);
+  background: #f6f1fa;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: #5b2f78;
+  outline: none;
+  box-sizing: border-box;
+  transition: box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.filter input[type="text"]:focus,
+.filter input[type="search"]:focus {
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(132, 88, 167, 0.2);
+}
+
+.filter label {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #4a3358;
+  padding: 6px 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.filter label:hover {
+  background: rgba(132, 88, 167, 0.08);
+}
+
+.filter input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  border-radius: 6px;
+  border: 2px solid rgba(93, 47, 120, 0.28);
+  background: #fff;
+  margin-right: 10px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.15s ease;
+}
+
+.filter input[type="checkbox"]:checked {
+  background: linear-gradient(135deg, #8458a7, #5b2f78);
+  border-color: #5b2f78;
+}
+
+.filter input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* === RESPONSIVIDADE === */
 @media (max-width: 1200px) {
   .conteudo {
     flex-direction: column; 
@@ -210,10 +293,14 @@ h2 {
   }
 
   .conteudo {
-    margin-left: 0; 
-    padding-left: 60px; 
     gap: 16px;
-    width: 100%;
+    width: auto; /* Alterado de 100% para auto para não somar com o margin-left */
+    box-sizing: border-box;
+  }
+
+  /* Força os cards e o topo a nunca passarem do tamanho da tela */
+  .principal > * {
+    max-width: 100%;
     box-sizing: border-box;
   }
 
@@ -226,27 +313,14 @@ h2 {
     display: none; 
   }
 
-  .banner {
-    min-height: 130px;
-  }
-
-  .banner-texto {
-    max-width: 60%;
-  }
-
-  .banner img {
-    width: 110px;
-  }
-
   .infos {
-    overflow-x: auto;
-    padding-bottom: 8px;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
   }
 
   .card-info {
-    flex: 0 0 200px;
+    flex: 0 0 auto;
+    width: 240px; 
     scroll-snap-align: start;
   }
 }
@@ -255,6 +329,7 @@ h2 {
   .conteudo {
     padding-left: 0; 
     margin-left: 0;
+    width: 100%; /* Aqui volta para 100% porque o margin-left zerou */
   }
 
   .topo-acoes {
@@ -263,44 +338,28 @@ h2 {
   }
 
   .principal {
-    gap: 12px;
-    align-items: center; 
+    gap: 16px;
   }
 
   .banner {
-    flex-direction: column;
-    text-align: center;
-    gap: 16px;
-    position: relative;
     padding: 20px;
     width: 100%;
     box-sizing: border-box;
+    text-align: left; 
   }
 
   .banner-texto {
-    max-width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center; 
+    align-items: flex-start; 
   }
 
-  .banner-texto p {
-    margin: 0 auto 12px;
-  }
-
-  .banner img {
-    position: static;
-    width: 120px;
-    margin: 8px auto 0;
-  }
-
-  h2, .info-atividade-container, .infos {
+  h2, .infos {
     width: 100%;
   }
 
   h2 {
     font-size: 16px;
-    text-align: left; 
     padding-left: 4px;
   }
 }
@@ -310,21 +369,20 @@ h2 {
     padding: 12px;
   }
 
-  .conteudo {
-    margin-left: 0;
-    padding-left: 0;
-  }
-
   .banner h1 {
-    font-size: 18px;
+    font-size: 20px;
   }
 
-  .banner-texto p {
-    font-size: 12px;
+  .banner p {
+    font-size: 13px;
+  }
+
+  .card-info {
+    width: 220px;
   }
 
   .card-info h3 {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .card-info span {

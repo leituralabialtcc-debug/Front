@@ -19,7 +19,6 @@ const TelaPerfil = () => {
   const navigate = useNavigate();
   const { handleLogout } = useLogout();
 
-  // refs das seções, pra poder scrollar até elas
   const perfilRef = useRef(null);
   const configuracoesRef = useRef(null);
 
@@ -33,14 +32,12 @@ const TelaPerfil = () => {
     handleLogout();
   };
 
-  // faz o scroll suave até a seção clicada na sidebar
   const handleSectionChange = (secao) => {
     setSecaoAtiva(secao);
     const ref = secao === 'perfil' ? perfilRef : configuracoesRef;
     ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  // observa qual seção está visível pra manter a sidebar sincronizada com o scroll manual
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -77,7 +74,6 @@ const TelaPerfil = () => {
 
       <main className="perfil-main-content">
 
-        {/* ---- SEÇÃO PERFIL ---- */}
         <section ref={perfilRef} data-secao="perfil" className="perfil-section">
           <div className="perfil-header">
             <h1 className="perfil-title">Seu Perfil</h1>
@@ -127,7 +123,6 @@ const TelaPerfil = () => {
           </form>
         </section>
 
-        {/* ---- SEÇÃO CONFIGURAÇÕES ---- */}
         <section ref={configuracoesRef} data-secao="configuracoes" className="configuracoes-section">
           <div className="configuracoes-grid">
             <div className="config-card">
