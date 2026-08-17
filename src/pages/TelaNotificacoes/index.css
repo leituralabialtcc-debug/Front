@@ -1,124 +1,140 @@
+.container-notificacoes {
+  min-height: 100vh;
+  background-color: #F8EDFB; 
+  display: flex;
+  flex-direction: column;
+}
 
-    .container-notificacoes {
-    min-height: 100vh;
-    background-color: #F8EDFB; 
-    display: flex;
-    flex-direction: column;
+.header-notificacoes {
+  background-color: #835997; 
+  height: 80px;
+  display: flex;
+  align-items: center;
+  padding: 0 40px;
+}
+
+.btn-voltar {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.conteudo-principal {
+  max-width: 1600px; 
+  width: 92%;
+  margin: 0 auto;
+  padding: 30px 0;
+}
+
+.container-filtros {
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+  background-color: #EFE9F3;
+  padding: 4px;
+  border-radius: 20px;
+  width: fit-content;
+  margin-left: auto;
+  margin-bottom: 30px;
+}
+
+.btn-filtro {
+  background: none;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #757575;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-filtro.ativo {
+  background-color: white;
+  color: #333;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.secao-notificacoes {
+  margin-bottom: 35px;
+}
+
+.secao-notificacoes h2 {
+  color: #4A154B; 
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.lista-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.card-notificacao {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 4px 12px rgba(131, 89, 151, 0.05); 
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.card-notificacao:hover {
+  transform: translateY(-2px);
+}
+
+.icone-calendario {
+  background-color: #F8EDFB;
+  padding: 10px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; 
+}
+
+.texto-notificacao {
+  flex: 1; 
+}
+
+.texto-notificacao h3 {
+  color: #4A154B;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.texto-notificacao p {
+  color: #666;
+  font-size: 14px;
+}
+
+.ponto-nao-lida {
+  width: 10px;
+  height: 10px;
+  background-color: #8A46A8;
+  border-radius: 50%;
+  margin-left: auto; 
+  flex-shrink: 0; 
+}
+
+@media (max-width: 768px) {
+  .conteudo-principal {
+    width: 100%;
+    padding: 20px;
   }
   
   .header-notificacoes {
-    background-color: #835997; 
-    height: 80px;
-    display: flex;
-    align-items: center;
-    padding: 0 40px;
+    padding: 0 20px;
   }
-  
-  .btn-voltar {
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .conteudo-principal {
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 30px 40px;
-  }
-  
-  .container-filtros {
-    display: flex;
-    justify-content: flex-end;
-    gap: 5px;
-    background-color: #EFE9F3;
-    padding: 4px;
-    border-radius: 20px;
-    width: fit-content;
-    margin-left: auto;
-    margin-bottom: 30px;
-  }
-  
-  .btn-filtro {
-    background: none;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 16px;
-    font-size: 14px;
-    font-weight: 500;
-    color: #757575;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  
-  .btn-filtro.ativo {
-    background-color: white;
-    color: #333;
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.08);
-  }
-  
-  .secao-notificacoes {
-    margin-bottom: 35px;
-  }
-  
-  .secao-notificacoes h2 {
-    color: #4A154B; 
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 20px;
-  }
-  
-  .lista-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .card-notificacao {
-    background-color: white;
-    border-radius: 12px;
-    padding: 20px 24px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    box-shadow: 0 4px 12px rgba(131, 89, 151, 0.05); 
-    position: relative;
-    transition: transform 0.2s ease;
-  }
-  
-  .card-notificacao:hover {
-    transform: translateY(-2px);
-  }
-  
-  .icone-calendario {
-    background-color: #F8EDFB;
-    padding: 10px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .texto-notificacao h3 {
-    color: #4A154B;
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 4px;
-  }
-  
-  .texto-notificacao p {
-    color: #666;
-    font-size: 14px;
-  }
-  
-  .ponto-nao-lida {
-    width: 10px;
-    height: 10px;
-    background-color: #8A46A8;
-    border-radius: 50%;
-    margin-left: auto; 
-  }
+}

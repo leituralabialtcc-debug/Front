@@ -43,9 +43,9 @@
   background-color: white;
   border-radius: 12px;
   margin: clamp(16px, 4vw, 40px) auto;
-  padding: clamp(16px, 4vw, 40px);
-  max-width: 1500px;
-  width: min(100% - 32px, 1500px);
+  padding: clamp(20px, 4vw, 40px);
+  max-width: 1700px;
+  width: 92%;
   display: flex;
   flex-direction: column;
   gap: clamp(20px, 4vw, 40px);
@@ -53,22 +53,29 @@
 }
 
 .secao-grid-conquistas h2 {
-  font-size: clamp(20px, 4vw, 32px);
+  font-size: clamp(25px, 4vw, 20px);
   font-weight: 700;
   color: #4A154B;
-  margin-bottom: clamp(12px, 2.5vw, 24px);
+  margin-bottom: 6px;
+}
+
+.subtitulo-conquistas {
+  color: #666666;
+  font-size: 15px;
+  margin-bottom: clamp(16px, 2.5vw, 24px);
+  line-height: 1.4;
 }
 
 .grid-cards-conquistas {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: clamp(10px, 2vw, 20px);
   width: 100%;
 }
 
 .grid-cards-conquistas > div {
-  flex: 1 1 clamp(90px, 22vw, 150px);
+  flex: 1 1 clamp(100px, 15vw, 160px);
   max-width: 200px;
 }
 
@@ -76,9 +83,39 @@
   opacity: 0.5;
 }
 
-@media (max-width: 340px) {
+/* === RESPONSIVO CENTRALIZADO PARA TELAS MENORES === */
+@media (max-width: 768px) {
+  .box-conquistas {
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+    padding: 24px 16px;
+  }
+
+  .secao-grid-conquistas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .subtitulo-conquistas {
+    max-width: 480px;
+  }
+
+  .grid-cards-conquistas {
+    justify-content: center;
+  }
+
   .grid-cards-conquistas > div {
-    flex: 1 1 40%;
-    max-width: none;
+    flex: 0 1 140px;
+    max-width: 160px;
+  }
+}
+
+@media (max-width: 400px) {
+  .grid-cards-conquistas > div {
+    flex: 0 1 100%;
+    max-width: 280px;
   }
 }

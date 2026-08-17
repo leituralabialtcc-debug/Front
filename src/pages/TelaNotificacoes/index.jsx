@@ -17,10 +17,8 @@ const TelaNotificacoes = () => {
     { id: 5, titulo: "Sua Ofensiva 5", mensagem: "Não esqueça da sua ofensiva blal fvald dawdwawd", lida: true }
   ];
 
-  // Identifica qual é o status booleano desejado no momento
   const isLida = filtro === 'lidas';
 
-  // Aplica o filtro de acordo com a aba selecionada (lidas ou não lidas)
   const notificacoesHojeFiltradas = notificacoesHoje.filter(notif => notif.lida === isLida);
   const notificacoesMesFiltradas = notificacoesUltimoMes.filter(notif => notif.lida === isLida);
 
