@@ -1,8 +1,69 @@
-@import url('https://fonts.googleapis.com/...');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap' );
+
+:root {
+  font-family: 'Poppins', sans-serif;
+  color: #24122f;
+  background: #fbf8ff;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+
+  --lipai-purple: #7a3a8e;
+  --lipai-purple-dark: #542368;
+  --lipai-purple-soft: #f2e8f8;
+  --lipai-background: #fbf8ff;
+  --lipai-surface: #ffffff;
+  --lipai-surface-muted: #f7f1fb;
+  --lipai-border: #eadcf0;
+  --lipai-text: #24122f;
+  --lipai-text-muted: #6e6275;
+  --lipai-shadow: 0 14px 40px rgba(83, 40, 105, 0.1);
+}
+
+:root[data-theme='dark'] {
+  color: #f7effb;
+  background: #17111d;
+  --lipai-background: #17111d;
+  --lipai-surface: #21182a;
+  --lipai-surface-muted: #2c2036;
+  --lipai-border: #493655;
+  --lipai-text: #f7effb;
+  --lipai-text-muted: #c8b8d0;
+  --lipai-purple-soft: #3a2547;
+  --lipai-shadow: 0 14px 40px rgba(0, 0, 0, 0.32);
+}
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: inherit;
+}
+
+html,
+body,
+#root {
+  min-width: 320px;
+  min-height: 100%;
+}
+
+body {
+  background: var(--lipai-background);
+  color: var(--lipai-text);
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: var(--lipai-purple);
+  color: #fff;
 }

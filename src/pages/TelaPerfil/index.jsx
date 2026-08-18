@@ -1,30 +1,122 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { UserSidebar } from "../../components/UserSidebar";
+import { useTheme } from "../../hooks/useTheme";
 import useLogout from "./index.hooks";
-import './index.css';
+import {
+  atualizarUsuario,
+  buscarProgresso,
+  buscarUsuario,
+  calcularPercentualAtividades,
+  contarAtividadesConcluidas,
+} from "../../services/usuarioService";
+import {
+  lerPreferencias,
+  salvarPreferencias,
+} from "../../services/preferenciasService";
+import { buscarUnidades, contarLicoesDisponiveis } from "../../services/unidadeService";
+import "./index.css";
+
+const RAIO_CIRCULO = 40;
+const CIRCUNFERENCIA = 2 * Math.PI * RAIO_CIRCULO;
 
 const TelaPerfil = () => {
-  const [secaoAtiva, setSecaoAtiva] = useState('perfil');
-
-  const [nome, setNome] = useState('');
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [diagnostico, setDiagnostico] = useState('');
-
-  const [modoEscuro, setModoEscuro] = useState(false);
-  const [notificacoes, setNotificacoes] = useState(true);
+  const [secaoAtiva, setSecaoAtiva] = useState("perfil");
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [diagnostico, setDiagnostico] = useState("");
+  const [nivelDificuldade, setNivelDificuldade] = useState(1);
+  const [notificacoes, setNotificacoes] = useState(
+    () => lerPreferencias(localStorage.getItem("id")).notificacoes,
+  );
   const [confirmarSaidaAberto, setConfirmarSaidaAberto] = useState(false);
+  const [carregando, setCarregando] = useState(true);
+  const [salvando, setSalvando] = useState(false);
+  const [mensagem, setMensagem] = useState("");
+  const [percentualAtividades, setPercentualAtividades] = useState(0);
 
   const navigate = useNavigate();
   const { handleLogout } = useLogout();
-
+  const { isDarkMode, setTheme } = useTheme();
   const perfilRef = useRef(null);
   const configuracoesRef = useRef(null);
+  const usuarioId = localStorage.getItem("id");
 
-  const handleSalvar = (e) => {
-    e.preventDefault();
-    console.log('Dados salvos:', { nome, email, senha, diagnostico });
+  useEffect(() => {
+    let ativo = true;
+
+    async function carregarDados() {
+      const [perfilResult, progressoResult, unidadesResult] = await Promise.all([
+        buscarUsuario(usuarioId),
+        buscarProgresso(usuarioId),
+        buscarUnidades(),
+      ]);
+
+      if (!ativo) return;
+
+      if (perfilResult.sucesso) {
+        const perfil = perfilResult.data;
+        setNome(perfil.Nome || "");
+        setEmail(perfil.Email || "");
+        setDiagnostico(perfil.Diagnostico || "");
+        setNivelDificuldade(perfil.NivelDificuldade ?? 1);
+      } else {
+        setNome(localStorage.getItem("nome") || "");
+        setEmail(localStorage.getItem("email") || "");
+      }
+
+      if (progressoResult.sucesso && unidadesResult.sucesso) {
+        const concluidas = contarAtividadesConcluidas(progressoResult.data);
+        const totalLicoes = contarLicoesDisponiveis(unidadesResult.data);
+        setPercentualAtividades(calcularPercentualAtividades(concluidas, totalLicoes));
+      } else {
+        setPercentualAtividades(0);
+      }
+
+      setCarregando(false);
+    }
+
+    carregarDados();
+    return () => {
+      ativo = false;
+    };
+  }, [usuarioId]);
+
+  const alterarTema = (ativo) => {
+    setTheme(ativo ? "dark" : "light");
+    salvarPreferencias({
+      ...lerPreferencias(usuarioId),
+      modoEscuro: ativo,
+      notificacoes,
+    }, usuarioId);
+  };
+
+  const alterarNotificacoes = (ativo) => {
+    setNotificacoes(ativo);
+    salvarPreferencias({
+      ...lerPreferencias(usuarioId),
+      modoEscuro: isDarkMode,
+      notificacoes: ativo,
+    }, usuarioId);
+  };
+
+  const handleSalvar = async (event) => {
+    event.preventDefault();
+    setSalvando(true);
+    setMensagem("");
+
+    const resultado = await atualizarUsuario(usuarioId, {
+      nome,
+      email,
+      senha,
+      diagnostico,
+      nivelDificuldade,
+    });
+
+    setSalvando(false);
+    setMensagem(resultado.sucesso ? "Dados atualizados com sucesso." : resultado.mensagem);
+    if (resultado.sucesso) setSenha("");
   };
 
   const confirmarLogout = () => {
@@ -34,35 +126,34 @@ const TelaPerfil = () => {
 
   const handleSectionChange = (secao) => {
     setSecaoAtiva(secao);
-    const ref = secao === 'perfil' ? perfilRef : configuracoesRef;
-    ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const ref = secao === "perfil" ? perfilRef : configuracoesRef;
+    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setSecaoAtiva(entry.target.dataset.secao);
-          }
+          if (entry.isIntersecting) setSecaoAtiva(entry.target.dataset.secao);
         });
       },
-      { threshold: 0.4 }
+      { threshold: 0.4 },
     );
 
     if (perfilRef.current) observer.observe(perfilRef.current);
     if (configuracoesRef.current) observer.observe(configuracoesRef.current);
-
     return () => observer.disconnect();
   }, []);
 
+  const offset = CIRCUNFERENCIA - (percentualAtividades / 100) * CIRCUNFERENCIA;
+
   return (
     <div className="perfil-page-container">
-      <div className="bg-waves">
+      <div className="bg-waves" aria-hidden="true">
         <svg viewBox="0 0 1440 1024" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-          <path d="M1440 0H900C1100 200 1050 500 1250 750C1350 870 1390 960 1440 1024V0Z" fill="#ecdcf7" opacity="0.6"/>
-          <path d="M1440 250C1200 450 1280 700 1100 850C1000 930 920 970 850 1024H1440V250Z" fill="#f0e4fa" opacity="0.5"/>
-          <path d="M1440 600C1350 720 1380 850 1200 950C1120 990 1050 1010 1000 1024H1440V600Z" fill="#e6d2f5" opacity="0.4"/>
+          <path d="M1440 0H900C1100 200 1050 500 1250 750C1350 870 1390 960 1440 1024V0Z" fill="#ecdcf7" opacity="0.6" />
+          <path d="M1440 250C1200 450 1280 700 1100 850C1000 930 920 970 850 1024H1440V250Z" fill="#f0e4fa" opacity="0.5" />
+          <path d="M1440 600C1350 720 1380 850 1200 950C1120 990 1050 1010 1000 1024H1440V600Z" fill="#e6d2f5" opacity="0.4" />
         </svg>
       </div>
 
@@ -73,52 +164,56 @@ const TelaPerfil = () => {
       />
 
       <main className="perfil-main-content">
-
         <section ref={perfilRef} data-secao="perfil" className="perfil-section">
           <div className="perfil-header">
             <h1 className="perfil-title">Seu Perfil</h1>
-
-            <div className="progress-container">
-              <button className="btn-voltar" onClick={() => navigate(-1)}></button>
-              <svg className="progress-svg" viewBox="0 0 90 90">
-                <circle className="progress-circle-bg" cx="45" cy="45" r="40" />
-                <circle className="progress-circle-bar" cx="45" cy="45" r="40" />
+            <div className="progress-container" aria-label={`${percentualAtividades}% das atividades concluídas`}>
+              <button className="btn-voltar" onClick={() => navigate(-1)} aria-label="Voltar" />
+              <svg className="progress-svg" viewBox="0 0 90 90" role="img" aria-hidden="true">
+                <circle className="progress-circle-bg" cx="45" cy="45" r={RAIO_CIRCULO} />
+                <circle
+                  className="progress-circle-bar"
+                  cx="45"
+                  cy="45"
+                  r={RAIO_CIRCULO}
+                  strokeDasharray={CIRCUNFERENCIA}
+                  strokeDashoffset={offset}
+                />
               </svg>
               <div className="progress-text">
-                <strong>75%</strong>
+                <strong>{percentualAtividades}%</strong>
                 <br />
-                <span>Completo</span>
+                <span>Atividades</span>
               </div>
             </div>
           </div>
 
+          {carregando && <p className="perfil-status">Carregando seus dados...</p>}
+          {mensagem && <p className="perfil-status" role="status">{mensagem}</p>}
+
           <form className="perfil-form" onSubmit={handleSalvar}>
             <div className="form-group">
-              <label>Nome:</label>
+              <label htmlFor="perfil-nome">Nome:</label>
               <span>Altere seu nome completo cadastrado na conta</span>
-              <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />
+              <input id="perfil-nome" type="text" value={nome} onChange={(e) => setNome(e.target.value)} required />
             </div>
-
             <div className="form-group">
-              <label>Email:</label>
+              <label htmlFor="perfil-email">Email:</label>
               <span>Gerencie seu endereço de email principal de acesso</span>
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <input id="perfil-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
             </div>
-
             <div className="form-group">
-              <label>Senha:</label>
-              <span>Altere sua chave de segurança secreta</span>
-              <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
+              <label htmlFor="perfil-senha">Senha:</label>
+              <span>Preencha somente se desejar alterar sua senha</span>
+              <input id="perfil-senha" type="password" value={senha} onChange={(e) => setSenha(e.target.value)} autoComplete="new-password" />
             </div>
-
             <div className="form-group">
-              <label>Diagnóstico:</label>
+              <label htmlFor="perfil-diagnostico">Diagnóstico:</label>
               <span>Insira ou edite os dados do seu diagnóstico médico atual</span>
-              <input type="text" value={diagnostico} onChange={(e) => setDiagnostico(e.target.value)} />
+              <input id="perfil-diagnostico" type="text" value={diagnostico} onChange={(e) => setDiagnostico(e.target.value)} />
             </div>
-
-            <button type="submit" className="btn-confirmar">
-              Confirmar
+            <button type="submit" className="btn-confirmar" disabled={salvando || carregando}>
+              {salvando ? "Salvando..." : "Confirmar"}
             </button>
           </form>
         </section>
@@ -127,36 +222,21 @@ const TelaPerfil = () => {
           <div className="configuracoes-grid">
             <div className="config-card">
               <h3 className="config-card-title">Modo de Cor</h3>
-              <p className="config-card-description">
-                Ative o tema escuro para reduzir o cansaço visual em ambientes de
-                baixa luminosidade.
-              </p>
+              <p className="config-card-description">Ative o tema escuro para reduzir o cansaço visual em ambientes de baixa luminosidade.</p>
               <div className="config-card-action">
                 <label className="switch">
-                  <input
-                    type="checkbox"
-                    checked={modoEscuro}
-                    onChange={(e) => setModoEscuro(e.target.checked)}
-                  />
-                  <span className="slider round"></span>
+                  <input type="checkbox" checked={isDarkMode} onChange={(e) => alterarTema(e.target.checked)} aria-label="Ativar modo escuro" />
+                  <span className="slider round" />
                 </label>
               </div>
             </div>
-
             <div className="config-card">
               <h3 className="config-card-title">Notificações</h3>
-              <p className="config-card-description">
-                Receba alertas e atualizações importantes sobre o seu perfil
-                diretamente no sistema.
-              </p>
+              <p className="config-card-description">Receba alertas e atualizações importantes sobre o seu perfil diretamente no sistema.</p>
               <div className="config-card-action">
                 <label className="switch">
-                  <input
-                    type="checkbox"
-                    checked={notificacoes}
-                    onChange={(e) => setNotificacoes(e.target.checked)}
-                  />
-                  <span className="slider round"></span>
+                  <input type="checkbox" checked={notificacoes} onChange={(e) => alterarNotificacoes(e.target.checked)} aria-label="Receber notificações" />
+                  <span className="slider round" />
                 </label>
               </div>
             </div>
@@ -166,60 +246,25 @@ const TelaPerfil = () => {
             <div className="config-card-wide config-card-logout">
               <div className="wide-info">
                 <h3 className="config-card-title">Sair da conta</h3>
-                <p className="config-card-description">
-                  Encerre sua sessão atual neste dispositivo. Você precisará fazer
-                  login novamente para acessar sua conta.
-                </p>
+                <p className="config-card-description">Encerre sua sessão atual neste dispositivo. Você precisará fazer login novamente para acessar sua conta.</p>
               </div>
-
               <div className="wide-actions">
-                <button
-                  className="logout-button"
-                  onClick={() => setConfirmarSaidaAberto(true)}
-                >
-                  Sair
-                </button>
+                <button className="logout-button" onClick={() => setConfirmarSaidaAberto(true)}>Sair</button>
               </div>
             </div>
           </div>
         </section>
-
       </main>
 
       {confirmarSaidaAberto && (
-        <div
-          className="logout-modal-overlay"
-          role="presentation"
-          onClick={() => setConfirmarSaidaAberto(false)}
-        >
-          <div
-            className="logout-modal"
-            role="alertdialog"
-            aria-modal="true"
-            aria-labelledby="logout-modal-title"
-            aria-describedby="logout-modal-desc"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="logout-modal-icon">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M16 17l5-5-5-5M21 12H9" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-            <h2 id="logout-modal-title" className="logout-modal-title">
-              Deseja realmente sair?
-            </h2>
-            <p id="logout-modal-desc" className="logout-modal-desc">
-              Você será desconectado da sua conta neste dispositivo e precisará
-              fazer login novamente para continuar.
-            </p>
+        <div className="logout-modal-overlay" role="presentation" onClick={() => setConfirmarSaidaAberto(false)}>
+          <div className="logout-modal" role="alertdialog" aria-modal="true" aria-labelledby="logout-modal-title" aria-describedby="logout-modal-desc" onClick={(e) => e.stopPropagation()}>
+            <div className="logout-modal-icon" aria-hidden="true">↪</div>
+            <h2 id="logout-modal-title" className="logout-modal-title">Deseja realmente sair?</h2>
+            <p id="logout-modal-desc" className="logout-modal-desc">Você será desconectado da sua conta neste dispositivo e precisará fazer login novamente para continuar.</p>
             <div className="logout-modal-actions">
-              <button className="logout-modal-cancel" onClick={() => setConfirmarSaidaAberto(false)}>
-                Cancelar
-              </button>
-              <button className="logout-modal-confirm" onClick={confirmarLogout}>
-                Sim, sair
-              </button>
+              <button className="logout-modal-cancel" onClick={() => setConfirmarSaidaAberto(false)}>Cancelar</button>
+              <button className="logout-modal-confirm" onClick={confirmarLogout}>Sim, sair</button>
             </div>
           </div>
         </div>

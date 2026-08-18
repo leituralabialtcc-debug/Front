@@ -1,0 +1,215 @@
+:root[data-theme='dark'] {
+  --lipai-surface-elevated: #2a1f34;
+  --lipai-input: #251b2e;
+  --lipai-input-focus: #30213b;
+  --lipai-overlay: rgba(0, 0, 0, 0.7);
+  --lipai-success-soft: #183b32;
+  --lipai-warning-soft: #45320e;
+  --lipai-danger-soft: #482126;
+}
+
+:root[data-theme='dark'] body,
+:root[data-theme='dark'] #root {
+  background-color: var(--lipai-background);
+  color: var(--lipai-text);
+}
+
+:root[data-theme='dark'] #root :is(
+  [class*='page-container'],
+  [class*='page-wrapper'],
+  [class*='page-layout'],
+  [class*='page-content'],
+  [class*='dashboard-wrapper'],
+  [class*='dashboard-main'],
+  [class*='main-content'],
+  [class*='main-container'],
+  [class*='screen-container'],
+  [class*='tela-'],
+  [class*='landing-page']
+) {
+  background-color: var(--lipai-background);
+  color: var(--lipai-text);
+}
+
+:root[data-theme='dark'] #root :is(
+  [class*='card'],
+  [class*='panel'],
+  [class*='painel'],
+  [class*='modal'],
+  [class*='drawer'],
+  [class*='sidebar'],
+  [class*='navbar'],
+  [class*='container'],
+  [class*='section'],
+  [class*='content-box'],
+  [class*='activity-item'],
+  [class*='activity-card'],
+  [class*='lesson'],
+  [class*='licao'],
+  [class*='unit'],
+  [class*='unidade']
+):not([class*='overlay']):not([class*='bg-waves']) {
+  background-color: var(--lipai-surface);
+  border-color: var(--lipai-border);
+  box-shadow: var(--lipai-shadow);
+}
+
+:root[data-theme='dark'] #root :is(
+  [class*='item'],
+  [class*='option'],
+  [class*='alternativa'],
+  [class*='filter'],
+  [class*='filtro'],
+  [class*='tag'],
+  [class*='badge'],
+  [class*='chip'],
+  [class*='track'],
+  [class*='progress'],
+  [class*='empty'],
+  [class*='status'],
+  [class*='info'],
+  [class*='details']
+):not([class*='active']):not([class*='selected']):not([class*='correct']):not([class*='wrong']) {
+  background-color: var(--lipai-surface-muted);
+  border-color: var(--lipai-border);
+}
+
+:root[data-theme='dark'] #root :is(
+  h1, h2, h3, h4, h5, h6,
+  p, label, small, legend,
+  td, th, dt, dd,
+  [class*='title'],
+  [class*='titulo'],
+  [class*='description'],
+  [class*='descricao'],
+  [class*='subtitle'],
+  [class*='subtitulo'],
+  [class*='label'],
+  [class*='name'],
+  [class*='nome'],
+  [class*='email'],
+  [class*='text'],
+  [class*='texto'],
+  [class*='value'],
+  [class*='valor']
+):not(button):not([class*='button']):not([class*='btn']) {
+  color: var(--lipai-text);
+}
+
+:root[data-theme='dark'] #root :is(
+  [class*='muted'],
+  [class*='helper'],
+  [class*='hint'],
+  [class*='subtitle'],
+  [class*='subtitulo'],
+  [class*='description'],
+  [class*='descricao'],
+  [class*='date'],
+  [class*='data']
+):not(button):not([class*='button']):not([class*='btn']) {
+  color: var(--lipai-text-muted);
+}
+
+:root[data-theme='dark'] #root input:not([type='checkbox']):not([type='radio']),
+:root[data-theme='dark'] #root textarea,
+:root[data-theme='dark'] #root select {
+  background-color: var(--lipai-input);
+  border-color: var(--lipai-border);
+  color: var(--lipai-text);
+  caret-color: var(--lipai-text);
+}
+
+:root[data-theme='dark'] #root input::placeholder,
+:root[data-theme='dark'] #root textarea::placeholder {
+  color: var(--lipai-text-muted);
+  opacity: 1;
+}
+
+:root[data-theme='dark'] #root input:not([type='checkbox']):not([type='radio']):focus,
+:root[data-theme='dark'] #root textarea:focus,
+:root[data-theme='dark'] #root select:focus {
+  background-color: var(--lipai-input-focus);
+  border-color: var(--lipai-purple);
+  outline-color: var(--lipai-purple);
+}
+
+:root[data-theme='dark'] #root :is(a, button, input, textarea, select):focus-visible {
+  outline: 3px solid #d8aaf1;
+  outline-offset: 3px;
+}
+
+:root[data-theme='dark'] #root :is([class*='overlay'], [class*='backdrop']) {
+  background-color: var(--lipai-overlay);
+}
+
+:root[data-theme='dark'] #root :is(.bg-waves, [class*='background-wave'], [class*='wave-background']) {
+  opacity: 0.18;
+}
+
+:root[data-theme='dark'] #root :is([class*='correct'], [class*='success'], [class*='concluida']) {
+  background-color: var(--lipai-success-soft);
+  border-color: #4ac59b;
+}
+
+:root[data-theme='dark'] #root :is([class*='wrong'], [class*='error'], [class*='erro']) {
+  background-color: var(--lipai-danger-soft);
+  border-color: #ef8f97;
+}
+
+:root[data-theme='dark'] #root :is([class*='warning'], [class*='aviso']) {
+  background-color: var(--lipai-warning-soft);
+  border-color: #f3ca6f;
+}
+
+:root[data-theme='dark'] #root :is(
+  .login-page,
+  .cadastro-page,
+  .pagina-atividades,
+  .tela-atividades-admin,
+  .landing,
+  .landing__hero-wrapper,
+  .landing__features,
+  .landing__sobre,
+  .licao-overlay
+) {
+  background: var(--lipai-background) !important;
+  background-image: none !important;
+}
+
+:root[data-theme='dark'] #root :is(
+  .login-container,
+  .cadastro-container,
+  .conteudo > .filter,
+  .card-progresso,
+  .atividades-admin__painel,
+  .landing__feature-card,
+  .benefit-item
+) {
+  background: var(--lipai-surface) !important;
+  background-image: none !important;
+  border-color: var(--lipai-border) !important;
+}
+
+:root[data-theme='dark'] #root .landing__cta-text h2 span {
+  background: none !important;
+  -webkit-text-fill-color: var(--lipai-text) !important;
+  color: var(--lipai-text) !important;
+}
+
+:root[data-theme='dark'] #root :is(
+  .bg-circle,
+  .bg-triangle,
+  .landing__hero-wave,
+  .landing__features-wave,
+  .landing__sobre-bg,
+  .landing__cta-circle
+) {
+  filter: brightness(0.45) saturate(0.9);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-theme='dark'] #root * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

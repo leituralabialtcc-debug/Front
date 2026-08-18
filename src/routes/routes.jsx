@@ -6,7 +6,6 @@ import TelaLoginUser from '../pages/TelaLoginUser';
 import TelaCadastroUser from '../pages/TelaCadastroUser';
 import TelaDashboard from '../pages/TelaDashboard';
 import TelaPerfil from '../pages/TelaPerfil';
-import TelaConfiguracoes from '../pages/TelaConfiguracoes';
 import TelaNotificacoes from '../pages/TelaNotificacoes';
 import TelaConquistas from '../pages/TelaConquistas';
 import TelaDicionario from '../pages/TelaDicionario';
