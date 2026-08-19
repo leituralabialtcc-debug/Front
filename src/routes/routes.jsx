@@ -6,7 +6,6 @@ import TelaLoginUser from '../pages/TelaLoginUser';
 import TelaCadastroUser from '../pages/TelaCadastroUser';
 import TelaDashboard from '../pages/TelaDashboard';
 import TelaPerfil from '../pages/TelaPerfil';
-import TelaConfiguracoes from '../pages/TelaConfiguracoes';
 import TelaNotificacoes from '../pages/TelaNotificacoes';
 import TelaConquistas from '../pages/TelaConquistas';
 import TelaDicionario from '../pages/TelaDicionario';
@@ -61,8 +60,7 @@ function AnimatedRoutes() {
         <Route path="/conquistas" element={<PageTransition><TelaConquistas /></PageTransition>} />
         <Route path="/dicionario" element={<PageTransition><TelaDicionario /></PageTransition>} />
         <Route path="/loja" element={<PageTransition><TelaLoja /></PageTransition>} />
-        <Route path="/contato" element={<PageTransition><TelaContato /></PageTransition>} />
-
+        
         <Route path="/acompanhante" element={<PageTransition><TelaAcompanhante /></PageTransition>} />
         <Route path="/atividades-salvas" element={<PageTransition><TelaAtividadeSalva /></PageTransition>} />
         <Route path="/inicio-atividades" element={<PageTransition><TelaInicioAtividades /></PageTransition>} />
