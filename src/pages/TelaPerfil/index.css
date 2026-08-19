@@ -3,7 +3,6 @@
   min-height: 100vh;
   width: 100%;
   font-family: 'Poppins', sans-serif;
-  
   box-sizing: border-box;
   background-color: #f6effb;
   position: relative;
@@ -36,7 +35,6 @@
   align-items: center;
   z-index: 1;
   box-sizing: border-box;
-
   margin-left: 280px;
 }
 
@@ -240,6 +238,118 @@
   color: #ffffff;
 }
 
+/* --- Modal de Confirmação de Saída --- */
+.logout-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(74, 40, 104, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.logout-modal {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 32px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(74, 40, 104, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  box-sizing: border-box;
+  animation: modalFadeIn 0.2s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.logout-modal-icon {
+  font-size: 28px;
+  color: #e05252;
+  background-color: #fde8e8;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.logout-modal-title {
+  color: #4a2868;
+  font-size: 22px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.logout-modal-desc {
+  color: #7a688b;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.logout-modal-actions {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.logout-modal-cancel {
+  flex: 1;
+  background-color: #f0eaf5;
+  color: #4a2868;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.logout-modal-cancel:hover {
+  background-color: #e2d5ec;
+}
+
+.logout-modal-confirm {
+  flex: 1;
+  background-color: #e05252;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.logout-modal-confirm:hover {
+  background-color: #c93b3b;
+}
+
 /* --- REGRAS DE RESPONSIVIDADE INTERNA DA PÁGINA --- */
 @media (max-width: 1024px) {
   .perfil-main-content {
@@ -300,6 +410,7 @@
   }
 }
 
+/* --- MODO ESCURO --- */
 :root[data-theme='dark'] .perfil-page-container {
   background-color: var(--lipai-background);
   color: var(--lipai-text);
@@ -340,7 +451,7 @@
   border-color: var(--lipai-border);
 }
 
-/* LIPAI_THEME_DARK_COMPONENT: regras específicas para pages/TelaPerfil/index.css. */
+/* LIPAI_THEME_DARK_COMPONENT: regras específicas para pages/TelaPerfil/index.css */
 :root[data-theme='dark'] #root .perfil-page-container,
 :root[data-theme='dark'] #root .perfil-main-content,
 :root[data-theme='dark'] #root .progress-container,
@@ -348,6 +459,7 @@
   background-color: var(--lipai-background);
   color: var(--lipai-text);
 }
+
 :root[data-theme='dark'] #root .perfil-form,
 :root[data-theme='dark'] #root .form-group,
 :root[data-theme='dark'] #root .config-card,
@@ -360,18 +472,19 @@
   background-color: var(--lipai-surface);
   border-color: var(--lipai-border);
 }
+
 :root[data-theme='dark'] #root .perfil-title,
 :root[data-theme='dark'] #root .progress-text,
 :root[data-theme='dark'] #root .config-card-title,
 :root[data-theme='dark'] #root .logout-modal-title {
   color: var(--lipai-text);
 }
+
 :root[data-theme='dark'] #root .config-card-description {
   color: var(--lipai-text-muted);
 }
 
-
-/* Correção de acessibilidade visual — Perfil no modo escuro. */
+/* Correção de acessibilidade visual — Perfil no modo escuro */
 :root[data-theme='dark'] #root .perfil-page-container {
   background: var(--lipai-background) !important;
 }
@@ -435,18 +548,35 @@
   border-top-color: var(--lipai-border-strong) !important;
 }
 
-
-/* Perfil — cartões de preferências com borda suave, sem sombra e sem deformação visual. */
+/* Perfil — cartões de preferências com borda suave */
 :root[data-theme='dark'] #root .configuracoes-grid .config-card {
   background: linear-gradient(145deg, #2a1d35 0%, #24182f 100%) !important;
   border: 1px solid rgba(225, 182, 244, 0.22) !important;
   box-shadow: none !important;
 }
 
-
-/* Perfil — bloco de saída no mesmo padrão visual dos cartões de preferências. */
+/* Perfil — bloco de saída no mesmo padrão visual */
 :root[data-theme='dark'] #root .logout-section-wrapper .config-card-wide {
   background: linear-gradient(145deg, #2a1d35 0%, #24182f 100%) !important;
   border: 1px solid rgba(225, 182, 244, 0.22) !important;
   box-shadow: none !important;
+}
+
+/* Suporte ao Modo Escuro no Modal de Saída */
+:root[data-theme='dark'] #root .logout-modal-overlay {
+  background-color: rgba(0, 0, 0, 0.65) !important;
+}
+
+:root[data-theme='dark'] #root .logout-modal-icon {
+  background-color: rgba(224, 82, 82, 0.2) !important;
+  color: #f87171 !important;
+}
+
+:root[data-theme='dark'] #root .logout-modal-cancel {
+  background-color: #382845 !important;
+  color: #fffaff !important;
+}
+
+:root[data-theme='dark'] #root .logout-modal-cancel:hover {
+  background-color: #473357 !important;
 }
