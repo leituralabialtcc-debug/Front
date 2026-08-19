@@ -3,22 +3,57 @@ import { useNavigate } from "react-router-dom";
 import { UserSidebar } from "../../components/UserSidebar";
 import { useTheme } from "../../hooks/useTheme";
 import useLogout from "./index.hooks";
-import {
-  atualizarUsuario,
-  buscarProgresso,
-  buscarUsuario,
-  calcularPercentualAtividades,
-  contarAtividadesConcluidas,
-} from "../../services/usuarioService";
+import api from "../../services/api";
 import {
   lerPreferencias,
   salvarPreferencias,
 } from "../../services/preferenciasService";
-import { buscarUnidades, contarLicoesDisponiveis } from "../../services/unidadeService";
 import "./index.css";
 
 const RAIO_CIRCULO = 40;
 const CIRCUNFERENCIA = 2 * Math.PI * RAIO_CIRCULO;
+
+function obterLista(dados, nomes) {
+  for (const nome of nomes) {
+    if (Array.isArray(dados?.[nome])) return dados[nome];
+  }
+  return [];
+}
+
+function contarLicoes(unidades) {
+  return unidades.reduce((total, unidade) => {
+    return total +
+      obterLista(unidade, ["LicoesFala", "licoesFala"]).length +
+      obterLista(unidade, ["LicoesAlternativa", "licoesAlternativa"]).length +
+      obterLista(unidade, ["LicoesVideo", "licoesVideo"]).length +
+      obterLista(unidade, ["LicoesVibracao", "licoesVibracao"]).length;
+  }, 0);
+}
+
+function contarConcluidas(progresso) {
+  const alternativas = obterLista(progresso, ["Alternativas", "alternativas"]);
+  const falas = obterLista(progresso, ["Falas", "falas"]);
+
+  const atividadesConcluidas = [...alternativas, ...falas].filter((atividade) => {
+    const status = String(atividade.Status ?? atividade.status ?? "").toLowerCase();
+    return status === "concluido" || status === "concluida" || status === "completed";
+  });
+
+  return new Set(
+    atividadesConcluidas.map((atividade) => {
+      const tipo = atividade.Tipo ?? atividade.tipo ?? "";
+      const licaoId =
+        atividade.LicaoAlternativaId ??
+        atividade.licaoAlternativaId ??
+        atividade.LicaoFalaId ??
+        atividade.licaoFalaId ??
+        atividade.IdProgresso ??
+        atividade.idProgresso;
+
+      return `${tipo}:${licaoId}`;
+    }),
+  ).size;
+}
 
 const TelaPerfil = () => {
   const [secaoAtiva, setSecaoAtiva] = useState("perfil");
@@ -27,9 +62,6 @@ const TelaPerfil = () => {
   const [senha, setSenha] = useState("");
   const [diagnostico, setDiagnostico] = useState("");
   const [nivelDificuldade, setNivelDificuldade] = useState(1);
-  const [notificacoes, setNotificacoes] = useState(
-    () => lerPreferencias(localStorage.getItem("id")).notificacoes,
-  );
   const [confirmarSaidaAberto, setConfirmarSaidaAberto] = useState(false);
   const [carregando, setCarregando] = useState(true);
   const [salvando, setSalvando] = useState(false);
@@ -42,63 +74,102 @@ const TelaPerfil = () => {
   const perfilRef = useRef(null);
   const configuracoesRef = useRef(null);
   const usuarioId = localStorage.getItem("id");
+  const [notificacoes, setNotificacoes] = useState(
+    () => lerPreferencias(usuarioId).notificacoes,
+  );
 
   useEffect(() => {
     let ativo = true;
 
-    async function carregarDados() {
-      const [perfilResult, progressoResult, unidadesResult] = await Promise.all([
-        buscarUsuario(usuarioId),
-        buscarProgresso(usuarioId),
-        buscarUnidades(),
-      ]);
+    async function carregarPerfil() {
+      try {
+        const [perfilResposta, progressoResposta, unidadesResposta] = await Promise.allSettled([
+          api.get(`/Usuario/${usuarioId}`),
+          api.get(`/Progresso/usuario/${usuarioId}`),
+          api.get("/Unidades"),
+        ]);
 
-      if (!ativo) return;
+        if (!ativo) return;
 
-      if (perfilResult.sucesso) {
-        const perfil = perfilResult.data;
-        setNome(perfil.Nome || "");
-        setEmail(perfil.Email || "");
-        setDiagnostico(perfil.Diagnostico || "");
-        setNivelDificuldade(perfil.NivelDificuldade ?? 1);
-      } else {
-        setNome(localStorage.getItem("nome") || "");
-        setEmail(localStorage.getItem("email") || "");
+        if (perfilResposta.status === "fulfilled") {
+          const perfil = perfilResposta.value.data;
+          setNome(perfil.Nome ?? perfil.nome ?? "");
+          setEmail(perfil.Email ?? perfil.email ?? "");
+          setDiagnostico(perfil.Diagnostico ?? perfil.diagnostico ?? "");
+          setNivelDificuldade(perfil.NivelDificuldade ?? perfil.nivelDificuldade ?? 1);
+        } else {
+          setNome(localStorage.getItem("nome") || "");
+          setEmail(localStorage.getItem("email") || "");
+        }
+
+        if (
+          progressoResposta.status === "fulfilled" &&
+          unidadesResposta.status === "fulfilled"
+        ) {
+          const concluidas = contarConcluidas(progressoResposta.value.data);
+          const unidades = Array.isArray(unidadesResposta.value.data)
+            ? unidadesResposta.value.data
+            : [];
+          const totalLicoes = contarLicoes(unidades);
+          setPercentualAtividades(
+            totalLicoes > 0
+              ? Math.min(100, Math.round((concluidas / totalLicoes) * 100))
+              : 0,
+          );
+        }
+      } catch {
+        if (ativo) setMensagem("Não foi possível carregar todos os dados do perfil.");
+      } finally {
+        if (ativo) setCarregando(false);
       }
-
-      if (progressoResult.sucesso && unidadesResult.sucesso) {
-        const concluidas = contarAtividadesConcluidas(progressoResult.data);
-        const totalLicoes = contarLicoesDisponiveis(unidadesResult.data);
-        setPercentualAtividades(calcularPercentualAtividades(concluidas, totalLicoes));
-      } else {
-        setPercentualAtividades(0);
-      }
-
-      setCarregando(false);
     }
 
-    carregarDados();
+    carregarPerfil();
     return () => {
       ativo = false;
     };
   }, [usuarioId]);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setSecaoAtiva(entry.target.dataset.secao);
+          }
+        });
+      },
+      { threshold: 0.4 },
+    );
+
+    if (perfilRef.current) observer.observe(perfilRef.current);
+    if (configuracoesRef.current) observer.observe(configuracoesRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
   const alterarTema = (ativo) => {
     setTheme(ativo ? "dark" : "light");
-    salvarPreferencias({
-      ...lerPreferencias(usuarioId),
-      modoEscuro: ativo,
-      notificacoes,
-    }, usuarioId);
+    salvarPreferencias(
+      {
+        ...lerPreferencias(usuarioId),
+        modoEscuro: ativo,
+        notificacoes,
+      },
+      usuarioId,
+    );
   };
 
   const alterarNotificacoes = (ativo) => {
     setNotificacoes(ativo);
-    salvarPreferencias({
-      ...lerPreferencias(usuarioId),
-      modoEscuro: isDarkMode,
-      notificacoes: ativo,
-    }, usuarioId);
+    salvarPreferencias(
+      {
+        ...lerPreferencias(usuarioId),
+        modoEscuro: isDarkMode,
+        notificacoes: ativo,
+      },
+      usuarioId,
+    );
   };
 
   const handleSalvar = async (event) => {
@@ -106,22 +177,23 @@ const TelaPerfil = () => {
     setSalvando(true);
     setMensagem("");
 
-    const resultado = await atualizarUsuario(usuarioId, {
-      nome,
-      email,
-      senha,
-      diagnostico,
-      nivelDificuldade,
-    });
-
-    setSalvando(false);
-    setMensagem(resultado.sucesso ? "Dados atualizados com sucesso." : resultado.mensagem);
-    if (resultado.sucesso) setSenha("");
-  };
-
-  const confirmarLogout = () => {
-    setConfirmarSaidaAberto(false);
-    handleLogout();
+    try {
+      await api.put(`/Usuario/${usuarioId}`, {
+        nome,
+        email,
+        senha,
+        diagnostico,
+        nivelDificuldade,
+      });
+      setMensagem("Dados atualizados com sucesso.");
+      setSenha("");
+    } catch (error) {
+      setMensagem(
+        error.response?.data?.message || "Não foi possível atualizar o perfil.",
+      );
+    } finally {
+      setSalvando(false);
+    }
   };
 
   const handleSectionChange = (secao) => {
@@ -130,20 +202,10 @@ const TelaPerfil = () => {
     ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setSecaoAtiva(entry.target.dataset.secao);
-        });
-      },
-      { threshold: 0.4 },
-    );
-
-    if (perfilRef.current) observer.observe(perfilRef.current);
-    if (configuracoesRef.current) observer.observe(configuracoesRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const confirmarLogout = () => {
+    setConfirmarSaidaAberto(false);
+    handleLogout();
+  };
 
   const offset = CIRCUNFERENCIA - (percentualAtividades / 100) * CIRCUNFERENCIA;
 
@@ -168,7 +230,7 @@ const TelaPerfil = () => {
           <div className="perfil-header">
             <h1 className="perfil-title">Seu Perfil</h1>
             <div className="progress-container" aria-label={`${percentualAtividades}% das atividades concluídas`}>
-              <button className="btn-voltar" onClick={() => navigate(-1)} aria-label="Voltar" />
+              <button className="btn-voltar" type="button" onClick={() => navigate(-1)} aria-label="Voltar" />
               <svg className="progress-svg" viewBox="0 0 90 90" role="img" aria-hidden="true">
                 <circle className="progress-circle-bg" cx="45" cy="45" r={RAIO_CIRCULO} />
                 <circle
@@ -195,22 +257,22 @@ const TelaPerfil = () => {
             <div className="form-group">
               <label htmlFor="perfil-nome">Nome:</label>
               <span>Altere seu nome completo cadastrado na conta</span>
-              <input id="perfil-nome" type="text" value={nome} onChange={(e) => setNome(e.target.value)} required />
+              <input id="perfil-nome" type="text" value={nome} onChange={(event) => setNome(event.target.value)} required />
             </div>
             <div className="form-group">
               <label htmlFor="perfil-email">Email:</label>
               <span>Gerencie seu endereço de email principal de acesso</span>
-              <input id="perfil-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+              <input id="perfil-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
             </div>
             <div className="form-group">
               <label htmlFor="perfil-senha">Senha:</label>
               <span>Preencha somente se desejar alterar sua senha</span>
-              <input id="perfil-senha" type="password" value={senha} onChange={(e) => setSenha(e.target.value)} autoComplete="new-password" />
+              <input id="perfil-senha" type="password" value={senha} onChange={(event) => setSenha(event.target.value)} autoComplete="new-password" />
             </div>
             <div className="form-group">
               <label htmlFor="perfil-diagnostico">Diagnóstico:</label>
               <span>Insira ou edite os dados do seu diagnóstico médico atual</span>
-              <input id="perfil-diagnostico" type="text" value={diagnostico} onChange={(e) => setDiagnostico(e.target.value)} />
+              <input id="perfil-diagnostico" type="text" value={diagnostico} onChange={(event) => setDiagnostico(event.target.value)} />
             </div>
             <button type="submit" className="btn-confirmar" disabled={salvando || carregando}>
               {salvando ? "Salvando..." : "Confirmar"}
@@ -225,17 +287,28 @@ const TelaPerfil = () => {
               <p className="config-card-description">Ative o tema escuro para reduzir o cansaço visual em ambientes de baixa luminosidade.</p>
               <div className="config-card-action">
                 <label className="switch">
-                  <input type="checkbox" checked={isDarkMode} onChange={(e) => alterarTema(e.target.checked)} aria-label="Ativar modo escuro" />
+                  <input
+                    type="checkbox"
+                    checked={isDarkMode}
+                    onChange={(event) => alterarTema(event.target.checked)}
+                    aria-label="Ativar modo escuro"
+                  />
                   <span className="slider round" />
                 </label>
               </div>
             </div>
+
             <div className="config-card">
               <h3 className="config-card-title">Notificações</h3>
               <p className="config-card-description">Receba alertas e atualizações importantes sobre o seu perfil diretamente no sistema.</p>
               <div className="config-card-action">
                 <label className="switch">
-                  <input type="checkbox" checked={notificacoes} onChange={(e) => alterarNotificacoes(e.target.checked)} aria-label="Receber notificações" />
+                  <input
+                    type="checkbox"
+                    checked={notificacoes}
+                    onChange={(event) => alterarNotificacoes(event.target.checked)}
+                    aria-label="Receber notificações"
+                  />
                   <span className="slider round" />
                 </label>
               </div>
@@ -249,7 +322,7 @@ const TelaPerfil = () => {
                 <p className="config-card-description">Encerre sua sessão atual neste dispositivo. Você precisará fazer login novamente para acessar sua conta.</p>
               </div>
               <div className="wide-actions">
-                <button className="logout-button" onClick={() => setConfirmarSaidaAberto(true)}>Sair</button>
+                <button className="logout-button" type="button" onClick={() => setConfirmarSaidaAberto(true)}>Sair</button>
               </div>
             </div>
           </div>
@@ -258,13 +331,13 @@ const TelaPerfil = () => {
 
       {confirmarSaidaAberto && (
         <div className="logout-modal-overlay" role="presentation" onClick={() => setConfirmarSaidaAberto(false)}>
-          <div className="logout-modal" role="alertdialog" aria-modal="true" aria-labelledby="logout-modal-title" aria-describedby="logout-modal-desc" onClick={(e) => e.stopPropagation()}>
+          <div className="logout-modal" role="alertdialog" aria-modal="true" aria-labelledby="logout-modal-title" aria-describedby="logout-modal-desc" onClick={(event) => event.stopPropagation()}>
             <div className="logout-modal-icon" aria-hidden="true">↪</div>
             <h2 id="logout-modal-title" className="logout-modal-title">Deseja realmente sair?</h2>
             <p id="logout-modal-desc" className="logout-modal-desc">Você será desconectado da sua conta neste dispositivo e precisará fazer login novamente para continuar.</p>
             <div className="logout-modal-actions">
-              <button className="logout-modal-cancel" onClick={() => setConfirmarSaidaAberto(false)}>Cancelar</button>
-              <button className="logout-modal-confirm" onClick={confirmarLogout}>Sim, sair</button>
+              <button className="logout-modal-cancel" type="button" onClick={() => setConfirmarSaidaAberto(false)}>Cancelar</button>
+              <button className="logout-modal-confirm" type="button" onClick={confirmarLogout}>Sim, sair</button>
             </div>
           </div>
         </div>

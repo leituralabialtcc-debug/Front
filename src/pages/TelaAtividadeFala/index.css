@@ -152,3 +152,188 @@
     font-size: 2rem;
   }
 }
+
+.fala-erro {
+  max-width: 720px;
+  margin: 1rem auto 0;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  background: #fff4e8;
+  color: #7c4a10;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.fala-feedback {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: min(90%, 720px);
+  margin: 2rem auto 0;
+  padding: 1rem 1.25rem;
+  border: 1px solid #cdebd7;
+  border-radius: 12px;
+  background: #f1fbf4;
+  color: #245b38;
+  text-align: center;
+}
+
+.fala-feedback strong {
+  font-size: 1.1rem;
+}
+
+.fala-feedback span {
+  line-height: 1.45;
+}
+
+.btn-fechar:focus-visible {
+  outline: 3px solid #5b2d74;
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.treino-ruido {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  width: min(90%, 720px);
+  margin: 1.5rem auto 0;
+  padding: 1rem 1.25rem;
+  border: 1px solid #e3dbe9;
+  border-radius: 12px;
+  background: #fbf8fc;
+}
+
+.treino-ruido h2 {
+  margin: 0;
+  color: #5b2d74;
+  font-size: 1rem;
+}
+
+.treino-ruido p {
+  margin: 0.3rem 0 0;
+  color: #72677a;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.treino-ruido-controle {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 180px;
+  color: #4f3d59;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.treino-ruido-controle input {
+  accent-color: #9065a6;
+}
+
+@media (max-width: 600px) {
+  .treino-ruido {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .treino-ruido-controle {
+    min-width: 0;
+  }
+}
+
+/* Tema escuro específico da atividade de fala. */
+:root[data-theme='dark'] #root .atividade-overlay {
+  background: var(--lipai-background);
+}
+
+:root[data-theme='dark'] #root .atividade-container {
+  background: linear-gradient(145deg, #23182c 0%, #1c1424 100%);
+  border: 1px solid var(--lipai-border);
+  box-shadow: var(--lipai-shadow);
+  color: var(--lipai-text);
+}
+
+:root[data-theme='dark'] #root :is(.atividade-titulo h1, .atividade-conteudo h2, .treino-ruido h2) {
+  color: #ffffff;
+}
+
+:root[data-theme='dark'] #root :is(.atividade-titulo span, .video-numero, .treino-ruido p, .treino-ruido-controle) {
+  color: var(--lipai-text-muted);
+}
+
+:root[data-theme='dark'] #root .barra-progresso {
+  background: #140e19;
+}
+
+:root[data-theme='dark'] #root .progresso {
+  background: linear-gradient(90deg, #c36cec, #8439ab);
+}
+
+:root[data-theme='dark'] #root .btn-fechar {
+  color: #e7d8ef;
+}
+
+:root[data-theme='dark'] #root .fala-container {
+  background: transparent;
+}
+
+:root[data-theme='dark'] #root .fala-box {
+  background: #2a1d35;
+  border: 1px solid var(--lipai-border-subtle);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.17);
+}
+
+:root[data-theme='dark'] #root .frase-container {
+  background: #19111f;
+  border-color: var(--lipai-border);
+}
+
+:root[data-theme='dark'] #root .frase-container p {
+  color: #e2a6ff;
+}
+
+:root[data-theme='dark'] #root .treino-ruido {
+  background: #2a1d35;
+  border-color: var(--lipai-border-subtle);
+}
+
+:root[data-theme='dark'] #root .treino-ruido-controle input {
+  accent-color: #c36cec;
+}
+
+:root[data-theme='dark'] #root .fala-erro {
+  background: #493410;
+  color: #ffe1a3;
+}
+
+:root[data-theme='dark'] #root .fala-feedback {
+  background: #173d31;
+  border-color: #5cd8a7;
+  color: #ddfff0;
+}
+
+
+/* Refinamento de contornos — Atividade de fala no modo escuro. */
+:root[data-theme='dark'] #root .atividade-container {
+  border: 0 !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18) !important;
+}
+
+:root[data-theme='dark'] #root .fala-box {
+  border: 0 !important;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.20) !important;
+}
+
+:root[data-theme='dark'] #root .frase-container {
+  border: 0 !important;
+  background: #1d1423 !important;
+}
+
+:root[data-theme='dark'] #root .treino-ruido,
+:root[data-theme='dark'] #root .fala-feedback {
+  border: 0 !important;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.14) !important;
+}

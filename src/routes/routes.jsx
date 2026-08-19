@@ -60,8 +60,7 @@ function AnimatedRoutes() {
         <Route path="/conquistas" element={<PageTransition><TelaConquistas /></PageTransition>} />
         <Route path="/dicionario" element={<PageTransition><TelaDicionario /></PageTransition>} />
         <Route path="/loja" element={<PageTransition><TelaLoja /></PageTransition>} />
-        <Route path="/contato" element={<PageTransition><TelaContato /></PageTransition>} />
-
+        
         <Route path="/acompanhante" element={<PageTransition><TelaAcompanhante /></PageTransition>} />
         <Route path="/atividades-salvas" element={<PageTransition><TelaAtividadeSalva /></PageTransition>} />
         <Route path="/inicio-atividades" element={<PageTransition><TelaInicioAtividades /></PageTransition>} />
