@@ -1,63 +1,77 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './index.css';
-import Conquistas from '../../components/Conquistas/index.jsx';
+import Conquistas from '../../components/Conquistas';
+import { listarConquistasUsuario } from '../../services/conquistaService';
+import { DEFAULT_CONQUISTA_DATA } from '../../components/Conquistas/types';
+import './index.css'
 
 const TelaConquistas = () => {
   const navigate = useNavigate();
+  const [atingidas, setAtingidas] = useState([]);
+  const [naoAtingidas, setNaoAtingidas] = useState([]);
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState(null);
 
-  const conquistasAtingidas = Array(7).fill({
-    title: "Semana Ouro",
-    subtitle: "Semana Ouro"
-  });
+  useEffect(() => {
+    async function carregarConquistas() {
+      const usuarioId = localStorage.getItem('id');
+      const resultado = await listarConquistasUsuario(usuarioId);
 
-  const conquistasNaoAtingidas = Array(14).fill({
-    title: "Semana Ouro",
-    subtitle: "Semana Ouro"
-  });
+      if (resultado.sucesso) {
+        setAtingidas(resultado.data.atingidas ?? resultado.data.Atingidas ?? []);
+        setNaoAtingidas(resultado.data.naoAtingidas ?? resultado.data.NaoAtingidas ?? []);
+      } else {
+        setErro(resultado.mensagem);
+      }
+
+      setCarregando(false);
+    }
+
+    carregarConquistas();
+  }, []);
+
+  if (carregando) return <p>Carregando conquistas...</p>;
+  if (erro) return <p>{erro}</p>;
 
   return (
     <div className="container-tela-conquistas">
-      <header className="header-conquistas">
-        <button className="btn-voltar-conquistas" onClick={() => navigate(-1)}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="19" y1="12" x2="5" y2="12"></line>
-            <polyline points="12 19 5 12 12 5"></polyline>
+      <div className="header-conquistas">
+        <button onClick={() => navigate(-1)} className="btn-voltar-conquistas">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 18l-6-6 6-6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
-      </header>
+      </div>
 
-      <main className="box-conquistas">
-        
-        <section className="secao-grid-conquistas">
+      <div className="box-conquistas">
+        <div className="secao-grid-conquistas">
           <h2>Conquistas</h2>
-          <p className="subtitulo-conquistas">
-            Parabéns! Estes são os emblemas que você já desbloqueou com o seu progresso e dedicação.
-          </p>
           <div className="grid-cards-conquistas">
-            {conquistasAtingidas.map((item, index) => (
-              <div key={`atingida-${index}`}>
-                <Conquistas title={item.title} subtitle={item.subtitle} />
-              </div>
+            {atingidas.map((c) => (
+              <Conquistas
+                key={c.idConquista ?? c.IdConquista}
+                title={c.nome ?? c.Nome ?? DEFAULT_CONQUISTA_DATA.title}
+                subtitle={c.descricao ?? c.Descricao ?? DEFAULT_CONQUISTA_DATA.subtitle}
+                iconeUrl={c.iconeUrl ?? c.IconeUrl ?? DEFAULT_CONQUISTA_DATA.iconeUrl}
+              />
             ))}
           </div>
-        </section>
+        </div>
 
-        <section className="secao-grid-conquistas">
+        <div className="secao-grid-conquistas bloco-nao-atingidas">
           <h2>Não atingidas</h2>
-          <p className="subtitulo-conquistas">
-            Conclua as atividades, mantenha sua ofensiva e alcance novas metas para conquistar estes emblemas!
-          </p>
-          <div className="grid-cards-conquistas bloco-nao-atingidas">
-            {conquistasNaoAtingidas.map((item, index) => (
-              <div key={`nao-atingida-${index}`}>
-                <Conquistas title={item.title} subtitle={item.subtitle} />
-              </div>
+          <div className="grid-cards-conquistas">
+            {naoAtingidas.map((c) => (
+              <Conquistas
+                key={c.idConquista ?? c.IdConquista}
+                title={c.nome ?? c.Nome ?? DEFAULT_CONQUISTA_DATA.title}
+                subtitle={c.descricao ?? c.Descricao ?? DEFAULT_CONQUISTA_DATA.subtitle}
+                iconeUrl={c.iconeUrl ?? c.IconeUrl ?? DEFAULT_CONQUISTA_DATA.iconeUrl}
+              />
             ))}
           </div>
-        </section>
-
-      </main>
+        </div>
+      </div>
     </div>
   );
 };
