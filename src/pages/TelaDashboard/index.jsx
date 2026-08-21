@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import Navbar from '../../components/Navbar/index';
 import './index.css';
@@ -6,8 +6,8 @@ import { HeaderActions } from '../../components/infoEstrelas/index';
 import { UserProfileDrawer } from '../../components/UserProfileDrawer/index';
 import Conquistas from '../../components/Conquistas/index';
 import { useTelaDashboard } from './index.hook'; 
+import { buscarOfensiva } from '../../services/ofensivaService';
 import backgroundOnda from '../../assets/img/background_onda.png';
-
 
 const HeadphoneIcon = () => (
   <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -21,17 +21,25 @@ const HeadphoneIcon = () => (
   </svg>
 );
 
-const strikeDays = [
-  { label: 'MAR', day: '04' },
-  { label: 'MAR', day: '04' },
-  { label: 'MAR', day: '04' },
-  { label: 'MAR', day: '04' },
-  { label: 'MAR', day: '06', active: true },
-  { label: 'MAR', day: '04' },
-  { label: 'MAR', day: '04' },
-  { label: 'MAR', day: '04' },
-  { label: 'MAR', day: '04' },
-];
+const MESES = ['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
+
+function gerarStrikeDays(diasSeguidos) {
+  const hoje = new Date();
+  const dias = [];
+
+  for (let i = -4; i <= 4; i++) {
+    const data = new Date(hoje);
+    data.setDate(hoje.getDate() + i);
+
+    dias.push({
+      label: MESES[data.getMonth()],
+      day: String(data.getDate()).padStart(2, '0'),
+      active: i === 0,
+    });
+  }
+
+  return dias;
+}
 
 const ActivityCard = ({ title, description, onComecar }) => (
   <div className="activity-card">
@@ -63,6 +71,25 @@ const TelaDashboard = () => {
   const { drawerAberto, abrirPerfil, fecharPerfil } = useTelaDashboard();
   const navigate = useNavigate(); 
 
+  const [strikeDays, setStrikeDays] = useState([]);
+  const [loadingOfensiva, setLoadingOfensiva] = useState(true);
+
+  useEffect(() => {
+    async function carregarOfensiva() {
+      try {
+        setLoadingOfensiva(true);
+        const resultado = await buscarOfensiva();
+        if (resultado.sucesso) {
+          const diasSeguidos = resultado.data.diasSeguidos ?? resultado.data.DiasSeguidos ?? 0;
+          setStrikeDays(gerarStrikeDays(diasSeguidos));
+        }
+      } finally {
+        setLoadingOfensiva(false);
+      }
+    }
+    carregarOfensiva();
+  }, []);
+
   const handleAjudaOfensiva = () => {
     alert("Painel de Ofensivas:\n\nAs ofensivas representam a quantidade de dias consecutivos que você completou pelo menos uma atividade no LipAI. Mantenha o foco diário para não perder sua sequência!");
   };
@@ -78,11 +105,8 @@ const TelaDashboard = () => {
         <div className="dashboard-header">
           <h1 className="dashboard-title">Dashboard</h1>
           <div className="header-right">
-            
             <HeaderActions onOpenProfile={abrirPerfil} />
-            
             <UserProfileDrawer isOpen={drawerAberto} onClose={fecharPerfil} />
-            
           </div>
         </div>
 
@@ -94,13 +118,18 @@ const TelaDashboard = () => {
             </div>
             <button className="help-btn" aria-label="Ajuda sobre ofensiva" onClick={handleAjudaOfensiva}>?</button>
           </div>
+
           <div className="strike-days">
-            {strikeDays.map((d, i) => (
-              <div key={i} className={`strike-day${d.active ? ' strike-day--active' : ''}`}>
-                <span className="strike-month">{d.label}</span>
-                <span className="strike-num">{d.day}</span>
-              </div>
-            ))}
+            {loadingOfensiva ? (
+              <div className="loading-spinner" />
+            ) : (
+              strikeDays.map((d, i) => (
+                <div key={i} className={`strike-day${d.active ? ' strike-day--active' : ''}`}>
+                  <span className="strike-month">{d.label}</span>
+                  <span className="strike-num">{d.day}</span>
+                </div>
+              ))
+            )}
           </div>
         </section>
 
