@@ -1,40 +1,26 @@
-import React from 'react';
 import './index.css';
 
-const Botao = ({
-  texto,
-  corDeFundo = '#4A154B',
-  corTexto = '#FFFFFF',
-  corBorda = 'transparent',
-  variante, 
+export default function Botao({
+  texto = 'Clique aqui',
+  corDeFundo = '#7a3a8e',
+  corTexto = '#ffffff',
   onClick = () => {},
-  className = ''
-}) => {
-
-  if (variante) {
-    return (
-      <button 
-        className={`btn-generico btn-${variante} ${className}`}
-        onClick={onClick}
-      >
-        {texto}
-      </button>
-    );
-  }
-
+  className = '',
+  disabled = false,
+  ...props
+}) {
   return (
-    <button 
-      className={`btn-generico ${className}`}
-      style={{ 
+    <button
+      className={`botao ${className}`}
+      style={{
         backgroundColor: corDeFundo,
         color: corTexto,
-        border: `1.5px solid ${corBorda}`
       }}
       onClick={onClick}
+      disabled={disabled}
+      {...props}
     >
       {texto}
     </button>
   );
-};
-
-export default Botao;
+}

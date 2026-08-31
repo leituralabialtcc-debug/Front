@@ -1,30 +1,17 @@
-import "./index.css";
-import Botao from "../Botao";
+import './index.css';
 
-const CardExercicio = ({
-  imagem,
+export default function CardExercicio({
+  titulo,
   descricao,
-  onComecar,
-}) => {
+  dificuldade,
+  onClick,
+  ...props
+}) {
   return (
-    <div className="card-exercicio">
-      <div className="card-imagem">
-        {imagem}
-      </div>
-
-      <div className="card-info">
-        <p>{descricao}</p>
-
-        <Botao
-          texto="Começar"
-          corDeFundo="#7A3A8E" 
-          corTexto="#FFF"
-          onClick={onComecar}
-          className="btn-card"
-        />
-      </div>
+    <div className="card-exercicio" onClick={onClick} {...props}>
+      <h3 className="card-exercicio__titulo">{titulo}</h3>
+      <p className="card-exercicio__descricao">{descricao}</p>
+      <span className="card-exercicio__dificuldade">{dificuldade}</span>
     </div>
   );
-};
-
-export default CardExercicio;
+}

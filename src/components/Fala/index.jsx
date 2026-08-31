@@ -1,38 +1,32 @@
-import React, { useState, useEffect } from "react";
-import "./index.css";
-
+import { useState, useEffect } from 'react';
+import './index.css';
 
 export default function Fala() {
-  const [status, setStatus] = useState("idle");
-
+  const [status, setStatus] = useState('idle');
 
   useEffect(() => {
     let temporizador;
 
-
-    if (status === "recording") {
+    if (status === 'recording') {
       temporizador = setTimeout(() => {
         const acertou = Math.random() > 0.5;
-        setStatus(acertou ? "correct" : "incorrect");
-      }, 5000); 
+        setStatus(acertou ? 'correct' : 'incorrect');
+      }, 5000);
     }
-
 
     return () => clearTimeout(temporizador);
   }, [status]);
 
-
   const handleClique = () => {
-    if (status === "idle") {
-      setStatus("recording");
-    } else if (status === "correct" || status === "incorrect") {
-      setStatus("idle");
+    if (status === 'idle') {
+      setStatus('recording');
+    } else if (status === 'correct' || status === 'incorrect') {
+      setStatus('idle');
     }
   };
 
-
   const renderIcon = () => {
-    if (status === "recording") {
+    if (status === 'recording') {
       return (
         <svg width="40" height="10" viewBox="0 0 40 10" fill="currentColor">
           <circle cx="6" cy="5" r="5" />
@@ -41,7 +35,6 @@ export default function Fala() {
         </svg>
       );
     }
-
 
     return (
       <svg width="32" height="42" viewBox="0 0 24 30" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -53,12 +46,11 @@ export default function Fala() {
     );
   };
 
-
   return (
     <button
       className={`fala-box ${status}`}
       onClick={handleClique}
-      disabled={status === "recording"} 
+      disabled={status === 'recording'}
     >
       <div className="icon-container">
         {renderIcon()}

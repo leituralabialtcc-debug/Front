@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Menu } from 'lucide-react';
 import { NAV_ITEMS } from './index.types';
@@ -6,7 +5,7 @@ import { useNavbar } from './index.hook';
 import { NavbarDrawer } from '../NavbarDrawer';
 import './index.css';
 
-const Navbar = () => {
+function Navbar() {
   const { drawerAberto, abrirDrawer, fecharDrawer } = useNavbar();
 
   return (
@@ -41,6 +40,6 @@ const Navbar = () => {
       <NavbarDrawer isOpen={drawerAberto} onClose={fecharDrawer} />
     </>
   );
-};
+}
 
 export default Navbar;
